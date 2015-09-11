@@ -1,0 +1,51 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="NPFIS_Draft_.Site1" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+
+    <form id="form1" runat="server">
+        <div class="container-fluid" style="background-color: #337AB7; color: #FFFFFF; font-weight: bold">
+            <div style="background-color: #337AB7; color: #FFFFFF; font-weight: bold">
+                <div style="padding: inherit; margin: inherit; font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center" class="container-fluid">
+                    <asp:Label ID="Label1" runat="server" Text="Label" CssClass="text-center">NAMRIA Provident Fund Information System</asp:Label>
+                </div>
+                <div style="float: right; width: 40%; position: relative; text-align: right; color: #FFFFFF; background-color: #337AB7;" id="Logout">User1 | Log Out</div>
+                <br />
+            </div>
+        </div>
+        <br />
+        <div style="float: left; position: relative; width: 304px">
+            <h4><a data-toggle="collapse" href="#LoanMaintenance">Loan Maintenance</a></h4>
+            <div id="LoanMaintenance" class="collapse">
+                <div>
+                    <asp:LinkButton ID="lnkLoanManage" runat="server" CSSclass="btn btn-info btn-sm" PostBackUrl="~/NewLoanTransaction.aspx" Width="300px">Loan Management</asp:LinkButton>
+                </div>
+                <div>
+                    <asp:LinkButton ID="lnkLoanApp" runat="server" CSSclass="btn btn-info btn-sm" Width="300px" PostBackUrl="~/LoanManagement.aspx">Loan Application Form</asp:LinkButton>
+                </div>
+                <div><a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 300px">Member's Loan Amortization Schedule Report</a></div>
+                <div><a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 300px">Member's Loan Summary Report</a></div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div style="position: absolute; width: 720px; float: left; left: 380px;">
+
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                This is where the pages will load
+         
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
