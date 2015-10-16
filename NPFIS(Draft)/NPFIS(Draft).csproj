@@ -82,6 +82,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="alertify\alertify-0.3.11 .js" />
+    <Content Include="alertify\alertify.css" />
+    <Content Include="alertify\alertify.js" />
+    <Content Include="alertify\alertify.min.js" />
+    <Content Include="Bootstrap\bootstrap.min.css" />
+    <Content Include="Bootstrap\bootstrap.min.js" />
+    <Content Include="Branch_Division_Library.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -119,16 +126,26 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="alertify\default.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="alertify\jquery-1.11.3.min.js" />
+    <Content Include="alertify\jquery.js" />
+    <Content Include="Image\bgBody.png" />
+    <Content Include="Image\bgPage.png" />
+    <Content Include="Image\NPFIS.jpg" />
+    <Content Include="Image\textNamria2.jpg" />
+    <Content Include="Import_Loan_Transact.aspx" />
     <Content Include="LandingPage.aspx" />
-    <Content Include="Landing_Page.aspx" />
     <Content Include="ListOfBorrowers.aspx" />
     <Content Include="LoanManagement.aspx" />
     <Content Include="Members_Amortization_Report.aspx" />
     <Content Include="Members_Share.aspx" />
     <Content Include="Members_Summary.aspx" />
+    <Content Include="Member_Browse.aspx" />
     <Content Include="Member_Loan_Summary.aspx" />
+    <Content Include="Member_Maintenance.aspx" />
     <Content Include="NewLoanTransaction.aspx" />
+    <Content Include="NPF_Members_Summary_Report.aspx" />
     <Content Include="RemittanceOfSharesAndLoans.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -137,6 +154,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Remittance_of_Shares_Loans.aspx" />
+    <Content Include="Salary_Deduction_Report.aspx" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -177,6 +196,10 @@
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="App_Code\GlyphIcon.cshtml" />
+    <Content Include="alertify\semantic.min.css" />
+    <Content Include="alertify\semantic.min.js" />
+    <Content Include="LoanTransactionInfo2.aspx" />
+    <Content Include="WebLogin.aspx" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -929,27 +952,31 @@
     <Content Include="Signatory_Library.aspx" />
     <Content Include="User_Maintenance.aspx" />
     <Content Include="Web.config" />
-    <Content Include="Loan_Management.aspx" />
-    <Content Include="Loan_Maintenance.aspx" />
-    <Content Include="Loan_Application_Form.aspx" />
     <Content Include="Import.aspx" />
-    <Content Include="Members_Amortization.aspx" />
-    <Content Include="Member%27s Maintenance.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\Helper.cs" />
+    <Compile Include="BHelper.cs" />
+    <Compile Include="Branch_Division_Library.aspx.cs">
+      <DependentUpon>Branch_Division_Library.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Branch_Division_Library.aspx.designer.cs">
+      <DependentUpon>Branch_Division_Library.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Import_Loan_Transact.aspx.cs">
+      <DependentUpon>Import_Loan_Transact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Import_Loan_Transact.aspx.designer.cs">
+      <DependentUpon>Import_Loan_Transact.aspx</DependentUpon>
+    </Compile>
     <Compile Include="LandingPage.aspx.cs">
       <DependentUpon>LandingPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="LandingPage.aspx.designer.cs">
       <DependentUpon>LandingPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Landing_Page.aspx.cs">
-      <DependentUpon>Landing_Page.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Landing_Page.aspx.designer.cs">
-      <DependentUpon>Landing_Page.aspx</DependentUpon>
     </Compile>
     <Compile Include="LoanManagement.aspx.cs">
       <DependentUpon>LoanManagement.aspx</DependentUpon>
@@ -958,12 +985,47 @@
     <Compile Include="LoanManagement.aspx.designer.cs">
       <DependentUpon>LoanManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Member_Browse.aspx.cs">
+      <DependentUpon>Member_Browse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Member_Browse.aspx.designer.cs">
+      <DependentUpon>Member_Browse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Member_Maintenance.aspx.cs">
+      <DependentUpon>Member_Maintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Member_Maintenance.aspx.designer.cs">
+      <DependentUpon>Member_Maintenance.aspx</DependentUpon>
+    </Compile>
     <Compile Include="NewLoanTransaction.aspx.cs">
       <DependentUpon>NewLoanTransaction.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="NewLoanTransaction.aspx.designer.cs">
       <DependentUpon>NewLoanTransaction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NPF_Members_Summary_Report.aspx.cs">
+      <DependentUpon>NPF_Members_Summary_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NPF_Members_Summary_Report.aspx.designer.cs">
+      <DependentUpon>NPF_Members_Summary_Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Remittance_of_Shares_Loans.aspx.cs">
+      <DependentUpon>Remittance_of_Shares_Loans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Remittance_of_Shares_Loans.aspx.designer.cs">
+      <DependentUpon>Remittance_of_Shares_Loans.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Salary_Deduction_Report.aspx.cs">
+      <DependentUpon>Salary_Deduction_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Salary_Deduction_Report.aspx.designer.cs">
+      <DependentUpon>Salary_Deduction_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="SignatoryHelper.cs" />
     <Compile Include="LoanMaintenanceHelper.cs" />
@@ -1025,27 +1087,6 @@
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
     </Compile>
-    <Compile Include="Loan_Management.aspx.cs">
-      <DependentUpon>Loan_Management.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Loan_Management.aspx.designer.cs">
-      <DependentUpon>Loan_Management.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Loan_Maintenance.aspx.cs">
-      <DependentUpon>Loan_Maintenance.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Loan_Maintenance.aspx.designer.cs">
-      <DependentUpon>Loan_Maintenance.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Loan_Application_Form.aspx.cs">
-      <DependentUpon>Loan_Application_Form.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Loan_Application_Form.aspx.designer.cs">
-      <DependentUpon>Loan_Application_Form.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Import.aspx.cs">
       <DependentUpon>Import.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1053,26 +1094,27 @@
     <Compile Include="Import.aspx.designer.cs">
       <DependentUpon>Import.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Members_Amortization.aspx.cs">
-      <DependentUpon>Members_Amortization.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Members_Amortization.aspx.designer.cs">
-      <DependentUpon>Members_Amortization.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Member%27s Maintenance.aspx.cs">
-      <DependentUpon>Member%27s Maintenance.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Member%27s Maintenance.aspx.designer.cs">
-      <DependentUpon>Member%27s Maintenance.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="UserMHelper.cs" />
     <Compile Include="User_Maintenance.aspx.cs">
       <DependentUpon>User_Maintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="User_Maintenance.aspx.designer.cs">
       <DependentUpon>User_Maintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoanTransactionInfo2.aspx.cs">
+      <DependentUpon>LoanTransactionInfo2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoanTransactionInfo2.aspx.designer.cs">
+      <DependentUpon>LoanTransactionInfo2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebLogin.aspx.cs">
+      <DependentUpon>WebLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebLogin.aspx.designer.cs">
+      <DependentUpon>WebLogin.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1085,6 +1127,9 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="upload\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

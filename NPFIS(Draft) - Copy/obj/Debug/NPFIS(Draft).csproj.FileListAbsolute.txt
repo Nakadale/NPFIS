@@ -1,0 +1,11 @@
+c:\users\sherwinaquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\bin\NPFIS(Draft).dll.config
+c:\users\sherwinaquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\bin\NPFIS(Draft).dll
+c:\users\sherwinaquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\bin\NPFIS(Draft).pdb
+c:\users\sherwinaquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\obj\Debug\NPFIS(Draft).dll
+c:\users\sherwinaquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\obj\Debug\NPFIS(Draft).pdb
+C:\Users\SherwinAquino\Documents\Visual Studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\NPFIS(Draft).dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\NPFIS(Draft).pdb
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).dll
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).pdb

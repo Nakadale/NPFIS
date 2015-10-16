@@ -13,3 +13,30 @@ C:\Users\SherwinAquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(
 C:\Users\SherwinAquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\bin\Newtonsoft.Json.xml
 C:\Users\SherwinAquino\documents\visual studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\bin\System.Web.Optimization.xml
 C:\Users\SherwinAquino\Documents\Visual Studio 2013\Projects\NPFIS(Draft)\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\NPFIS(Draft).dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\NPFIS(Draft).pdb
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Antlr3.Runtime.dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Microsoft.Web.Infrastructure.dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Newtonsoft.Json.dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\System.Web.Optimization.dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\WebGrease.dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Antlr3.Runtime.pdb
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Newtonsoft.Json.xml
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\System.Web.Optimization.xml
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).dll
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).pdb
+Y:\NPFIS(Draft)\bin\NPFIS(Draft).dll.config
+Y:\NPFIS(Draft)\bin\NPFIS(Draft).dll
+Y:\NPFIS(Draft)\bin\NPFIS(Draft).pdb
+Y:\NPFIS(Draft)\bin\Antlr3.Runtime.dll
+Y:\NPFIS(Draft)\bin\Microsoft.Web.Infrastructure.dll
+Y:\NPFIS(Draft)\bin\Newtonsoft.Json.dll
+Y:\NPFIS(Draft)\bin\System.Web.Optimization.dll
+Y:\NPFIS(Draft)\bin\WebGrease.dll
+Y:\NPFIS(Draft)\bin\Antlr3.Runtime.pdb
+Y:\NPFIS(Draft)\bin\Newtonsoft.Json.xml
+Y:\NPFIS(Draft)\bin\System.Web.Optimization.xml
+Y:\NPFIS(Draft)\obj\Debug\NPFIS(Draft).dll
+Y:\NPFIS(Draft)\obj\Debug\NPFIS(Draft).pdb
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache
+Y:\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache

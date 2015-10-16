@@ -13,24 +13,6 @@ namespace NPFIS_Draft_ {
     public partial class Members_Summary {
         
         /// <summary>
-        /// lblMemberSummary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMemberSummary;
-        
-        /// <summary>
-        /// btnSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
-        
-        /// <summary>
         /// btnPrint control.
         /// </summary>
         /// <remarks>
@@ -38,6 +20,87 @@ namespace NPFIS_Draft_ {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrint;
+        
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// txtSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        
+        /// <summary>
+        /// UpdatePanel4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel4;
+        
+        /// <summary>
+        /// btnSearchMember control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchMember;
+        
+        /// <summary>
+        /// gvSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvSearch;
+        
+        /// <summary>
+        /// UpdatePanel5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel5;
+        
+        /// <summary>
+        /// Table1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table Table1;
+        
+        /// <summary>
+        /// lblEmpid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmpid;
+        
+        /// <summary>
+        /// lblEmpidShow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmpidShow;
         
         /// <summary>
         /// lblMember control.
@@ -49,13 +112,13 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblMember;
         
         /// <summary>
-        /// ddlMember control.
+        /// lblMemberShow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMember;
+        protected global::System.Web.UI.WebControls.Label lblMemberShow;
         
         /// <summary>
         /// lblDivision control.
@@ -67,13 +130,22 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblDivision;
         
         /// <summary>
-        /// txtbxDivision control.
+        /// lblDivisionValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtbxDivision;
+        protected global::System.Web.UI.WebControls.Label lblDivisionValue;
+        
+        /// <summary>
+        /// Table2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table Table2;
         
         /// <summary>
         /// lblTotalShare control.
@@ -85,13 +157,13 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblTotalShare;
         
         /// <summary>
-        /// txtbxTotalShare control.
+        /// lblTotalShareValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtbxTotalShare;
+        protected global::System.Web.UI.WebControls.Label lblTotalShareValue;
         
         /// <summary>
         /// lblTotalLoanBalance control.
@@ -103,13 +175,13 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblTotalLoanBalance;
         
         /// <summary>
-        /// txtbxTotalLoanBalance control.
+        /// lblTotalLoanValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtbxTotalLoanBalance;
+        protected global::System.Web.UI.WebControls.Label lblTotalLoanValue;
         
         /// <summary>
         /// lblContributions control.
@@ -121,13 +193,22 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblContributions;
         
         /// <summary>
-        /// gridContributions control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridContributions;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
+        /// gvShareContribution control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvShareContribution;
         
         /// <summary>
         /// lblLoans control.

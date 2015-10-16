@@ -96,29 +96,29 @@ namespace NPFIS_Draft_
             bool ChPaidUpLoad = this.CkPaidUpLoan.Checked;
             string DDLLDDLLoanType = this.DDLLoanType.Text;
 
-            if (helpers.CheckIfExist(DDLTransactCode))
-            { // for updating of old transactions
-                if (helpers.UpdateLoanTransaction(DDLTransactCode, DDLEmpID, DDLLoanType, TxtDivision, TxtLoanApp, TxtLoanDate, TxtIssuedCheque, TxtIssuedChequeDate, TxtChequeReleasedDate, TxtStartAmort, TxtEndAmort, TxtPrincipalAmount, TxtPaymentTerms, TxtInterestRate, TxtServiceFee, ChPaidUpLoad))
-                {
-                    //will put up something with more flair here
-                }
-                else
-                {
-                    //will put up something with more flair here
-                }
-            }
-            else
-            { // for insertion of new transactions
-                if (helpers.InsertLoanTransaction(DDLTransactCode, DDLEmpID, DDLLoanType, TxtDivision, TxtLoanApp, TxtLoanDate, TxtIssuedCheque, TxtIssuedChequeDate, TxtChequeReleasedDate, TxtStartAmort, TxtEndAmort, TxtPrincipalAmount, TxtPaymentTerms, TxtInterestRate, TxtServiceFee, ChPaidUpLoad))
-                {
-                    //will put up something with more flair here
-                }
-                else
-                {
-                    //will put up something with more flair here
-                }
+            //if (helpers.CheckIfExist(DDLTransactCode))
+            //{ // for updating of old transactions
+            //    if (helpers.UpdateLoanTransaction(DDLTransactCode, DDLEmpID, DDLLoanType, TxtDivision, TxtLoanApp, TxtLoanDate, TxtIssuedCheque, TxtIssuedChequeDate, TxtChequeReleasedDate, TxtStartAmort, TxtEndAmort, TxtPrincipalAmount, TxtPaymentTerms, TxtInterestRate, TxtServiceFee, ChPaidUpLoad))
+            //    {
+            //        will put up something with more flair here
+            //    }
+            //    else
+            //    {
+            //        will put up something with more flair here
+            //    }
+            //}
+            //else
+            //{ // for insertion of new transactions
+            //    if (helpers.InsertLoanTransaction(DDLTransactCode, DDLEmpID, DDLLoanType, TxtDivision, TxtLoanApp, TxtLoanDate, TxtIssuedCheque, TxtIssuedChequeDate, TxtChequeReleasedDate, TxtStartAmort, TxtEndAmort, TxtPrincipalAmount, TxtPaymentTerms, TxtInterestRate, TxtServiceFee, ChPaidUpLoad))
+            //    {
+            //        will put up something with more flair here
+            //    }
+            //    else
+            //    {
+            //        will put up something with more flair here
+            //    }
 
-            }
+            //}
         }
 
         protected void BTNEdit_Click(object sender, EventArgs e)

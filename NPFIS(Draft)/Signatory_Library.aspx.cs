@@ -13,9 +13,25 @@ namespace NPFIS_Draft_
         {
             if (!IsPostBack)
             {
-                DropDownList ddlSignatureNum = (DropDownList)ddlSigNum;
-                BindSigNum(ddlSignatureNum);
+                //DropDownList ddlSignatureNum = (DropDownList)ddlSigNum;
+                //BindSigNum(ddlSignatureNum);
+                LoadSignatoryInfo();
             }
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#LibraryMaintenance').collapse('show');", true);
+        }
+
+        private void LoadSignatoryInfo()
+        {
+            string ddlSignatureNum = ddlSigNum.SelectedValue.ToString();
+            TextBox TxtAdministrator = (TextBox)this.TxtAdministrator;
+            TextBox TxtPosition = (TextBox)this.TxtPosition;
+            TextBox TxtNotedBy = (TextBox)this.TxtNotedBy;
+            TextBox TxtNotedByPosition = (TextBox)this.TxtNotedByPosition;
+            TextBox TxtPreparedBy = (TextBox)this.TxtPreparedBy;
+            TextBox TxtPrepareByPosition = (TextBox)this.TxtPrepareByPosition;
+            TextBox TxtEncodedBy = (TextBox)this.TxtEncodedBy;
+            TextBox TxtEncodedByPosition = (TextBox)this.TxtEncodedByPosition;
+            SignatoryHelper.LoadSignatory("1", TxtAdministrator, TxtPosition, TxtNotedBy, TxtNotedByPosition, TxtPreparedBy, TxtPrepareByPosition, TxtEncodedBy, TxtEncodedByPosition);
         }
 
         private void BindSigNum(DropDownList ddl)
@@ -68,14 +84,7 @@ namespace NPFIS_Draft_
             TxtNotedBy.Enabled = false;
             TxtPosition.Enabled = false;
             TxtAdministrator.Enabled = false;
-            TxtEncodedByPosition.Text = "";
-            TxtEncodedBy.Text = "";
-            TxtPrepareByPosition.Text = "";
-            TxtPreparedBy.Text = "";
-            TxtNotedByPosition.Text = "";
-            TxtNotedBy.Text = "";
-            TxtPosition.Text = "";
-            TxtAdministrator.Text = "";
+            LoadSignatoryInfo();
         }
 
         protected void ddlSigNum_SelectedIndexChanged(object sender, EventArgs e)
@@ -106,7 +115,7 @@ namespace NPFIS_Draft_
 
         protected void BTNSave_Click(object sender, EventArgs e)
         {
-            string ddlSignatoryNum = this.ddlSigNum.SelectedValue.ToString();
+            string ddlSignatoryNum = "1";
             string TxtAdministrator = this.TxtAdministrator.Text;
             string TxtPosition = this.TxtPosition.Text;
             string TxtNotedBy = this.TxtNotedBy.Text;
@@ -121,6 +130,15 @@ namespace NPFIS_Draft_
                 if (SignatoryHelper.UpdateSignatory(ddlSignatoryNum, TxtAdministrator, TxtPosition, TxtNotedBy, TxtNotedByPosition, TxtPreparedBy, TxtPrepareByPosition, TxtEncodedBy, TxtEncodedByPosition))
                 {
                     //will put up something with more flair here
+                    LoadSignatoryInfo();
+                    this.TxtEncodedByPosition.Enabled = false;
+                    this.TxtEncodedBy.Enabled = false;
+                    this.TxtPrepareByPosition.Enabled = false;
+                    this.TxtPreparedBy.Enabled = false;
+                    this.TxtNotedByPosition.Enabled = false;
+                    this.TxtNotedBy.Enabled = false;
+                    this.TxtPosition.Enabled = false;
+                    this.TxtAdministrator.Enabled = false;
                 }
                 else
                 {

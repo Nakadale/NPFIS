@@ -3,48 +3,89 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <script src="bootstrap/jquery.min.js"></script>
+    <script src="bootstrap/bootstrap.min.js"></script>
+    <link href="alertify/alertify.css" rel="stylesheet" type="text/css" />
+    <link href="alertify/default.css" rel="stylesheet" type="text/css" />
+    <script src="alertify/alertify.min.js" type="text/javascript"></script>
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-
     <form id="form1" runat="server">
-        <div class="container-fluid" style="background-color: #337AB7; color: #FFFFFF; font-weight: bold">
-            <div style="background-color: #337AB7; color: #FFFFFF; font-weight: bold">
-                <div style="padding: inherit; margin: inherit; font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center" class="container-fluid">
-                    <asp:Label ID="Label1" runat="server" Text="Label" CssClass="text-center">NAMRIA Provident Fund Information System</asp:Label>
+        <!-- Banner Area -->
+        <div style="background-color: #5e9ac0; color: #FFFFFF; font-weight: bold">
+            <div style="background-color: #5e9ac0; color: #FFFFFF; font-weight: bold">
+                <div style="width: 100%; height: 40px; background-color: #000000;">
+                    <div style=" margin: auto; padding-top: 10px; width: 1024px;">
+                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/LandingPage.aspx" Text="Home" BorderColor="Black" ForeColor="White" Font-Size="Medium" Font-Bold="False" Font-Names="Arial"></asp:HyperLink>
+                    </div>
                 </div>
-                <div style="float: right; width: 40%; position: relative; text-align: right; color: #FFFFFF; background-color: #337AB7;" id="Logout">User1 | Log Out</div>
-                <br />
+                <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; width: 100%;">
+                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Image/textNamria2.jpg" />
+                </div>
+                <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; background-color: #cccccc; width: 100%; height: 95px;">
+                    <asp:Image ID="Image4" runat="server" ImageUrl="~/Image/NPFIS.jpg" />
+                </div>
             </div>
         </div>
-        <br />
-        <div style="float: left; position: relative; width: 304px">
-            <h4><a data-toggle="collapse" href="#LoanMaintenance">Loan Maintenance</a></h4>
-            <div id="LoanMaintenance" class="collapse">
-                <div>
-                    <asp:LinkButton ID="lnkLoanManage" runat="server" CSSclass="btn btn-info btn-sm" PostBackUrl="~/NewLoanTransaction.aspx" Width="300px">Loan Management</asp:LinkButton>
-                </div>
-                <div>
-                    <asp:LinkButton ID="lnkLoanApp" runat="server" CSSclass="btn btn-info btn-sm" Width="300px" PostBackUrl="~/LoanManagement.aspx">Loan Application Form</asp:LinkButton>
-                </div>
-                <div><a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 300px">Member's Loan Amortization Schedule Report</a></div>
-                <div><a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 300px">Member's Loan Summary Report</a></div>
-            </div>
+        <div style=" margin: auto; padding-top: 10px; width: 1024px;">
+        <div style="background-color: #FFFFFF;color: #FFFFFF">&nbsp;<div class="col-md-8">
+            <asp:SiteMapPath ID="SiteMapPath1" runat="server" ForeColor="Black" RenderCurrentNodeAsLink="True">
+                <PathSeparatorStyle BackColor="White" />
+            </asp:SiteMapPath>
         </div>
-        <br />
-        <br />
-        <div style="position: absolute; width: 720px; float: left; left: 380px;">
-
-
+        <div class="col-md-3" style="text-align: right">
+            <asp:Label ID="Label1" runat="server" Text="Log Out Section" ForeColor="Black"></asp:Label>
+        </div>
+        </div>
+        </div>
+        <!-- Banner Area -->
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <!-- Menu -->
+        <div style="background-image: url('/Image/bgPage.png'); background-repeat: no-repeat; background-position: center;height:500px;">
+        <div style=" margin: auto; padding-top: 10px; width: 1024px;">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <div class="col-md-3">
+                    <div class="panel-collapse collapse in">
+                    <div id="MemberMaintenance" class="panel-collapse collapse ">
+                            <asp:LinkButton ID="lnkLoanManage" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/Member_Maintenance.aspx" Width="250px">Member' Maintenance</asp:LinkButton>
+                            <asp:LinkButton ID="lnkLoanApp" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Summary.aspx">Member's Summary</asp:LinkButton>
+                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Member's Shares Management</a>
+                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">NPF Member's Summary Report</a>
+                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">List of Borrower's for Salary Deduction</a>
+                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Remittance of Shares and Loans</a>
+                    </div>
+                    <div id="LibraryMaintenance" class="panel-collapse collapse ">
+                            <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Signatory_Library.aspx">Signatory Library</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton2" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Branch_Division_Library.aspx">Branch/Division Library</asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/User_Maintenance.aspx">User Maintenance</asp:LinkButton>
+                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Import Loan Transactions</a>
+                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Import Member List</a>
+                    </div>
+                    <div id="LoanMaintenance" class="panel-collapse collapse ">
+                            <asp:LinkButton ID="LinkButton3" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/LoanManagement.aspx" Width="250px">Loan Management</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton4" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/NewLoanTransaction.aspx">Loan Application Form</asp:LinkButton>
+                            <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Member's Amortization Schedule Report</a>
+                            <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Member's Loan Summary Report</a>
+                    </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <!-- Menu -->
+        <!-- Container Body -->
+        <div class="col-md-9">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 This is where the pages will load
          
             </asp:ContentPlaceHolder>
+        </div>
+        <!-- Container Body -->
+        </div>
         </div>
     </form>
 </body>

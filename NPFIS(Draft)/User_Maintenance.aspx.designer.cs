@@ -13,15 +13,6 @@ namespace NPFIS_Draft_ {
     public partial class User_Maintenance {
         
         /// <summary>
-        /// lblUserMaintenance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUserMaintenance;
-        
-        /// <summary>
         /// btnNew control.
         /// </summary>
         /// <remarks>
@@ -58,15 +49,6 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Button btnCancel;
         
         /// <summary>
-        /// btnSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
-        
-        /// <summary>
         /// btnDelete control.
         /// </summary>
         /// <remarks>
@@ -76,13 +58,58 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Button btnDelete;
         
         /// <summary>
-        /// Table1 control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// txtSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        
+        /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
+        /// btnSearchMember control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchMember;
+        
+        /// <summary>
+        /// gvSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvSearch;
+        
+        /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
         
         /// <summary>
         /// lblName control.
@@ -94,6 +121,15 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblName;
         
         /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
         /// txtbxName control.
         /// </summary>
         /// <remarks>
@@ -103,49 +139,31 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.TextBox txtbxName;
         
         /// <summary>
-        /// TableCell1 control.
+        /// lblUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell1;
+        protected global::System.Web.UI.WebControls.Label lblUsername;
         
         /// <summary>
-        /// lblUsername1 control.
+        /// RequiredFieldValidator2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUsername1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
-        /// TableCell2 control.
+        /// txtbxUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell2;
-        
-        /// <summary>
-        /// txtbxUsername1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtbxUsername1;
-        
-        /// <summary>
-        /// TableCell3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell3;
+        protected global::System.Web.UI.WebControls.TextBox txtbxUsername;
         
         /// <summary>
         /// lblPassword control.
@@ -157,13 +175,13 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblPassword;
         
         /// <summary>
-        /// TableCell4 control.
+        /// RequiredFieldValidator3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell4;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
         
         /// <summary>
         /// txtbxPassword control.
@@ -175,15 +193,6 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.TextBox txtbxPassword;
         
         /// <summary>
-        /// TableCell5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell5;
-        
-        /// <summary>
         /// lblVerifyPassword control.
         /// </summary>
         /// <remarks>
@@ -193,13 +202,13 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblVerifyPassword;
         
         /// <summary>
-        /// TableCell6 control.
+        /// RequiredFieldValidator4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell6;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
         
         /// <summary>
         /// txtbxVerifyPassword control.
@@ -211,111 +220,21 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.TextBox txtbxVerifyPassword;
         
         /// <summary>
-        /// TableCell7 control.
+        /// chckbxAllowUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell7;
+        protected global::System.Web.UI.WebControls.CheckBox chckbxAllowUser;
         
         /// <summary>
-        /// lblAllowUser control.
+        /// chckbxActiveUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAllowUser;
-        
-        /// <summary>
-        /// TableCell8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell8;
-        
-        /// <summary>
-        /// chkbxAllowUSer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkbxAllowUSer;
-        
-        /// <summary>
-        /// TableCell9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell9;
-        
-        /// <summary>
-        /// Label6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
-        
-        /// <summary>
-        /// TableCell10 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell10;
-        
-        /// <summary>
-        /// chkbxActiveUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkbxActiveUser;
-        
-        /// <summary>
-        /// TableCell11 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell11;
-        
-        /// <summary>
-        /// lblLastLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLastLogin;
-        
-        /// <summary>
-        /// TableCell12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell TableCell12;
-        
-        /// <summary>
-        /// txtbxLastLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtbxLastLogin;
+        protected global::System.Web.UI.WebControls.CheckBox chckbxActiveUser;
     }
 }

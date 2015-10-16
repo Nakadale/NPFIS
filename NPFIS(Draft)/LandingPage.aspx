@@ -7,19 +7,19 @@
             <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#Transact">Menu</a>
+                    Welcome! Please select a button.
                 </h4>
             </div>
             <div id="Transact" class="panel-collapse collapse in">
             <br />
             <br />
-            <asp:LinkButton ID="lnkLoanMain" runat="server" CssClass="btn btn-info btn-sm" Width="300px" href="#LoanMaintenance" data-toggle="collapse">Loan Maintenance</asp:LinkButton>
+            <asp:LinkButton ID="lnkMemMain" runat="server" CssClass="btn btn-info btn-sm" Width="300px" href="#MemberMaintenance" data-toggle="collapse" OnClientClick="$('#LoanMaintenance').collapse('hide');$('#LibraryMaintenance').collapse('hide');">Member Maintenance</asp:LinkButton>
             <br />
             <br />
-            <asp:LinkButton ID="lnkMemMain" runat="server" CssClass="btn btn-info btn-sm" Width="300px">Member Maintenance</asp:LinkButton>
+            <asp:LinkButton ID="lnkLoanMain" runat="server" CssClass="btn btn-info btn-sm" Width="300px" href="#LoanMaintenance" data-toggle="collapse" OnClientClick="$('#MemberMaintenance').collapse('hide');$('#LibraryMaintenance').collapse('hide');">Loan Maintenance</asp:LinkButton>
             <br />
             <br />
-            <asp:LinkButton ID="lnkLibMain" runat="server" CssClass="btn btn-info btn-sm" Width="300px">Library Maintenance</asp:LinkButton>
+            <asp:LinkButton ID="lnkLibMain" runat="server" CssClass="btn btn-info btn-sm" Width="300px" href="#LibraryMaintenance" data-toggle="collapse" OnClientClick="$('#MemberMaintenance').collapse('hide');$('#LoanMaintenance').collapse('hide');">Library Maintenance</asp:LinkButton>
             <br />
             <br />
             </div>

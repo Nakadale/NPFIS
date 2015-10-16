@@ -1,11 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="LoanManagement.aspx.cs" Inherits="NPFIS_Draft_.LoanManagement" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="LoanManagement.aspx.cs" enableEventValidation="false" Inherits="NPFIS_Draft_.LoanManagement" %>
+
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <div class="panel panel-default panel-body">
     <div style="float: right">
-        <asp:Button ID="btnNew" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/Loan_Management.aspx" Text="New" />
+        <asp:Button ID="btnNew" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/NewLoanTransaction.aspx" Text="New" />
     </div>
     <br />
     <br />
@@ -15,9 +17,7 @@
             <ContentTemplate>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch">Member</a>
-                        </h4>
+                        <h4 class="panel-title">Member</h4>
                     </div>
                     <div id="MemberSearch" class="panel-collapse collapse in">
                         <div class="panel-body">
@@ -48,14 +48,13 @@
 
 
 
-        <div class="panel panel-default">
+        <div class="panel panel-default" >
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#Transact">Transaction History</a>
                 </h4>
             </div>
-
-            <div id="Transact" class="panel-collapse collapse">
+            <div id="Transact" class="collapse in">
                 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                     <ContentTemplate>
                         <div id="Transactions">
@@ -64,7 +63,7 @@
                             </div>
                                 <br />
                             <center>
-                            <asp:GridView ID="gvTransactions" runat="server" AutoGenerateColumns="False" Width="700px" CssClass="panel panel-primary" OnRowCommand="gvTransactions_RowCommand" CellPadding="2">
+                            <asp:GridView ID="gvTransactions" runat="server" AutoGenerateColumns="False" Width="700px" CssClass="panel panel-primary" OnRowCommand="gvTransactions_RowCommand" CellPadding="2" OnRowDataBound="gvTransactions_RowDataBound" OnSelectedIndexChanged="gvTransactions_SelectedIndexChanged">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Loan Type">
                                         <ItemTemplate>
@@ -74,17 +73,17 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Principal Amount">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblPrincipalAmountDisp" runat="server" Text='<%# Bind("PrincipalAmount") %>'></asp:Label>
+                                            <asp:Label ID="lblPrincipalAmountDisp" runat="server" Text='<%# Bind("PrincipalAmount","{0:#,0.00}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Loan Date">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblLoanDateDisp" runat="server" Text='<%# Bind("DateFiled") %>'></asp:Label>
+                                            <asp:Label ID="lblLoanDateDisp" runat="server" Text='<%# Bind("DateFiled","{0:MMM dd, yyyy}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Balance">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance") %>'></asp:Label>
+                                            <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance","{0:#,0.00}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Paid">
@@ -97,7 +96,7 @@
                                     <asp:TemplateField HeaderText="Show Details">
                                         <ItemTemplate>
                                             <center>
-                                            <asp:LinkButton ID="lnkSelectTransact" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm">...</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkSelectTransact" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClick="lnkSelectTransact_Click">...</asp:LinkButton>
                                             </center>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -121,40 +120,45 @@
                             </div>
                                 <br />
                             <center>
-                            <asp:GridView ID="gvAmortizations" runat="server" CssClass="panel panel-primary" AutoGenerateColumns="False" Width="650px">
+                            <asp:GridView ID="gvAmortizations" runat="server" CssClass="panel panel-primary" AutoGenerateColumns="False" Width="650px" AllowPaging="True" OnRowCancelingEdit="gvAmortizations_RowCancelingEdit" OnSelectedIndexChanged="gvAmortizations_SelectedIndexChanged" PageSize="12" OnRowDataBound="gvAmortizations_RowDataBound" OnRowCommand="gvAmortizations_RowCommand">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Date">
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="txtDateDispChange" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <ajaxToolkit:CalendarExtender ID="txtDateDispChange_CalendarExtender" runat="server" TargetControlID="txtDateDispChange" />
+                                        </EditItemTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="lblDateDisp" runat="server" Text='<%# Bind("PayDate") %>'></asp:Label>
+                                            <asp:Label ID="lblDateDisp" runat="server" Text='<%# Bind("PayDate","{0:MMM dd, yyyy}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Amount">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblAmountDisp" runat="server" Text='<%# Bind("PayAmount") %>'></asp:Label>
+                                            <asp:Label ID="lblAmountDisp" runat="server" Text='<%# Bind("PayAmount","{0:#,0.00}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Balance">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance") %>'></asp:Label>
+                                            <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance","{0:#,0.00}") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Paid">
                                         <ItemTemplate>
                                             <center>
-                                            <asp:CheckBox ID="ckPaidAmort" runat="server" Text="Paid" Checked='<%# Bind("Paid") %>' />
+                                                &nbsp;<asp:Button ID="btnPaid" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClick="btnPaid_Click" Text="Pay" TargetControlID="btnPaid" />
                                             </center>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
                             <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
                             <RowStyle Height="25px" />
-                            </asp:GridView>
+                            </asp:GridView>                                                
                             </center>
+
                             <br />
                             &nbsp;&nbsp;&nbsp;
-                            <asp:Button ID="Button1" runat="server" Text="Rescheduling" CssClass="btn btn-info btn-sm"/>
+                            <asp:Button ID="btnResched" runat="server" Text="Rescheduling" CssClass="btn btn-info btn-sm" Visible="False"/>
                             &nbsp;
-                            <asp:Button ID="Button2" runat="server" Text="Recompute" CssClass="btn btn-info btn-sm"/>
+                            <asp:Button ID="btnReComp" runat="server" Text="Recompute" CssClass="btn btn-info btn-sm" Visible="False"/>
                             <br />
                             <br />
                             <br />
@@ -167,13 +171,13 @@
         </div>
 
 
-        <div class="panel panel-default">
+        <div class="panel panel-default panel-collapse collapse" id="MemberSearch2" data-parent="#accordion">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch2">Member Search</a>
                 </h4>
             </div>
-            <div id="MemberSearch2" data-parent="#accordion" class="panel-collapse collapse">
+            <div>
 
                 <div class="col-xs-8">
                     <asp:Label ID="Label3" runat="server" Text="Search: " Font-Size="Large"></asp:Label>
@@ -182,12 +186,13 @@
                 <br />
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
+                        <p>
                         <asp:Button ID="btnSearchMember" runat="server" Text="Search" CssClass="btn btn-info btn-sm" OnClick="btnSearchMember_Click" />
                         <br />
                         <br />
                         <br />
                         <center>
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" OnRowCommand="gvSearch_RowCommand" CellPadding="2">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" OnRowCommand="gvSearch_RowCommand" CellPadding="2" OnRowDataBound="gvSearch_RowDataBound">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
@@ -215,14 +220,14 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Date of Birth">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblDateOfBirthDisp" runat="server" Text='<%# Bind("BIRTHDATE") %>'></asp:Label>
+                                        <asp:Label ID="lblDateOfBirthDisp" runat="server" Text='<%# Bind("BIRTHDATE","{0:MMM dd, yyyy}") %>'></asp:Label>
                                     </ItemTemplate>
                                     <HeaderStyle />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Show Details">
                                     <ItemTemplate>
                                         <center>
-                                        <asp:LinkButton ID="lnkSelect" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClientClick="href=#Transact">Select</asp:LinkButton>
+                                        <asp:LinkButton ID="lnkSelect" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClientClick="$('#Transact').collapse('show');$('#MemberSearch2').collapse('hide');">Select</asp:LinkButton>
                                         </center>
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -238,5 +243,5 @@
         </div>
     </div>
     <br />
-
+    </div>
 </asp:Content>

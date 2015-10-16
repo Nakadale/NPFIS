@@ -13,15 +13,6 @@ namespace NPFIS_Draft_ {
     public partial class LandingPage {
         
         /// <summary>
-        /// lnkLoanMain control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkLoanMain;
-        
-        /// <summary>
         /// lnkMemMain control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace NPFIS_Draft_ {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkMemMain;
+        
+        /// <summary>
+        /// lnkLoanMain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkLoanMain;
         
         /// <summary>
         /// lnkLibMain control.

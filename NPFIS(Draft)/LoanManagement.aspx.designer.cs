@@ -13,15 +13,6 @@ namespace NPFIS_Draft_ {
     public partial class LoanManagement {
         
         /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
-        /// <summary>
         /// btnNew control.
         /// </summary>
         /// <remarks>
@@ -139,22 +130,22 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.GridView gvAmortizations;
         
         /// <summary>
-        /// Button1 control.
+        /// btnResched control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnResched;
         
         /// <summary>
-        /// Button2 control.
+        /// btnReComp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button btnReComp;
         
         /// <summary>
         /// Label3 control.

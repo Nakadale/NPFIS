@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace NPFIS_Draft_
 {
     public static class helpers
     {
+
+
         public static DataTable CreateBlankRecord()
         {
             DataTable dt = new DataTable();
@@ -22,7 +26,7 @@ namespace NPFIS_Draft_
             }
 
             return dt;
-        }
+        } //CreateBlankRecord
 
         public static DataTable LoadAmortizations(string TransactCode)
         {
@@ -35,19 +39,19 @@ namespace NPFIS_Draft_
             using (SqlCommand cmd = new SqlCommand(sql, cnn))
             {
                 cmd.Parameters.AddWithValue("@TransactCode", TransactCode);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
-            if (dt.Rows.Count == 0)
-            {
-                //DataRow dr = dt.NewRow();
-                //dt.Rows.Add(dr);
-            }
-            return dt;
+                if (dt.Rows.Count == 0)
+                {
+                    //DataRow dr = dt.NewRow();
+                    //dt.Rows.Add(dr);
+                }
+                return dt;
 
             }
-        }
+        } //LoadAmortizations
 
         public static DataTable LoadSearchedMembers(string querystring)
         {
@@ -56,7 +60,7 @@ namespace NPFIS_Draft_
             cnn.Open();
 
             string sql = @"select lastname,firstname,midname,birthdate, empid from member 
-            where firstname like @SearchKey or lastname like @SearchKey or midname like @SearchKey ";
+            where firstname like @SearchKey or lastname like @SearchKey or midname like @SearchKey or empid like @SearchKey";
 
             using (SqlCommand cmd = new SqlCommand(sql, cnn))
             {
@@ -73,9 +77,9 @@ namespace NPFIS_Draft_
                 return dt;
 
             }
-        }
+        } //LoadSearchedMembers
 
-        public static void LoadSearchedMember(string querystring,TextBox MemberName,TextBox BranchName, TextBox DivisionName)
+        public static void LoadSearchedMember(string querystring, TextBox MemberName, TextBox BranchName, TextBox DivisionName)
         {
             SqlConnection cnn = new SqlConnection();
             cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
@@ -105,7 +109,7 @@ namespace NPFIS_Draft_
 
                 }
             }
-        }
+        } //LoadSearchedMember
 
         public static DataTable LoadMemberList()
         {
@@ -127,7 +131,7 @@ namespace NPFIS_Draft_
             }
 
             return dt;
-        }
+        } //LoadMemberList
 
         public static DataTable LoadLoanType()
         {
@@ -149,7 +153,7 @@ namespace NPFIS_Draft_
             }
 
             return dt;
-        }
+        } //LoadLoanType
 
         public static String GetDivisionName(string DivID)
         {
@@ -382,7 +386,8 @@ namespace NPFIS_Draft_
 
                 string sql = @"select LoanTransaction.TransactCode, LoanType, PrincipalAmount, DateFiled, ISNULL(Balance,PrincipalAmount) as Balance, LoanTransaction.Paid  from LoanTransaction 
                 left outer join loanlib on loanlib.LoanId = LoanTransaction.LoanId
-                left outer join LoanAmortization as LoanAmort on LoanAmort.TransactCode = LoanTransaction.TransactCode
+                left outer join (select TransactCode,Balance, AmortCode from LoanAmortization
+                where Paid = 0 and SUBSTRING(AmortCode,6,4) = '0001') as LoanAmort on LoanAmort.TransactCode = LoanTransaction.TransactCode
                 where LoanTransaction.EmpID = @EmpID";
 
                 using (SqlCommand CMD = new SqlCommand(sql, cnn))
@@ -414,11 +419,13 @@ namespace NPFIS_Draft_
             }
         } //LoadEmpTransactRecord
 
-        public static bool InsertLoanTransaction(string TransactCode, string EmpId, 
+        public static bool InsertLoanTransaction(string TransactCode, string EmpId,
             string LoanID, string DivisionId, string ApplicationNum, string DateFiled,
             string ChequeNum, string ChequeDate, string DateRelease, string StartDate,
-            string EndDate, double PrincipalAmount, int NumTerm, double InterestRate, double ProcessingFee, bool Paid)
+            string EndDate, double PrincipalAmount, int NumTerm, double InterestRate, double ProcessingFee, bool Paid, string UserID)
         {
+
+            DivisionId = GetDivisionID(DivisionId);
 
             double Amortization;
 
@@ -429,16 +436,17 @@ namespace NPFIS_Draft_
                 cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
                 cnn.Open();
 
-//                string sql = @"INSERT INTO LOANTRANSACTION VALUES 
-//                    (@TRANSACTCODE,@EMPID,@LOANID,@DIVISIONID,@APPLICATIONNUM,
-//                    @DATEFILED,@CHEQUENUM,@CHEQUEDATE,@DATERELEASE,@STARTDATE,
-//                    @ENDDATE,@PRINCIPALAMOUNT,@NUMTERM,@INTERESTRATE,
-//                    @PROCESSINGFEE,@AMORTIZATION,@PAID,@USERID)";
-                string sql = @"INSERT INTO LOANTRANSACTION VALUES 
+                string sql = @"INSERT INTO LOANTRANSACTION(TRANSACTCODE,EMPID,LOANID,
+                    DIVISIONID,APPLICATIONNUM,DATEFILED,CHEQUENUM,CHEQUEDATE,DATERELEASE,STARTDATE,
+                    ENDDATE,PRINCIPALAMOUNT,NUMTERM,INTERESTRATE,PROCESSINGFEE,AMORTIZATION,PAID,UserID) VALUES 
                     (@TRANSACTCODE,@EMPID,@LOANID,@DIVISIONID,@APPLICATIONNUM,
-                    @DATEFILED,@CHEQUENUM,@CHEQUEDATE,@DATERELEASE,@STARTDATE,
-                    @ENDDATE,@PRINCIPALAMOUNT,@NUMTERM,@INTERESTRATE,
-                    @PROCESSINGFEE,@AMORTIZATION,@PAID)";
+                    Convert(DateTime,@DATEFILED,101),@CHEQUENUM,
+                    Convert(DateTime,@CHEQUEDATE,101),
+                    Convert(DateTime,@DATERELEASE,101),
+                    Convert(DateTime,@STARTDATE,101),
+                    Convert(DateTime,@ENDDATE,101),
+                    @PRINCIPALAMOUNT,@NUMTERM,@INTERESTRATE,
+                    @PROCESSINGFEE,@AMORTIZATION,@PAID,@USERID)";
 
                 using (SqlCommand CMD = new SqlCommand(sql, cnn))
                 {
@@ -459,7 +467,7 @@ namespace NPFIS_Draft_
                     CMD.Parameters.AddWithValue("@PROCESSINGFEE", ProcessingFee);
                     CMD.Parameters.AddWithValue("@AMORTIZATION", Amortization);
                     CMD.Parameters.AddWithValue("@PAID", Paid);
-                    //CMD.Parameters.AddWithValue("@USERID", UserID);
+                    CMD.Parameters.AddWithValue("@USERID", UserID);
                     try
                     {
                         CMD.ExecuteNonQuery();
@@ -471,7 +479,7 @@ namespace NPFIS_Draft_
                     }
                 }
             }
-        }
+        } //InsertLoanTransaction
 
 
         public static bool DeleteRecord(string TransactID)
@@ -497,7 +505,7 @@ namespace NPFIS_Draft_
                         {
                             CMD.CommandText = "Delete from LoanAmortization WHERE Transactcode = @TransactCode";
                             CMD.Parameters.AddWithValue("@TransactCode", TransactID);
-                            CMD.ExecuteNonQuery();                            
+                            CMD.ExecuteNonQuery();
                             return true;
                         }
                     }
@@ -518,7 +526,7 @@ namespace NPFIS_Draft_
 
             double Amortization;
 
-            Amortization = Math.Round(PrincipalAmount / NumTerm,2);
+            Amortization = Math.Round(PrincipalAmount / NumTerm, 2);
 
             using (SqlConnection cnn = new SqlConnection())
             {
@@ -562,7 +570,7 @@ namespace NPFIS_Draft_
                     }
                 }
             }
-        }
+        } //UpdateLoanTransaction
 
         private static string GetDivisionID(string DivisionId)
         {
@@ -622,55 +630,201 @@ namespace NPFIS_Draft_
             }
         } // check if exist
 
-        public static bool InsertLoanAmortization(string TransactCode, string AmortCode, string EmpID, string Paydate, double PayAmount, double IntAmount, double Balance, bool Paid)
+        public static void GenerateAmortization(int NumberOfPayments, string StartDate, Double Balance, int Interest, double ServiceFee, GridView gvAmortizations, TextBox txtTxtEndAmort)
         {
+            DataTable dtAmortization = new DataTable();
 
-            Balance = Balance - (PayAmount + IntAmount);
+            dtAmortization.Columns.Add("PayDate", typeof(string));
+            dtAmortization.Columns.Add("PayAmount", typeof(double));
+            dtAmortization.Columns.Add("Balance", typeof(double));
+            dtAmortization.Columns.Add("Paid", typeof(Boolean));
+
+            string PaymentDate;
+            double Amount;
+            //double TLA = Balance + Interest + ServiceFee;
+            double TLA = Balance;
+            Amount = (TLA / NumberOfPayments);
+            int dayPay;
+            int monthPay;
+            int yearPay;
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            DateTime StartDatePayment = DateTime.ParseExact(StartDate, "MM/dd/yyyy", provider);
+            for (int Counter = 0; Counter < NumberOfPayments; Counter++)
+            {
+                //StartDatePayment.AddMonths(Counter).Month;
+                dayPay = StartDatePayment.AddMonths(Counter).Day;
+                DateTime lastDay = new DateTime((StartDatePayment.AddMonths(Counter).Year), (StartDatePayment.AddMonths(Counter).Month), 1).AddMonths(1).AddDays(-1);
+
+                if (dayPay == lastDay.Day)
+                {
+                    dayPay = DateTime.DaysInMonth((StartDatePayment.AddMonths(Counter).Year), (StartDatePayment.AddMonths(Counter).Month));
+                }
+                else
+                { }
+
+
+                monthPay = (StartDatePayment.AddMonths(Counter)).Month;
+
+                yearPay = (StartDatePayment.AddMonths(Counter)).Year;
+
+                PaymentDate = monthPay + "/" + dayPay + "/" + yearPay;
+
+                if (Counter == 0)
+                {
+                    Balance = (TLA - Amount);
+                }
+                else
+                {
+                    Balance = (TLA - (Amount + (Amount * Counter)));
+                }
+                dtAmortization.Rows.Add(PaymentDate, String.Format("{0:#,0.00}", Amount), String.Format("{0:#,0.00}", Balance), false);
+
+                txtTxtEndAmort.Text = PaymentDate;
+
+            }
+
+            gvAmortizations.DataSource = dtAmortization;
+            gvAmortizations.DataBind();
+
+        } //GenerateAmortization
+
+        public static bool InsertLoanAmortization(string TransactCode, string EmpID, string AmortCode, double IntAmount, GridView dtAmortization, string UserID)
+        {
+            string PayDate;
+            double Balance, Amortization;
+            bool Paid;
 
             using (SqlConnection cnn = new SqlConnection())
             {
                 cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
                 cnn.Open();
 
-//                string sql = @"INSERT INTO LOANTRANSACTION VALUES 
-//                    (@TRANSACTCODE,@EMPID,@LOANID,@DIVISIONID,@APPLICATIONNUM,
-//                    @DATEFILED,@CHEQUENUM,@CHEQUEDATE,@DATERELEASE,@STARTDATE,
-//                    @ENDDATE,@PRINCIPALAMOUNT,@NUMTERM,@INTERESTRATE,
-//                    @PROCESSINGFEE,@AMORTIZATION,@PAID)";
+                foreach (GridViewRow dt in dtAmortization.Rows)
+                {
+                    PayDate = ((Label)dtAmortization.Rows[dt.RowIndex].FindControl("lblDateDisp")).Text;
+                    double.TryParse(((Label)dtAmortization.Rows[dt.RowIndex].FindControl("lblAmountDisp")).Text, out Amortization);
+                    double.TryParse(((Label)dtAmortization.Rows[dt.RowIndex].FindControl("lblBalance")).Text, out Balance);
+                    Paid = ((CheckBox)dtAmortization.Rows[dt.RowIndex].FindControl("ckPaidAmort")).Checked;
 
-                //using (SqlCommand CMD = new SqlCommand(sql, cnn))
-                //{
-                //    //CMD.Parameters.AddWithValue("@TRANSACTCODE", TransactCode);
-                //    //CMD.Parameters.AddWithValue("@EMPID", EmpId);
-                //    //CMD.Parameters.AddWithValue("@LOANID", LoanID);
-                //    //CMD.Parameters.AddWithValue("@DIVISIONID", DivisionId);
-                //    //CMD.Parameters.AddWithValue("@APPLICATIONNUM", ApplicationNum);
-                //    //CMD.Parameters.AddWithValue("@DATEFILED", DateFiled);
-                //    //CMD.Parameters.AddWithValue("@CHEQUENUM", ChequeNum);
-                //    //CMD.Parameters.AddWithValue("@CHEQUEDATE", ChequeDate);
-                //    //CMD.Parameters.AddWithValue("@DATERELEASE", DateRelease);
-                //    //CMD.Parameters.AddWithValue("@STARTDATE", StartDate);
-                //    //CMD.Parameters.AddWithValue("@ENDDATE", EndDate);
-                //    //CMD.Parameters.AddWithValue("@PRINCIPALAMOUNT", PrincipalAmount);
-                //    //CMD.Parameters.AddWithValue("@NUMTERM", NumTerm);
-                //    //CMD.Parameters.AddWithValue("@INTERESTRATE", InterestRate);
-                //    //CMD.Parameters.AddWithValue("@PROCESSINGFEE", ProcessingFee);
-                //    //CMD.Parameters.AddWithValue("@AMORTIZATION", Amortization);
-                //    //CMD.Parameters.AddWithValue("@PAID", Paid);
-                //    //CMD.Parameters.AddWithValue("@USERID", UserID);
-                //    try
-                //    {
-                //        CMD.ExecuteNonQuery();
-                //        return true;
-                //    }
-                //    catch
-                //    {
-                //        return false;
-                //    }
-                //}
+                    string sql = @"INSERT INTO LOANAMORTIZATION(TRANSACTCODE,AMORTCODE, EMPID, PAYDATE, PAYAMOUNT, INTAMOUNT, BALANCE,PAID, USERID)
+                    VALUES (@TRANSACTCODE,@AMORTCODE, @EMPID, @PAYDATE, @PAYAMOUNT, @INTAMOUNT, @BALANCE, @PAID, @USERID);";
+
+                    using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                    {
+                        CMD.Parameters.AddWithValue("@TRANSACTCODE", TransactCode);
+                        CMD.Parameters.AddWithValue("@AMORTCODE", AmortCode.Trim() + (dt.RowIndex + 1).ToString("0000"));
+                        CMD.Parameters.AddWithValue("@EMPID", EmpID);
+                        CMD.Parameters.AddWithValue("@PAYDATE", PayDate);
+                        CMD.Parameters.AddWithValue("@PAYAMOUNT", Amortization);
+                        CMD.Parameters.AddWithValue("@INTAMOUNT", IntAmount);
+                        CMD.Parameters.AddWithValue("@BALANCE", Balance);
+                        CMD.Parameters.AddWithValue("@PAID", Paid);
+                        CMD.Parameters.AddWithValue("@USERID", UserID);
+                        try
+                        {
+                            CMD.ExecuteNonQuery();
+                            //return true;
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+
+
             }
 
-            return false;
-        }
+            return true;
+        } //InsertLoanAmortization
+
+
+        public static void LoadTransactInfo(string TransactID, TextBox DDLLoanType, TextBox TxtMember, TextBox TxtDivision, TextBox TxtBranch, TextBox TxtLoanApp, TextBox TxtLoanDate, TextBox TxtIssuedCheque,
+            TextBox IssuedChequeDate, TextBox ChequeReleasedDate, TextBox TxtPrincipalAmount, TextBox TxtInterestRate, TextBox TxtServiceFee, TextBox TxtPaymentTerms,
+            TextBox TxtStartAmort, TextBox TxtEndAmort, CheckBox ChPaidUpLoad, HyperLink ScannedApp)
+        {
+
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+
+                string sql = @"select LoanTransaction.*, lastname + ', ' + firstname + ' ' + midname as FullName, branchname, divisionname, LoanLib.Description, isnull(ScannedAppForm.filepath,'\upload\404-no-file.png') as filepath from LoanTransaction
+                            left outer join Member on Member.empid = LoanTransaction.EmpId
+                            left outer join DivisionLib on DivisionLib.divisionid = LoanTransaction.DivisionId
+                            left outer join BranchLib on DivisionLib.branchid = BranchLib.branchid
+                            left outer join LoanLib on LoanTransaction.LoanId = LoanLib.LoanId
+                            left outer join ScannedAppForm on ScannedAppForm.TransactionCode = LoanTransaction.TransactCode
+                            where TransactCode = @TransactID";
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.CommandType = CommandType.Text;
+                    CMD.Parameters.AddWithValue("@TransactID", TransactID);
+                    cnn.Open();
+                    try
+                    {
+                        SqlDataReader dr = CMD.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            DDLLoanType.Text = dr["Description"].ToString();
+                            TxtMember.Text = dr["FullName"].ToString();
+                            TxtDivision.Text = dr["DivisionName"].ToString();
+                            TxtBranch.Text = dr["BranchName"].ToString();
+                            TxtLoanApp.Text = dr["ApplicationNum"].ToString();
+                            TxtLoanDate.Text = ((DateTime)dr["DateFiled"]).ToShortDateString();
+                            TxtIssuedCheque.Text = dr["ChequeNum"].ToString();
+                            IssuedChequeDate.Text = ((DateTime)dr["ChequeDate"]).ToShortDateString();
+                            ChequeReleasedDate.Text = ((DateTime)dr["DateRelease"]).ToShortDateString();
+                            TxtPrincipalAmount.Text = ((decimal)dr["PrincipalAmount"]).ToString("N", CultureInfo.InvariantCulture);
+                            TxtInterestRate.Text = ((decimal)dr["InterestRate"]).ToString("N", CultureInfo.InvariantCulture);
+                            TxtServiceFee.Text = ((decimal)dr["ProcessingFee"]).ToString("N", CultureInfo.InvariantCulture);
+                            TxtPaymentTerms.Text = dr["NumTerm"].ToString();
+                            TxtStartAmort.Text = ((DateTime)dr["StartDate"]).ToShortDateString();
+                            TxtEndAmort.Text = ((DateTime)dr["EndDate"]).ToShortDateString();
+                            if (dr["Paid"].ToString() == "0")
+                            {
+                                ChPaidUpLoad.Checked = false;
+                            }
+                            else
+                            {
+                                ChPaidUpLoad.Checked = true;
+                            }
+                            ScannedApp.NavigateUrl = dr["filepath"].ToString();
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+            }
+        } //LoadTransactInfo
+
+        public static void CreateEntryScannedApp(string TransactID, string File)
+        {
+            string FilePath = @"\uploads\";
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = @"INSERT INTO ScannedAppForm(TransactionCode,FilePath) VALUES (@TRANSACTID,@FilePath);";
+
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@TRANSACTID", TransactID);
+                    CMD.Parameters.AddWithValue("@FilePath", FilePath + File);
+                    try
+                    {
+                        CMD.ExecuteNonQuery();
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        } //CreateEntryScannedApp
+
     } //helpers
 } // namespace
