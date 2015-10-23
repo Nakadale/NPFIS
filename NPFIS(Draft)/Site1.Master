@@ -9,6 +9,7 @@
     <link href="alertify/alertify.css" rel="stylesheet" type="text/css" />
     <link href="alertify/default.css" rel="stylesheet" type="text/css" />
     <script src="alertify/alertify.min.js" type="text/javascript"></script>
+    <link href="Pager.css" rel="stylesheet" type="text/css" />
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -38,7 +39,8 @@
             </asp:SiteMapPath>
         </div>
         <div class="col-md-3" style="text-align: right">
-            <asp:Label ID="Label1" runat="server" Text="Log Out Section" ForeColor="Black"></asp:Label>
+            <asp:Label ID="lblName" runat="server" Text="Log Out Section" ForeColor="Black"></asp:Label> &nbsp;
+            <asp:LinkButton ID="LnkLogout" runat="server" OnClick="LnkLogout_Click">Log Out</asp:LinkButton>
         </div>
         </div>
         </div>
@@ -54,23 +56,24 @@
                     <div id="MemberMaintenance" class="panel-collapse collapse ">
                             <asp:LinkButton ID="lnkLoanManage" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/Member_Maintenance.aspx" Width="250px">Member' Maintenance</asp:LinkButton>
                             <asp:LinkButton ID="lnkLoanApp" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Summary.aspx">Member's Summary</asp:LinkButton>
-                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Member's Shares Management</a>
+                            <asp:LinkButton ID="LinkButton9" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Share.aspx">Member's Shares Management</asp:LinkButton>
                         <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">NPF Member's Summary Report</a>
                         <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">List of Borrower's for Salary Deduction</a>
                         <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Remittance of Shares and Loans</a>
                     </div>
                     <div id="LibraryMaintenance" class="panel-collapse collapse ">
-                            <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Signatory_Library.aspx">Signatory Library</asp:LinkButton>
-                            <asp:LinkButton ID="LinkButton2" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Branch_Division_Library.aspx">Branch/Division Library</asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Signatory_Library.aspx">Signatory Library</asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton2" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Branch_Division_Library.aspx">Branch/Division Library</asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton6" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Loan_Library_Maintenance.aspx">Loan Library</asp:LinkButton>
                         <asp:LinkButton ID="LinkButton5" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/User_Maintenance.aspx">User Maintenance</asp:LinkButton>
-                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Import Loan Transactions</a>
-                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Import Member List</a>
+                        <asp:LinkButton ID="LinkButton7" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Import_Loan_Transact.aspx">Import Loan Transactions</asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton8" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Import.aspx">Import Member Contribution</asp:LinkButton>
                     </div>
                     <div id="LoanMaintenance" class="panel-collapse collapse ">
                             <asp:LinkButton ID="LinkButton3" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/LoanManagement.aspx" Width="250px">Loan Management</asp:LinkButton>
                             <asp:LinkButton ID="LinkButton4" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/NewLoanTransaction.aspx">Loan Application Form</asp:LinkButton>
-                            <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Member's Amortization Schedule Report</a>
-                            <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Member's Loan Summary Report</a>
+                            <asp:LinkButton ID="LinkButton10" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Amortization_Report.aspx">Member's Amortization Schedule Report</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton11" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Member_Loan_Summary.aspx">Member's Loan Summary Report</asp:LinkButton>
                     </div>
                     </div>
                 </div>

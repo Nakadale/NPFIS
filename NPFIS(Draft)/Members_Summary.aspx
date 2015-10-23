@@ -36,7 +36,7 @@
                                 <br />
                                 <center>
                         <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" 
-                                        CellPadding="2" OnRowCommand="gvSearch_RowCommand">
+                                        CellPadding="2" OnRowCommand="gvSearch_RowCommand" AllowPaging="True" ShowFooter="True">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
@@ -77,6 +77,7 @@
                                 </asp:TemplateField>
                             </Columns>
                             <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
+                            <PagerStyle CssClass="gridViewPager"/>
                             <RowStyle Height="25px" />
                         </asp:GridView>
                             </center>
@@ -175,12 +176,12 @@
                 <ContentTemplate>
                 <asp:GridView ID="gvShareContribution" runat="server" 
                     AutoGenerateColumns="False" CssClass="panel-primary" CellPadding="4" 
-                    ForeColor="#333333">
+                    ForeColor="#333333" Width="650px">
                     <AlternatingRowStyle BackColor="White" />
                     <Columns>
                         <asp:TemplateField HeaderText="Date" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate >
-                                <asp:Label ID="lblDate" runat="server" Text="<%# Bind('dateremit', '{0:MMM dd, yyy}') %>"></asp:Label>
+                                <asp:Label ID="lblDate" runat="server" Text='<%# Bind("dateremit", "{0:MMM dd, yyyy}") %>'></asp:Label>
                             </ItemTemplate>
                             <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             <ItemStyle HorizontalAlign="Center" />
@@ -188,7 +189,7 @@
                         <asp:TemplateField HeaderText="Monthly Salary">
                             <ItemTemplate>
                                 <asp:Label ID="lblMonthlySalary" runat="server" 
-                                    Text="<%# Bind('salarybasis', '{0:#,0.00}') %>"></asp:Label>
+                                    Text='<%# Bind("salarybasis", "{0:#,0.00}") %>'></asp:Label>
                             </ItemTemplate>
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
@@ -196,21 +197,21 @@
                         <asp:TemplateField HeaderText="% of Share">
                             <ItemTemplate>
                                 <asp:Label ID="lblPercentageofShare" runat="server" 
-                                    Text="<%# Bind('perofsharebasis') %>"></asp:Label>
+                                    Text='<%# Bind("perofsharebasis") %>'></asp:Label>
                             </ItemTemplate>
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Amount">
                             <ItemTemplate>
-                                <asp:Label ID="lblAmount" runat="server" Text="<%# Bind('amount', '{0:#,0.00}') %>"></asp:Label>
+                                <asp:Label ID="lblAmount" runat="server" Text='<%# Bind("amount", "{0:#,0.00}") %>'></asp:Label>
                             </ItemTemplate>
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Left" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Remarks" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Label ID="lblRemarks" runat="server" Text="<%# Bind('remarks') %>"></asp:Label>
+                                <asp:Label ID="lblRemarks" runat="server" Text='<%# Bind("remarks") %>'></asp:Label>
                             </ItemTemplate>
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
@@ -236,25 +237,69 @@
 
             <br />
             <br />
-
+                <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <ContentTemplate>
             <div>
                 <asp:Label ID="lblLoans" runat="server" Text="Loans"></asp:Label>
                 <br />
-                <asp:GridView ID="gridLoans" runat="server" AutoGenerateColumns="False" 
-                    CellPadding="4" ForeColor="#333333" GridLines="None">
+                <asp:GridView ID="gvLoans" runat="server" AutoGenerateColumns="False" 
+                    CellPadding="4" ForeColor="#333333" CssClass="panel-primary" Width="650px">
                     <AlternatingRowStyle BackColor="White" />
                     <Columns>
-                        <asp:BoundField HeaderText="Type" />
-                        <asp:BoundField HeaderText="Date" />
-                        <asp:BoundField HeaderText="Principal Amount" />
-                        <asp:BoundField HeaderText="Interest Amount" />
-                        <asp:BoundField HeaderText="Service Fee" />
-                        <asp:BoundField HeaderText="Payment Terms" />
-                        <asp:BoundField HeaderText="Balance" />
+                        <asp:TemplateField HeaderText="Type" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblType" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Date" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDate" runat="server" Text='<%# Bind("DateFiled", "{0:MMM dd, yyy}") %>'></asp:Label>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Prin. amt." ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblPrincipalAmount" runat="server" Text='<%# Bind("PrincipalAmount", "{0:#,0.00}") %>'></asp:Label>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Int. amt." ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblIntAmt" runat="server" Text='<%# Bind("IntAmt", "{0:#,0.00}") %>'></asp:Label>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Serv. fee" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblProcessingfee" runat="server" Text='<%# Bind("ProcessingFee", "{0:#,0.00}") %>'></asp:Label>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Pay terms" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblPaymentterms" runat="server" Text='<%# Bind("NumTerm") %>'></asp:Label>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Balance" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance") %>'></asp:Label>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                     <EditRowStyle BackColor="#2461BF" />
                     <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                    <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle CssClass="panel-primary" BackColor="#507CD1" Font-Bold="True" 
+                        ForeColor="White" />
                     <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
                     <RowStyle BackColor="#EFF3FB" />
                     <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
@@ -265,6 +310,7 @@
                 </asp:GridView>
 
             </div>
-            
+                   </ContentTemplate>
+                </asp:UpdatePanel>         
             </div>
 </asp:Content>

@@ -164,7 +164,9 @@ namespace NPFIS_Draft_
                     btnEdit.Enabled = false;
                 else
                     btnEdit.Enabled = true;
-
+               
+                gvSearch.DataSource = null;
+                gvSearch.DataBind();
 
             }
         }

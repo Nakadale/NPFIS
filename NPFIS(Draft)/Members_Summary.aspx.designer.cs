@@ -211,6 +211,15 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.GridView gvShareContribution;
         
         /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        
+        /// <summary>
         /// lblLoans control.
         /// </summary>
         /// <remarks>
@@ -220,12 +229,12 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Label lblLoans;
         
         /// <summary>
-        /// gridLoans control.
+        /// gvLoans control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridLoans;
+        protected global::System.Web.UI.WebControls.GridView gvLoans;
     }
 }

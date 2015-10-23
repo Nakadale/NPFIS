@@ -2,8 +2,18 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div>
-        <asp:Label ID="Label1" runat="server" Text="Import:  "></asp:Label>
-        <asp:FileUpload ID="FileUpload1" runat="server" Width="500px" />
+    <div class="panel panel-default panel-body">
+        <div>
+        <asp:FileUpload ID="fuScannedForm" runat="server" />
+        <br />
+        <asp:Button ID="btnUpload" runat="server" CssClass="btn btn-info btn-sm" Text="Upload" OnClick="btnUpload_Click" />
+            </div>
+        <br />
+        <div>
+            <br />           
+            <asp:Label ID="lblStatus" runat="server" Font-Bold="True" Font-Size="X-Large"></asp:Label>
+            <br />
+        </div>
     </div>
+
 </asp:Content>

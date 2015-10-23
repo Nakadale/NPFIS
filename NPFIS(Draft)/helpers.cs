@@ -34,7 +34,7 @@ namespace NPFIS_Draft_
             cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
             cnn.Open();
 
-            string sql = "select PayDate,PayAmount,Balance,Paid from LoanAmortization where TransactCode = @TransactCode";
+            string sql = "select TransactCode, AmortCode, PayDate,PayAmount,Balance,Paid from LoanAmortization where TransactCode = @TransactCode";
 
             using (SqlCommand cmd = new SqlCommand(sql, cnn))
             {
@@ -317,12 +317,14 @@ namespace NPFIS_Draft_
                 cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
                 // this query will get the last entered transaction code for the month. if on a new month with no records yet entered. 
                 //it will generate a transact code <year><month> 0001 to signify it is the first record entered for the month.
-                string sql = @"select top 1 ISNULL((select top 1 (TransactCode + 1) as TransactCode from LoanTransaction 
+                string sql = @"select Case when (Count(TransactCode) <> 0)
+                then (select top 1 (TransactCode + 1) as TransactCode from LoanTransaction 
                 where YEAR(GETDATE()) = SUBSTRING(TransactCode,0,5) and MONTH(GETDATE()) = SUBSTRING(TransactCode,5,2) 
-                order by TransactCode DESC),cast(YEAR(GETDATE())as varchar) + 
+                order by TransactCode DESC) else (cast(YEAR(GETDATE())as varchar) + 
                 case when month(Getdate()) < 10 then '0' + Cast(MONTH(GETDATE())as varchar) 
-                else Cast(MONTH(GETDATE())as varchar) end + '0001') as TransactCode 
-                from LoanTransaction ";
+                else Cast(MONTH(GETDATE())as varchar) end + '0001')
+                end as TransactCode from LoanTransaction
+                where YEAR(GETDATE()) = SUBSTRING(TransactCode,0,5) and MONTH(GETDATE()) = SUBSTRING(TransactCode,5,2)";
 
                 using (SqlCommand CMD = new SqlCommand(sql, cnn))
                 {
@@ -384,7 +386,7 @@ namespace NPFIS_Draft_
             {
                 cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
 
-                string sql = @"select LoanTransaction.TransactCode, LoanType, PrincipalAmount, DateFiled, ISNULL(Balance,PrincipalAmount) as Balance, LoanTransaction.Paid  from LoanTransaction 
+                string sql = @"select LoanTransaction.TransactCode, LoanType, PrincipalAmount, DateFiled, ISNULL(LoanTransaction.Balance,PrincipalAmount) as Balance, LoanTransaction.Paid  from LoanTransaction 
                 left outer join loanlib on loanlib.LoanId = LoanTransaction.LoanId
                 left outer join (select TransactCode,Balance, AmortCode from LoanAmortization
                 where Paid = 0 and SUBSTRING(AmortCode,6,4) = '0001') as LoanAmort on LoanAmort.TransactCode = LoanTransaction.TransactCode
@@ -438,7 +440,7 @@ namespace NPFIS_Draft_
 
                 string sql = @"INSERT INTO LOANTRANSACTION(TRANSACTCODE,EMPID,LOANID,
                     DIVISIONID,APPLICATIONNUM,DATEFILED,CHEQUENUM,CHEQUEDATE,DATERELEASE,STARTDATE,
-                    ENDDATE,PRINCIPALAMOUNT,NUMTERM,INTERESTRATE,PROCESSINGFEE,AMORTIZATION,PAID,UserID) VALUES 
+                    ENDDATE,PRINCIPALAMOUNT,NUMTERM,INTERESTRATE,PROCESSINGFEE,AMORTIZATION,PAID,UserID,BALANCE) VALUES 
                     (@TRANSACTCODE,@EMPID,@LOANID,@DIVISIONID,@APPLICATIONNUM,
                     Convert(DateTime,@DATEFILED,101),@CHEQUENUM,
                     Convert(DateTime,@CHEQUEDATE,101),
@@ -446,7 +448,7 @@ namespace NPFIS_Draft_
                     Convert(DateTime,@STARTDATE,101),
                     Convert(DateTime,@ENDDATE,101),
                     @PRINCIPALAMOUNT,@NUMTERM,@INTERESTRATE,
-                    @PROCESSINGFEE,@AMORTIZATION,@PAID,@USERID)";
+                    @PROCESSINGFEE,@AMORTIZATION,@PAID,@USERID,@BALANCE)";
 
                 using (SqlCommand CMD = new SqlCommand(sql, cnn))
                 {
@@ -468,6 +470,7 @@ namespace NPFIS_Draft_
                     CMD.Parameters.AddWithValue("@AMORTIZATION", Amortization);
                     CMD.Parameters.AddWithValue("@PAID", Paid);
                     CMD.Parameters.AddWithValue("@USERID", UserID);
+                    CMD.Parameters.AddWithValue("@BALANCE", PrincipalAmount);
                     try
                     {
                         CMD.ExecuteNonQuery();
@@ -825,6 +828,40 @@ namespace NPFIS_Draft_
                 }
             }
         } //CreateEntryScannedApp
+
+        public static bool UpdateLoanAmortization(string TransactCode, string LoanAmortCode)
+        {
+
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = @"Update LoanAmortization set Paid = 1
+                where TransactCode= @TRANSACTCODE and AmortCode = @AmortCode";
+                
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@TRANSACTCODE", TransactCode);
+                    CMD.Parameters.AddWithValue("@AmortCode", LoanAmortCode);
+
+                    try
+                    {
+                        CMD.ExecuteNonQuery();
+                        //update balance in LoanTransaction
+                        CMD.CommandText = @"update LoanTransaction set LoanTransaction.Balance = LoanAmortization.Balance from LoanTransaction
+                                            inner join LoanAmortization on LoanAmortization.AmortCode = @AmortCode and LoanAmortization.TransactCode=@TRANSACTCODE
+                                            where LoanTransaction.TransactCode=@TRANSACTCODE";
+                        CMD.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        } //UpdateLoanAmortization
 
     } //helpers
 } // namespace

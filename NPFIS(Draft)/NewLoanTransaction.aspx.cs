@@ -77,7 +77,7 @@ namespace NPFIS_Draft_
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if ((int.Parse(gvAmortizations.Rows.ToString())) != 0)
+            if ((int.Parse(gvAmortizations.Rows.Count.ToString())) != 0)
             {
                 double InterestAmount;
                 string DDLEmpID = ((Label)gvSearch.SelectedRow.FindControl("lblEmpIDDisp")).Text;
@@ -128,6 +128,8 @@ namespace NPFIS_Draft_
                         Refresh();
                         ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Transaction saved!');});", true);
                         ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
+                        gvSearch.DataSource = null;
+                        gvSearch.DataBind();
                     }
                     else
                     {
@@ -168,9 +170,7 @@ namespace NPFIS_Draft_
             this.TxtStartAmort.Text = "";
             this.TxtEndAmort.Text = "";
             this.DDLLoanType.SelectedIndex = 0;
-            gvSearch.DataSource = "";
-            gvSearch.DataBind();
-            gvAmortizations.DataSource = "";
+            gvAmortizations.DataSource = null;
             gvAmortizations.DataBind();
         }
         void SaveFile(HttpPostedFile file)
@@ -250,8 +250,6 @@ namespace NPFIS_Draft_
                 this.TxtDivision.Text = helpers.GetDivisionName(((Label)gvSearch.Rows[RowIndex].FindControl("lblEmpIDDisp")).Text);
                 this.TxtBranch.Text = helpers.GetBranchName(((Label)gvSearch.Rows[RowIndex].FindControl("lblEmpIDDisp")).Text);
                 //ViewState["EmpID"] = ((Label)gvSearch.Rows[RowIndex].FindControl("lblEmpIDDisp")).Text;
-                gvSearch.DataSource = null;
-                gvSearch.DataBind();
             }
         }
 

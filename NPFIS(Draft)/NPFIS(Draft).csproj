@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,6 +49,27 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.DataVisualization.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -138,6 +160,7 @@
     <Content Include="LandingPage.aspx" />
     <Content Include="ListOfBorrowers.aspx" />
     <Content Include="LoanManagement.aspx" />
+    <Content Include="Loan_Library_Maintenance.aspx" />
     <Content Include="Members_Amortization_Report.aspx" />
     <Content Include="Members_Share.aspx" />
     <Content Include="Members_Summary.aspx" />
@@ -146,6 +169,7 @@
     <Content Include="Member_Maintenance.aspx" />
     <Content Include="NewLoanTransaction.aspx" />
     <Content Include="NPF_Members_Summary_Report.aspx" />
+    <Content Include="Pager.css" />
     <Content Include="RemittanceOfSharesAndLoans.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -199,7 +223,19 @@
     <Content Include="alertify\semantic.min.css" />
     <Content Include="alertify\semantic.min.js" />
     <Content Include="LoanTransactionInfo2.aspx" />
+    <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="WebLogin.aspx" />
+    <Content Include="Reports\DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -951,7 +987,9 @@
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Signatory_Library.aspx" />
     <Content Include="User_Maintenance.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Import.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -964,6 +1002,7 @@
     <Compile Include="Branch_Division_Library.aspx.designer.cs">
       <DependentUpon>Branch_Division_Library.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Ihelper.cs" />
     <Compile Include="Import_Loan_Transact.aspx.cs">
       <DependentUpon>Import_Loan_Transact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -984,6 +1023,13 @@
     </Compile>
     <Compile Include="LoanManagement.aspx.designer.cs">
       <DependentUpon>LoanManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Loan_Library_Maintenance.aspx.cs">
+      <DependentUpon>Loan_Library_Maintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Loan_Library_Maintenance.aspx.designer.cs">
+      <DependentUpon>Loan_Library_Maintenance.aspx</DependentUpon>
     </Compile>
     <Compile Include="Member_Browse.aspx.cs">
       <DependentUpon>Member_Browse.aspx</DependentUpon>
@@ -1019,6 +1065,11 @@
     </Compile>
     <Compile Include="Remittance_of_Shares_Loans.aspx.designer.cs">
       <DependentUpon>Remittance_of_Shares_Loans.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Salary_Deduction_Report.aspx.cs">
       <DependentUpon>Salary_Deduction_Report.aspx</DependentUpon>
@@ -1094,6 +1145,7 @@
     <Compile Include="Import.aspx.designer.cs">
       <DependentUpon>Import.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="UserMHelper.cs" />
     <Compile Include="User_Maintenance.aspx.cs">
       <DependentUpon>User_Maintenance.aspx</DependentUpon>
@@ -1129,7 +1181,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Import\" />
+    <Folder Include="Temp\" />
     <Folder Include="upload\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\Amortization_Schedule.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,7 +11,14 @@ namespace NPFIS_Draft_
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            lblName.Text = Session["Name"].ToString();
+        }
 
+        protected void LnkLogout_Click(object sender, EventArgs e)
+        {
+            Session["User"] = null;
+            Session["Name"] = null;
+            Response.Redirect("WebLogin.aspx");
         }
     }
 }

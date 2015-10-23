@@ -37,8 +37,8 @@ namespace NPFIS_Draft_
 
                     if (dt.Rows.Count > 0)
                     {
+                        Session["Name"] = dt.Rows[0]["Name"].ToString();
                         Session["User"] = user;
-                        
                         Response.Redirect("LandingPage.aspx");
 
                         //hdnMessage.Value = "Login Success.";

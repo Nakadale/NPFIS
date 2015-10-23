@@ -8,6 +8,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <div class="panel panel-default panel-body">
+    
     <div class="panel panel-default">
     <div class="panel-body">
     
@@ -31,7 +33,7 @@
 
 
             <div id="Transact">
-            <div class="panel panel-default panel-collapse collapse in" id="MemberSearch2">
+            <div class="panel panel-default panel-collapse collapse" id="MemberSearch2">
             <div class="panel-heading">
 
 
@@ -55,7 +57,7 @@
                                 <br />
                                 <br />
                                 <center>
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" AllowPaging="True" ShowFooter="True">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
@@ -95,6 +97,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
+                            <PagerStyle CssClass="gridViewPager"/>
                             <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
                             <RowStyle Height="25px" />
                         </asp:GridView>
@@ -247,6 +250,7 @@
     
         <br />
     
+    </div>
     </div>
     </asp:Content>
 

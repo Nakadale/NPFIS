@@ -27,7 +27,7 @@
                             </div>
                             <div>
                                 <br />
-                                <a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch2" class="btn btn-info btn-sm">...</a>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch2" data-id="#MemberSearch2" class="btn btn-info btn-sm">...</a>
                             </div>
                             <br />
                             <div class="col-xs-8">
@@ -54,7 +54,7 @@
                     <a data-toggle="collapse" data-parent="#accordion" href="#Transact">Transaction History</a>
                 </h4>
             </div>
-            <div id="Transact" class="collapse in">
+            <div id="Transact" class="collapse">
                 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                     <ContentTemplate>
                         <div id="Transactions">
@@ -96,7 +96,7 @@
                                     <asp:TemplateField HeaderText="Show Details">
                                         <ItemTemplate>
                                             <center>
-                                            <asp:LinkButton ID="lnkSelectTransact" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClick="lnkSelectTransact_Click">...</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkSelectTransact" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClick="lnkSelectTransact_Click" data-target="#Amortizations">...</asp:LinkButton>
                                             </center>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -119,8 +119,7 @@
                             <asp:Label ID="lblAmortization" runat="server" Text="Amortization" Font-Size="Large"></asp:Label>
                             </div>
                                 <br />
-                            <center>
-                            <asp:GridView ID="gvAmortizations" runat="server" CssClass="panel panel-primary" AutoGenerateColumns="False" Width="650px" AllowPaging="True" OnRowCancelingEdit="gvAmortizations_RowCancelingEdit" OnSelectedIndexChanged="gvAmortizations_SelectedIndexChanged" PageSize="12" OnRowDataBound="gvAmortizations_RowDataBound" OnRowCommand="gvAmortizations_RowCommand">
+                            <asp:GridView ID="gvAmortizations" runat="server" AllowPaging="True" AutoGenerateColumns="False" CssClass="panel panel-primary" OnRowCancelingEdit="gvAmortizations_RowCancelingEdit" OnRowCommand="gvAmortizations_RowCommand" OnRowDataBound="gvAmortizations_RowDataBound" OnSelectedIndexChanged="gvAmortizations_SelectedIndexChanged" PageSize="12" Width="650px" ViewStateMode="Enabled">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Date">
                                         <EditItemTemplate>
@@ -144,16 +143,24 @@
                                     <asp:TemplateField HeaderText="Paid">
                                         <ItemTemplate>
                                             <center>
-                                                &nbsp;<asp:Button ID="btnPaid" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClick="btnPaid_Click" Text="Pay" TargetControlID="btnPaid" />
+                                            <asp:CheckBox ID="ckPaid" runat="server"/>    
                                             </center>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="TransactCode" Visible="False">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblTransactCode" runat="server" Text='<%# Bind("TransactCode") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="AmortCode" Visible="False">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblAmortCode" runat="server" Text='<%# Bind("AmortCode") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
-                            <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
-                            <RowStyle Height="25px" />
-                            </asp:GridView>                                                
-                            </center>
-
+                                <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
+                                <RowStyle Height="25px" />
+                            </asp:GridView>
                             <br />
                             &nbsp;&nbsp;&nbsp;
                             <asp:Button ID="btnResched" runat="server" Text="Rescheduling" CssClass="btn btn-info btn-sm" Visible="False"/>
@@ -178,21 +185,21 @@
                 </h4>
             </div>
             <div>
-
-                <div class="col-xs-8">
-                    <asp:Label ID="Label3" runat="server" Text="Search: " Font-Size="Large"></asp:Label>
-                    <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>
-                </div>
-                <br />
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
-                        <p>
-                        <asp:Button ID="btnSearchMember" runat="server" Text="Search" CssClass="btn btn-info btn-sm" OnClick="btnSearchMember_Click" />
+                <div class="col-xs-8">
+                    <asp:Label ID="Label3" runat="server" Text="Search: " Font-Size="Large"></asp:Label>
+                    <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>                
+                </div>
+                <div class="col-xs-2" style="margin-top: 25px">                    
+                    <asp:Button ID="btnSearchMember" runat="server" Text="Search" CssClass="btn btn-info btn-sm" OnClick="btnSearchMember_Click" />
+                </div>
                         <br />
                         <br />
                         <br />
                         <center>
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" OnRowCommand="gvSearch_RowCommand" CellPadding="2" OnRowDataBound="gvSearch_RowDataBound">
+                            <br />
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" OnRowCommand="gvSearch_RowCommand" CellPadding="2" OnRowDataBound="gvSearch_RowDataBound" AllowPaging="True">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
@@ -200,7 +207,7 @@
                                     </ItemTemplate>
                                     <HeaderStyle />
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Surname">
+                                <asp:TemplateField HeaderText="Last Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblSurnameDisp" runat="server" Text='<%# Bind("LASTNAME") %>'></asp:Label>
                                     </ItemTemplate>
@@ -227,12 +234,13 @@
                                 <asp:TemplateField HeaderText="Show Details">
                                     <ItemTemplate>
                                         <center>
-                                        <asp:LinkButton ID="lnkSelect" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClientClick="$('#Transact').collapse('show');$('#MemberSearch2').collapse('hide');">Select</asp:LinkButton>
+                                        <asp:LinkButton ID="lnkSelect" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClientClick="$('#Transact').collapse('show');$('#MemberSearch2').collapse('hide');" data-target="#Transact">Select</asp:LinkButton>
                                         </center>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                             <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
+                            <PagerStyle CssClass="gridViewPager"/>
                             <RowStyle Height="25px" />
                         </asp:GridView>
                             </center>

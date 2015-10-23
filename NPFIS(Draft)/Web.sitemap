@@ -2,7 +2,9 @@
 <siteMap>
   <siteMapNode title="Home" url="~/LandingPage.aspx" >
     <siteMapNode title="Member Maintenance" >
-      <siteMapNode title="Member's Maintenance" url="~/Member_Maintenance.aspx"/>
+      <siteMapNode title="Member's Maintenance" url="~/Member_Maintenance.aspx">
+        <siteMapNode title="Member Search" url="~/Member_Browse.aspx"/>
+      </siteMapNode>
       <siteMapNode title="Member's Summary" url="~/Members_Summary.aspx"/>
       <siteMapNode title="Member's Shares Management" url="~/Members_Share.aspx"/>
       <siteMapNode title="Member's Summary Report" url="~/NPF_Members_Summary_Report.aspx"/>

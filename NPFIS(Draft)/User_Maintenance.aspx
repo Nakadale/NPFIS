@@ -44,7 +44,7 @@
                         <br />
                         <br />
                         <center>
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" CellPadding="2" OnRowDataBound="gvSearch_RowDataBound" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" OnRowCommand="gvSearch_RowCommand">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" CellPadding="2" OnRowDataBound="gvSearch_RowDataBound" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" OnRowCommand="gvSearch_RowCommand" AllowPaging="True" ShowFooter="True">
                             <Columns>
                                 <asp:TemplateField HeaderText="Name">
                                     <HeaderStyle />

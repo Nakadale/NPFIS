@@ -39,8 +39,6 @@ namespace NPFIS_Draft_
             if (((string)e.CommandName.ToString()) == "Select")
             {
 
-
-
                 lblMemberShow.Text = "";
                 lblDivisionValue.Text = "";
                 lblTotalShareValue.Text = "";
@@ -62,7 +60,10 @@ namespace NPFIS_Draft_
                 gvShareContribution.DataSource = Helper.LoadShareDetails(((Label)gvSearch.Rows[RowIndex].FindControl("lblEmpIDDisp")).Text);
                 gvShareContribution.DataBind();
               
-
+                Label lblTotalLoan = (Label)lblTotalLoanValue;
+                Helper.LoadTotalLoan(empid, lblTotalLoan);
+                gvLoans.DataSource = Helper.LoadLoanTransactions(empid);
+                gvLoans.DataBind();
 
                 gvSearch.DataSource = null;
                 gvSearch.DataBind();

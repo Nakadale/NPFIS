@@ -141,6 +141,48 @@ public static class Helper
         }
     }
 
+    public static DataTable LoadLoanLib()
+    {
+        DataTable dtu = new DataTable();
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+            conn.Open();
+            string sql = @"SELECT * FROM LoanLib";
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dtu);
+                if (dtu.Rows.Count > 0)
+                {
+                    return dtu;
+                }
+                else
+                {
+                    DataRow dru = dtu.NewRow();
+                    dtu.Rows.Add(dru);
+
+                    return dtu;
+                }
+            }
+        }
+    }
+
+    public static String LoadLoanLibDescription(String LoanId)
+    {
+      //  DataTable dtu = new DataTable();
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+            conn.Open();
+            string sql = @"SELECT Description FROM LoanLib WHERE LoanId=@LoanId";
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@LoanId", LoanId);
+                string TempLoan = cmd.ExecuteReader().ToString();
+                return TempLoan;
+            }
+        }
+    }
+
     public static DataTable LoadMemberSummary()
     {
         DataTable dtu = new DataTable();
@@ -492,9 +534,74 @@ group by empid ";
         }
     } //LoadTotalContribution
 
+    public static void LoadTotalLoan(string empid, Label lblTotalShareValue)
+    {
+        SqlConnection cnn = new SqlConnection();
+        cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
 
-  
+        string sql = @"select empid,isnull(cast(SUM(Balance)as varchar),0) as TotalContribution from LoanTransaction where empid=@empid
+                        group by empid ";
 
+        using (SqlCommand CMD = new SqlCommand(sql, cnn))
+        {
+            CMD.CommandType = CommandType.Text;
+            CMD.Parameters.AddWithValue("@empid", empid);
+            cnn.Open();
+            try
+            {
+                SqlDataReader dr = CMD.ExecuteReader();
+                while (dr.Read())
+                {
+                    // lblTotalShareValue.Text = ((decimal)dr["TotalContribution"]).ToString("N", CultureInfo.InvariantCulture);
+                    lblTotalShareValue.Text = dr["TotalContribution"].ToString();
+                }// decimal cannot unbox
+            }
+            catch
+            {
+
+            }
+        }
+    } //LoadTotalContribution
+
+    public static DataTable LoadLoanTransactions(string empid)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+
+
+            conn.Open();
+
+            string sql = @"select LoanLib.Description,DateFiled,PrincipalAmount, 
+                           PrincipalAmount * cast(cast((LoanTransaction.InterestRate/1) as decimal(18,2))/100 as decimal(18,2)) as IntAmt 
+                           ,ProcessingFee,NumTerm, LoanTransaction.Balance
+                           from LoanTransaction 
+                           left outer join LoanLib on LoanLib.LoanId = LoanTransaction.LoanId WHERE empid=@empid";
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+
+            DataTable dt = new DataTable();
+
+            cmd.Parameters.AddWithValue("@empid", empid);
+
+
+            da.Fill(dt);
+
+            if (dt.Rows.Count == 0)
+            {
+                DataRow dr = dt.NewRow();
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+
+
+        }
+
+    }//LoadShareDetails
 }
 
 

@@ -25,6 +25,10 @@ C:\Users\SherwinAquino\Documents\Visual Studio 2013\Projects\NPFIS(Draft)\NPFIS(
 \\192.168.5.203\npfis\NPFIS(Draft)\bin\System.Web.Optimization.xml
 \\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).dll
 \\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).pdb
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\RdlCompile.cache
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\RdlCompile.compiled
+Y:\NPFIS(Draft)\obj\Debug\RdlCompile.cache
+Y:\NPFIS(Draft)\obj\Debug\RdlCompile.compiled
 Y:\NPFIS(Draft)\bin\NPFIS(Draft).dll.config
 Y:\NPFIS(Draft)\bin\NPFIS(Draft).dll
 Y:\NPFIS(Draft)\bin\NPFIS(Draft).pdb
@@ -38,5 +42,15 @@ Y:\NPFIS(Draft)\bin\Newtonsoft.Json.xml
 Y:\NPFIS(Draft)\bin\System.Web.Optimization.xml
 Y:\NPFIS(Draft)\obj\Debug\NPFIS(Draft).dll
 Y:\NPFIS(Draft)\obj\Debug\NPFIS(Draft).pdb
-\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache
+Y:\NPFIS(Draft)\bin\Microsoft.ReportViewer.Common.dll
+Y:\NPFIS(Draft)\bin\Microsoft.ReportViewer.DataVisualization.DLL
+Y:\NPFIS(Draft)\bin\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+Y:\NPFIS(Draft)\bin\Microsoft.ReportViewer.WinForms.DLL
+Y:\NPFIS(Draft)\bin\Microsoft.SqlServer.Types.dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Microsoft.ReportViewer.Common.dll
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Microsoft.ReportViewer.DataVisualization.DLL
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Microsoft.ReportViewer.WinForms.DLL
+\\192.168.5.203\npfis\NPFIS(Draft)\bin\Microsoft.SqlServer.Types.dll
 Y:\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache
+\\192.168.5.203\npfis\NPFIS(Draft)\obj\Debug\NPFIS(Draft).csprojResolveAssemblyReference.cache

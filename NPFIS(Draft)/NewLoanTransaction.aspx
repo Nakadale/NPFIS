@@ -14,9 +14,6 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="btnSave" runat="server" CssClass="btn btn-info btn-sm" Text="Save" OnClick="btnSave_Click" ValidationGroup="InputGroup" />
             </div>
-            <div>
-                New Loan Transaction
-            </div>
             <br />
             <br />
             <div id="Transact">
@@ -39,7 +36,7 @@
                                 <br />
                                 <br />
                                 <center>
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" AllowPaging="True" ShowFooter="True">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
@@ -79,6 +76,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
+                            <PagerStyle CssClass="gridViewPager"/>
                             <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
                             <RowStyle Height="25px" />
                         </asp:GridView>
@@ -120,7 +118,7 @@
                             <div>
                                 <asp:Label ID="Label6" runat="server" Text="Loan Application No. : "></asp:Label>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TxtLoanAppNo" ErrorMessage="No Loan Application entered." Font-Bold="True" Font-Size="Large" ForeColor="Red" Display="Dynamic" ValidationGroup="InputGroup">*</asp:RequiredFieldValidator>
-                                <asp:TextBox ID="TxtLoanAppNo" runat="server" Width="180px" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="TxtLoanAppNo" runat="server" Width="180px" CssClass="form-control" MaxLength="10"></asp:TextBox>
                             </div>
                             <div>
                                 <asp:Label ID="Label7" runat="server" Text="Loan Date: "></asp:Label>
@@ -132,7 +130,7 @@
                             <div>
                                 <asp:Label ID="Label8" runat="server" Text="Issued Cheque No.: "></asp:Label>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TxtIssuedCheque" ErrorMessage="No Issued Cheque Number entered!" Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationGroup="InputGroup" Display="Dynamic">*</asp:RequiredFieldValidator>
-                                <asp:TextBox ID="TxtIssuedCheque" runat="server" Width="203px" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="TxtIssuedCheque" runat="server" Width="203px" CssClass="form-control" MaxLength="10"></asp:TextBox>
                             </div>
                             <div>
                                 <asp:Label ID="Label9" runat="server" Text="Issued Cheque Date: "></asp:Label>
@@ -152,7 +150,7 @@
                             </div>
                             <div>
                                 <asp:Label ID="Label11" runat="server" Text="Computed Principal Amount: "></asp:Label>
-                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtPrincipalAmount" ErrorMessage="numbers only are accepted" Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationExpression="[0-9]+" Display="Dynamic">*</asp:RegularExpressionValidator>
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtPrincipalAmount" ErrorMessage="numbers only are accepted" Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationExpression="^(-)?\d+(\.\d\d)?$" Display="Dynamic">*</asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtPrincipalAmount" ErrorMessage="No Principal Amount entered" Font-Bold="True" Font-Size="Large" ForeColor="Red" Display="Dynamic">*</asp:RequiredFieldValidator>
                                 <asp:TextBox ID="TxtPrincipalAmount" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
@@ -229,7 +227,7 @@
                                     <asp:TemplateField HeaderText="Paid">
                                         <ItemTemplate>
                                             <center>
-                                            <asp:CheckBox ID="ckPaidAmort" runat="server" Text="" Checked='<%# Bind("Paid") %>' CssClass="checkbox" />
+                                            <asp:CheckBox ID="ckPaidAmort" runat="server" Text="" Checked='<%# Bind("Paid") %>' />
                                             </center>
                                         </ItemTemplate>
                                     </asp:TemplateField>
