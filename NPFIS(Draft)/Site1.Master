@@ -34,7 +34,7 @@
         </div>
         <div style=" margin: auto; padding-top: 10px; width: 1024px;">
         <div style="background-color: #FFFFFF;color: #FFFFFF">&nbsp;<div class="col-md-8">
-            <asp:SiteMapPath ID="SiteMapPath1" runat="server" ForeColor="Black" RenderCurrentNodeAsLink="True">
+            <asp:SiteMapPath ID="SiteMapPath1" runat="server" ForeColor="Black" RenderCurrentNodeAsLink="True" SiteMapProvider="XmlSiteMapProvider" Font-Size="Small">
                 <PathSeparatorStyle BackColor="White" />
             </asp:SiteMapPath>
         </div>
@@ -57,9 +57,10 @@
                             <asp:LinkButton ID="lnkLoanManage" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/Member_Maintenance.aspx" Width="250px">Member' Maintenance</asp:LinkButton>
                             <asp:LinkButton ID="lnkLoanApp" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Summary.aspx">Member's Summary</asp:LinkButton>
                             <asp:LinkButton ID="LinkButton9" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Share.aspx">Member's Shares Management</asp:LinkButton>
-                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">NPF Member's Summary Report</a>
-                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">List of Borrower's for Salary Deduction</a>
-                        <a data-toggle="collapse" href="#MemberSearch2" class="btn btn-info btn-sm" style="width: 250px">Remittance of Shares and Loans</a>
+                            <hr />
+                            <asp:LinkButton ID="LinkButton14" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Summary_Report.aspx">NPF Member's Summary Report</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton13" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Remittance_of_Loans.aspx">Remittance of Loans</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton15" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Remittance_of_Contributions.aspx">Remittance of Shares</asp:LinkButton>
                     </div>
                     <div id="LibraryMaintenance" class="panel-collapse collapse ">
                         <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Signatory_Library.aspx">Signatory Library</asp:LinkButton>
@@ -71,9 +72,11 @@
                     </div>
                     <div id="LoanMaintenance" class="panel-collapse collapse ">
                             <asp:LinkButton ID="LinkButton3" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/LoanManagement.aspx" Width="250px">Loan Management</asp:LinkButton>
-                            <asp:LinkButton ID="LinkButton4" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/NewLoanTransaction.aspx">Loan Application Form</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton4" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/NewLoanTransaction.aspx">New Loan</asp:LinkButton>
+                            <hr />
                             <asp:LinkButton ID="LinkButton10" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Amortization_Report.aspx">Member's Amortization Schedule Report</asp:LinkButton>
-                            <asp:LinkButton ID="LinkButton11" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Member_Loan_Summary.aspx">Member's Loan Summary Report</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton11" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Member_LoanSummary_Report.aspx">Member's Loan Summary Report</asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton12" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/ListOfBorrowers.aspx">List of Borrower's for Salary Deduction</asp:LinkButton>
                     </div>
                     </div>
                 </div>

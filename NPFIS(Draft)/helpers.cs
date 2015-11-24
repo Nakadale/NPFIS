@@ -79,6 +79,35 @@ namespace NPFIS_Draft_
             }
         } //LoadSearchedMembers
 
+
+        public static DataTable LoadSearchedMembersRemittance(string querystring)
+        {
+            SqlConnection cnn = new SqlConnection();
+            cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+            cnn.Open();
+
+            string sql = @"select lastname,firstname,midname,birthdate, empid, Branch from member
+            left outer join DivisionLib on member.divisionid = DivisionLib.divisionid
+            left outer join BranchLib on DivisionLib.branchid = BranchLib.branchid
+            where firstname like @SearchKey or lastname like @SearchKey or midname like @SearchKey or empid like @SearchKey";
+
+            using (SqlCommand cmd = new SqlCommand(sql, cnn))
+            {
+                cmd.Parameters.AddWithValue("@SearchKey", querystring + "%");
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count == 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dt.Rows.Add(dr);
+                }
+                return dt;
+
+            }
+        } //LoadSearchedMembers
+
         public static void LoadSearchedMember(string querystring, TextBox MemberName, TextBox BranchName, TextBox DivisionName)
         {
             SqlConnection cnn = new SqlConnection();
@@ -424,7 +453,7 @@ namespace NPFIS_Draft_
         public static bool InsertLoanTransaction(string TransactCode, string EmpId,
             string LoanID, string DivisionId, string ApplicationNum, string DateFiled,
             string ChequeNum, string ChequeDate, string DateRelease, string StartDate,
-            string EndDate, double PrincipalAmount, int NumTerm, double InterestRate, double ProcessingFee, bool Paid, string UserID)
+            string EndDate, double PrincipalAmount, int NumTerm, double InterestRate, double ProcessingFee, bool Paid, string UserID, double ChequeAmount)
         {
 
             DivisionId = GetDivisionID(DivisionId);
@@ -440,7 +469,7 @@ namespace NPFIS_Draft_
 
                 string sql = @"INSERT INTO LOANTRANSACTION(TRANSACTCODE,EMPID,LOANID,
                     DIVISIONID,APPLICATIONNUM,DATEFILED,CHEQUENUM,CHEQUEDATE,DATERELEASE,STARTDATE,
-                    ENDDATE,PRINCIPALAMOUNT,NUMTERM,INTERESTRATE,PROCESSINGFEE,AMORTIZATION,PAID,UserID,BALANCE) VALUES 
+                    ENDDATE,PRINCIPALAMOUNT,NUMTERM,INTERESTRATE,PROCESSINGFEE,AMORTIZATION,PAID,UserID,BALANCE, CHEQUEAMOUNT) VALUES 
                     (@TRANSACTCODE,@EMPID,@LOANID,@DIVISIONID,@APPLICATIONNUM,
                     Convert(DateTime,@DATEFILED,101),@CHEQUENUM,
                     Convert(DateTime,@CHEQUEDATE,101),
@@ -448,7 +477,7 @@ namespace NPFIS_Draft_
                     Convert(DateTime,@STARTDATE,101),
                     Convert(DateTime,@ENDDATE,101),
                     @PRINCIPALAMOUNT,@NUMTERM,@INTERESTRATE,
-                    @PROCESSINGFEE,@AMORTIZATION,@PAID,@USERID,@BALANCE)";
+                    @PROCESSINGFEE,@AMORTIZATION,@PAID,@USERID,@BALANCE,@CHEQUEAMOUNT)";
 
                 using (SqlCommand CMD = new SqlCommand(sql, cnn))
                 {
@@ -471,6 +500,7 @@ namespace NPFIS_Draft_
                     CMD.Parameters.AddWithValue("@PAID", Paid);
                     CMD.Parameters.AddWithValue("@USERID", UserID);
                     CMD.Parameters.AddWithValue("@BALANCE", PrincipalAmount);
+                    CMD.Parameters.AddWithValue("@CHEQUEAMOUNT", ChequeAmount);
                     try
                     {
                         CMD.ExecuteNonQuery();
@@ -688,6 +718,12 @@ namespace NPFIS_Draft_
 
             gvAmortizations.DataSource = dtAmortization;
             gvAmortizations.DataBind();
+            //DateTime StartAmort;
+            //DateTime.TryParse(StartDate, out StartAmort);
+            //int AddMonths;
+            //int.TryParse(NumberOfPayments, out AddMonths);
+            //txtTxtEndAmort.Text = StartAmort.AddMonths(NumberOfPayments).ToString("d");
+
 
         } //GenerateAmortization
 
@@ -829,7 +865,7 @@ namespace NPFIS_Draft_
             }
         } //CreateEntryScannedApp
 
-        public static bool UpdateLoanAmortization(string TransactCode, string LoanAmortCode)
+        public static bool UpdateLoanAmortization(string TransactCode, string LoanAmortCode, bool ChkPaid)
         {
 
             using (SqlConnection cnn = new SqlConnection())
@@ -837,21 +873,40 @@ namespace NPFIS_Draft_
                 cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
                 cnn.Open();
 
-                string sql = @"Update LoanAmortization set Paid = 1
+                string sql = @"Update LoanAmortization set Paid = @Paid
                 where TransactCode= @TRANSACTCODE and AmortCode = @AmortCode";
                 
                 using (SqlCommand CMD = new SqlCommand(sql, cnn))
                 {
                     CMD.Parameters.AddWithValue("@TRANSACTCODE", TransactCode);
                     CMD.Parameters.AddWithValue("@AmortCode", LoanAmortCode);
+                    CMD.Parameters.AddWithValue("@Paid", ChkPaid);
 
                     try
                     {
                         CMD.ExecuteNonQuery();
                         //update balance in LoanTransaction
-                        CMD.CommandText = @"update LoanTransaction set LoanTransaction.Balance = LoanAmortization.Balance from LoanTransaction
+                        if (ChkPaid == true)
+                        {
+                            CMD.CommandText = @"update LoanTransaction set LoanTransaction.Balance = LoanAmortization.Balance from LoanTransaction
                                             inner join LoanAmortization on LoanAmortization.AmortCode = @AmortCode and LoanAmortization.TransactCode=@TRANSACTCODE
                                             where LoanTransaction.TransactCode=@TRANSACTCODE";
+                        }
+                        else
+                        {
+                            CMD.CommandText = @"update LoanTransaction set LoanTransaction.Balance = LoanAmortization.Balance from LoanTransaction
+                                                inner join LoanAmortization on Right(LoanAmortization.AmortCode,5) = 
+                                                (select CASE 
+                                                WHEN (RIGHT(AmortCode,3) = 01) then
+                                                (cast(replicate('0',4-LEN(RIGHT(AmortCode,5))) as nvarchar)) + cast((RIGHT(AmortCode,5)) as nvarchar)
+                                                WHEN (RIGHT(AmortCode,3) > 10) then
+                                                (cast(replicate('0',6-LEN(RIGHT(AmortCode,5))) as nvarchar)) + cast((RIGHT(AmortCode,5)-1) as nvarchar)
+                                                WHEN (RIGHT(AmortCode,3) <= 10) then
+                                                (cast(replicate('0',7-LEN(RIGHT(AmortCode,5))) as nvarchar)) + cast((RIGHT(AmortCode,5)-1) as nvarchar)
+                                                end as NumberCode from LoanAmortization
+                                                where LoanAmortization.TransactCode=@TRANSACTCODE and Right(LoanAmortization.AmortCode,3) = Right(RTRIM(@AmortCode),2))
+                                                where LoanTransaction.TransactCode=@TRANSACTCODE";
+                        }
                         CMD.ExecuteNonQuery();
                         return true;
                     }

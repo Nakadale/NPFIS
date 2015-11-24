@@ -15,7 +15,11 @@ namespace NPFIS_Draft_
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["User"] == null)
+            {
+                Response.Redirect("WebLogin.aspx");
+            }
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#LibraryMaintenance').collapse('show');", true);
         }
 
         protected void btnUpload_Click(object sender, EventArgs e)

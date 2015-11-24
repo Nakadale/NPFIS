@@ -14,8 +14,8 @@
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        LoanTransaction.TransactCode, LoanTransaction.EmpId, LoanTransaction.ApplicationNum, LoanTransaction.DateFiled, LoanTransaction.ChequeNum, LoanTransaction.ChequeDate, LoanTransaction.DateRelease,
                           LoanTransaction.StartDate, LoanTransaction.EndDate, LoanTransaction.PrincipalAmount, LoanTransaction.NumTerm, LoanTransaction.InterestRate, LoanTransaction.ProcessingFee, 
-                         LoanTransaction.Amortization, BranchLib.branchname + '/' + DivisionLib.divisionname AS Division_Branch, LoanTransaction.Paid, 
-                         Member.lastname + ', ' + Member.firstname + ' ' + Member.midname AS Members_Name, LoanLib.Description
+                         LoanTransaction.Amortization, BranchLib.branchname + '/' + DivisionLib.divisionname AS Division_Branch, case when (LoanTransaction.Paid = 0) then 'No' when (LoanTransaction.Paid = 1) then 'Yes' end as Paid, 
+                         Member.lastname + ', ' + Member.firstname + ' ' + Member.midname AS Members_Name, LoanLib.Description, LoanTransaction.ChequeAmount
 FROM            LoanTransaction INNER JOIN
                          DivisionLib ON LoanTransaction.DivisionId = DivisionLib.divisionid INNER JOIN
                          BranchLib ON DivisionLib.branchid = BranchLib.branchid INNER JOIN
@@ -46,9 +46,10 @@ WHERE        (LoanTransaction.EmpId = @EMPID) AND (LoanTransaction.TransactCode 
               <Mapping SourceColumn="ProcessingFee" DataSetColumn="ProcessingFee" />
               <Mapping SourceColumn="Amortization" DataSetColumn="Amortization" />
               <Mapping SourceColumn="Division_Branch" DataSetColumn="Division_Branch" />
-              <Mapping SourceColumn="Paid" DataSetColumn="Paid" />
               <Mapping SourceColumn="Members_Name" DataSetColumn="Members_Name" />
               <Mapping SourceColumn="Description" DataSetColumn="Description" />
+              <Mapping SourceColumn="ChequeAmount" DataSetColumn="ChequeAmount" />
+              <Mapping SourceColumn="Paid" DataSetColumn="Paid" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -57,7 +58,7 @@ WHERE        (LoanTransaction.EmpId = @EMPID) AND (LoanTransaction.TransactCode 
               <DbSource ConnectionRef="NPFISCS (Web.config)" DbObjectName="NPFIS.dbo.LoanAmortization" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT        TransactCode, AmortCode, EmpID, PayDate, PayAmount, Balance, Paid
+                    <CommandText>SELECT        TransactCode, AmortCode, EmpID, PayDate, PayAmount, Balance, case when (Paid = 0) then 'No' when (Paid = 1) then 'Yes' end as Paid
 FROM            LoanAmortization
 WHERE        (TransactCode = @TransactCode) AND (EmpID = @EmpID)
 ORDER BY PayDate</CommandText>
@@ -98,6 +99,168 @@ WHERE        (SigNum = 1)</CommandText>
               <Mapping SourceColumn="PreparedPosition" DataSetColumn="PreparedPosition" />
               <Mapping SourceColumn="NotedPosition" DataSetColumn="NotedPosition" />
               <Mapping SourceColumn="NotedName" DataSetColumn="NotedName" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DTLoanSummaryTableAdapter" GeneratorDataComponentClassName="DTLoanSummaryTableAdapter" Name="DTLoanSummary" UserDataComponentName="DTLoanSummaryTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="NPFISCS (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Member.lastname + ',' + Member.firstname + ' ' + Member.midname AS Name, BranchLib.branch, UPPER(SUBSTRING(DATENAME(month, LoanTransaction.StartDate), 1, 3)) AS First_Pay, 
+                         CAST(LoanTransaction.InterestRate / 100 AS decimal(10, 3)) AS Interest_yr, LoanTransaction.PrincipalAmount, CAST(LoanTransaction.PrincipalAmount * (LoanTransaction.InterestRate / 100) AS decimal(10, 2)) 
+                         AS Interest, LoanTransaction.PrincipalAmount + CAST(LoanTransaction.PrincipalAmount * (LoanTransaction.InterestRate / 100) AS decimal(10, 2)) AS Total_Int_Prin, LoanTransaction.ProcessingFee, 
+                         LoanTransaction.Amortization, COALESCE (LoanAmortization.Balance, LoanTransaction.PrincipalAmount) AS Balance, COALESCE (LoanTransaction.PrincipalAmount - LoanAmortization.Balance, 0) 
+                         AS Total_Collection, LoanTransaction.NumTerm
+FROM            LoanTransaction LEFT OUTER JOIN
+                         Member ON Member.empid = LoanTransaction.EmpId LEFT OUTER JOIN
+                         DivisionLib ON DivisionLib.divisionid = LoanTransaction.DivisionId LEFT OUTER JOIN
+                         BranchLib ON BranchLib.branchid = DivisionLib.branchid LEFT OUTER JOIN
+                         LoanAmortization ON LoanAmortization.TransactCode = LoanTransaction.TransactCode AND MONTH(LoanAmortization.PayDate) = MONTH(@ReportDate) AND YEAR(LoanAmortization.PayDate) 
+                         = YEAR(@ReportDate)
+WHERE        (MONTH(LoanTransaction.StartDate) &lt;= MONTH(@ReportDate)) AND (YEAR(LoanTransaction.StartDate) &lt;= YEAR(@ReportDate))
+ORDER BY Member.lastname, Member.firstname, Member.midname</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="ReportDate" ColumnName="" DataSourceName="" DataTypeServer="unknown" DbType="DateTime" Direction="Input" ParameterName="@ReportDate" Precision="0" Scale="0" Size="0" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="branch" DataSetColumn="branch" />
+              <Mapping SourceColumn="First_Pay" DataSetColumn="First_Pay" />
+              <Mapping SourceColumn="Interest_yr" DataSetColumn="Interest_yr" />
+              <Mapping SourceColumn="PrincipalAmount" DataSetColumn="PrincipalAmount" />
+              <Mapping SourceColumn="Interest" DataSetColumn="Interest" />
+              <Mapping SourceColumn="Total_Int_Prin" DataSetColumn="Total_Int_Prin" />
+              <Mapping SourceColumn="ProcessingFee" DataSetColumn="ProcessingFee" />
+              <Mapping SourceColumn="Amortization" DataSetColumn="Amortization" />
+              <Mapping SourceColumn="Balance" DataSetColumn="Balance" />
+              <Mapping SourceColumn="Total_Collection" DataSetColumn="Total_Collection" />
+              <Mapping SourceColumn="NumTerm" DataSetColumn="NumTerm" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DTListOfBorrowersTableAdapter" GeneratorDataComponentClassName="DTListOfBorrowersTableAdapter" Name="DTListOfBorrowers" UserDataComponentName="DTListOfBorrowersTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="NPFISCS (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Member.lastname + ',' + Member.firstname + ' ' + Member.midname AS Name, BranchLib.branch, LoanTransaction.PrincipalAmount, CAST(LoanTransaction.PrincipalAmount * (LoanTransaction.InterestRate / 100) 
+                         AS decimal(10, 2)) AS Interest, LoanTransaction.PrincipalAmount + CAST(LoanTransaction.PrincipalAmount * (LoanTransaction.InterestRate / 100) AS decimal(10, 2)) AS Total_Int_Prin, 
+                         LoanTransaction.Amortization, LoanTransaction.NumTerm, LoanTransaction.StartDate, LoanTransaction.EndDate
+FROM            LoanTransaction LEFT OUTER JOIN
+                         Member ON Member.empid = LoanTransaction.EmpId LEFT OUTER JOIN
+                         DivisionLib ON DivisionLib.divisionid = LoanTransaction.DivisionId LEFT OUTER JOIN
+                         BranchLib ON BranchLib.branchid = DivisionLib.branchid LEFT OUTER JOIN
+                         LoanAmortization ON LoanAmortization.TransactCode = LoanTransaction.TransactCode AND MONTH(LoanAmortization.PayDate) = MONTH(@Reportdate) AND YEAR(LoanAmortization.PayDate) 
+                         = YEAR(@Reportdate)
+WHERE        (MONTH(LoanTransaction.StartDate) &lt;= MONTH(@Reportdate)) AND (YEAR(LoanTransaction.StartDate) &lt;= YEAR(@Reportdate))
+ORDER BY Member.lastname, Member.firstname, Member.midname</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Reportdate" ColumnName="" DataSourceName="" DataTypeServer="unknown" DbType="DateTime" Direction="Input" ParameterName="@Reportdate" Precision="0" Scale="0" Size="0" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="branch" DataSetColumn="branch" />
+              <Mapping SourceColumn="PrincipalAmount" DataSetColumn="PrincipalAmount" />
+              <Mapping SourceColumn="Interest" DataSetColumn="Interest" />
+              <Mapping SourceColumn="Total_Int_Prin" DataSetColumn="Total_Int_Prin" />
+              <Mapping SourceColumn="Amortization" DataSetColumn="Amortization" />
+              <Mapping SourceColumn="NumTerm" DataSetColumn="NumTerm" />
+              <Mapping SourceColumn="StartDate" DataSetColumn="StartDate" />
+              <Mapping SourceColumn="EndDate" DataSetColumn="EndDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="RemittanceOfSharesLoansTableAdapter" GeneratorDataComponentClassName="RemittanceOfSharesLoansTableAdapter" Name="RemittanceOfSharesLoans" UserDataComponentName="RemittanceOfSharesLoansTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="NPFISCS (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Member.lastname, Member.firstname, BranchLib.branch, COALESCE (Shares.Total_Contributions, 0) AS Total_Contributions, COALESCE (Loans.Total_Loans, 0) AS Total_Loans
+FROM            Member LEFT OUTER JOIN
+                         DivisionLib ON DivisionLib.divisionid = Member.divisionid LEFT OUTER JOIN
+                         BranchLib ON BranchLib.branchid = DivisionLib.branchid LEFT OUTER JOIN
+                             (SELECT        empid, SUM(amount) AS Total_Contributions
+                               FROM            SharesDetail
+                               WHERE        (MONTH(dateremit) &lt;= MONTH(@Reportdate)) AND (YEAR(dateremit) &lt;= YEAR(@Reportdate))
+                               GROUP BY empid) AS Shares ON Shares.empid = Member.empid LEFT OUTER JOIN
+                             (SELECT        EmpId, SUM(Balance) AS Total_Loans
+                               FROM            LoanTransaction
+                               WHERE        (MONTH(StartDate) &lt;= MONTH(@Reportdate)) AND (YEAR(StartDate) &lt;= YEAR(@Reportdate))
+                               GROUP BY EmpId) AS Loans ON Loans.EmpId = Member.empid
+ORDER BY Member.lastname</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Reportdate" ColumnName="" DataSourceName="" DataTypeServer="unknown" DbType="DateTime" Direction="Input" ParameterName="@Reportdate" Precision="0" Scale="0" Size="0" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="lastname" DataSetColumn="lastname" />
+              <Mapping SourceColumn="firstname" DataSetColumn="firstname" />
+              <Mapping SourceColumn="branch" DataSetColumn="branch" />
+              <Mapping SourceColumn="Total_Contributions" DataSetColumn="Total_Contributions" />
+              <Mapping SourceColumn="Total_Loans" DataSetColumn="Total_Loans" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SharesDetailTableAdapter" GeneratorDataComponentClassName="SharesDetailTableAdapter" Name="SharesDetail" UserDataComponentName="SharesDetailTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="NPFISCS (Web.config)" DbObjectName="NPFIS.dbo.SharesDetail" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        dateremit, empid, amount, remarks
+FROM            SharesDetail
+Where EmpID = @Empid</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Empid" ColumnName="empid" DataSourceName="NPFIS.dbo.SharesDetail" DataTypeServer="char(10)" DbType="AnsiString" Direction="Input" ParameterName="@Empid" Precision="0" ProviderType="Char" Scale="0" Size="10" SourceColumn="empid" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="dateremit" DataSetColumn="dateremit" />
+              <Mapping SourceColumn="empid" DataSetColumn="empid" />
+              <Mapping SourceColumn="amount" DataSetColumn="amount" />
+              <Mapping SourceColumn="remarks" DataSetColumn="remarks" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="RemittanceOfLoansTableAdapter" GeneratorDataComponentClassName="RemittanceOfLoansTableAdapter" Name="RemittanceOfLoans" UserDataComponentName="RemittanceOfLoansTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="NPFISCS (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Loantransaction.EmpID, LoanAmortization.TransactCode, LoanAmortization.AmortCode, LoanAmortization.PayDate, LoanAmortization.PayAmount, LoanLib.LoanType
+FROM            LoanAmortization 
+left outer join LoanTransaction on LoanTransaction.TransactCode = LoanAmortization.TransactCode
+Left outer Join LoanLib on LoanTransaction.LoanId = LoanLib.LoanId
+where LoanTransaction.EmpId = @EmpID
+                         Order by TransactCode, AmortCode, PayDate</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="EmpID" ColumnName="EmpId" DataSourceName="NPFIS.dbo.LoanTransaction" DataTypeServer="char(10)" DbType="AnsiString" Direction="Input" ParameterName="@EmpID" Precision="0" ProviderType="Char" Scale="0" Size="10" SourceColumn="EmpId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PayDate" DataSetColumn="PayDate" />
+              <Mapping SourceColumn="PayAmount" DataSetColumn="PayAmount" />
+              <Mapping SourceColumn="LoanType" DataSetColumn="LoanType" />
+              <Mapping SourceColumn="EmpID" DataSetColumn="EmpID" />
+              <Mapping SourceColumn="AmortCode" DataSetColumn="AmortCode" />
+              <Mapping SourceColumn="TransactCode" DataSetColumn="TransactCode" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -157,7 +320,6 @@ WHERE        (SigNum = 1)</CommandText>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Paid" msprop:Generator_ColumnVarNameInTable="columnPaid" msprop:Generator_ColumnPropNameInRow="Paid" msprop:Generator_ColumnPropNameInTable="PaidColumn" msprop:Generator_UserColumnName="Paid" type="xs:boolean" minOccurs="0" />
               <xs:element name="Members_Name" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMembers_Name" msprop:Generator_ColumnPropNameInRow="Members_Name" msprop:Generator_ColumnPropNameInTable="Members_NameColumn" msprop:Generator_UserColumnName="Members_Name" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -169,6 +331,14 @@ WHERE        (SigNum = 1)</CommandText>
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ChequeAmount" msprop:Generator_ColumnVarNameInTable="columnChequeAmount" msprop:Generator_ColumnPropNameInRow="ChequeAmount" msprop:Generator_ColumnPropNameInTable="ChequeAmountColumn" msprop:Generator_UserColumnName="ChequeAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Paid" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPaid" msprop:Generator_ColumnPropNameInRow="Paid" msprop:Generator_ColumnPropNameInTable="PaidColumn" msprop:Generator_UserColumnName="Paid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -202,7 +372,13 @@ WHERE        (SigNum = 1)</CommandText>
               <xs:element name="PayDate" msprop:Generator_ColumnVarNameInTable="columnPayDate" msprop:Generator_ColumnPropNameInRow="PayDate" msprop:Generator_ColumnPropNameInTable="PayDateColumn" msprop:Generator_UserColumnName="PayDate" type="xs:dateTime" minOccurs="0" />
               <xs:element name="PayAmount" msprop:Generator_ColumnVarNameInTable="columnPayAmount" msprop:Generator_ColumnPropNameInRow="PayAmount" msprop:Generator_ColumnPropNameInTable="PayAmountColumn" msprop:Generator_UserColumnName="PayAmount" type="xs:decimal" minOccurs="0" />
               <xs:element name="Balance" msprop:Generator_ColumnVarNameInTable="columnBalance" msprop:Generator_ColumnPropNameInRow="Balance" msprop:Generator_ColumnPropNameInTable="BalanceColumn" msprop:Generator_UserColumnName="Balance" type="xs:decimal" minOccurs="0" />
-              <xs:element name="Paid" msprop:Generator_ColumnVarNameInTable="columnPaid" msprop:Generator_ColumnPropNameInRow="Paid" msprop:Generator_ColumnPropNameInTable="PaidColumn" msprop:Generator_UserColumnName="Paid" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Paid" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPaid" msprop:Generator_ColumnPropNameInRow="Paid" msprop:Generator_ColumnPropNameInTable="PaidColumn" msprop:Generator_UserColumnName="Paid" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -240,6 +416,156 @@ WHERE        (SigNum = 1)</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="DTLoanSummary" msprop:Generator_TableClassName="DTLoanSummaryDataTable" msprop:Generator_TableVarName="tableDTLoanSummary" msprop:Generator_TablePropName="DTLoanSummary" msprop:Generator_RowDeletingName="DTLoanSummaryRowDeleting" msprop:Generator_RowChangingName="DTLoanSummaryRowChanging" msprop:Generator_RowEvHandlerName="DTLoanSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="DTLoanSummaryRowDeleted" msprop:Generator_UserTableName="DTLoanSummary" msprop:Generator_RowChangedName="DTLoanSummaryRowChanged" msprop:Generator_RowEvArgName="DTLoanSummaryRowChangeEvent" msprop:Generator_RowClassName="DTLoanSummaryRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="152" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="branch" msprop:Generator_ColumnVarNameInTable="columnbranch" msprop:Generator_ColumnPropNameInRow="branch" msprop:Generator_ColumnPropNameInTable="branchColumn" msprop:Generator_UserColumnName="branch" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="First_Pay" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFirst_Pay" msprop:Generator_ColumnPropNameInRow="First_Pay" msprop:Generator_ColumnPropNameInTable="First_PayColumn" msprop:Generator_UserColumnName="First_Pay" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Interest_yr" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnInterest_yr" msprop:Generator_ColumnPropNameInRow="Interest_yr" msprop:Generator_ColumnPropNameInTable="Interest_yrColumn" msprop:Generator_UserColumnName="Interest_yr" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PrincipalAmount" msprop:Generator_ColumnVarNameInTable="columnPrincipalAmount" msprop:Generator_ColumnPropNameInRow="PrincipalAmount" msprop:Generator_ColumnPropNameInTable="PrincipalAmountColumn" msprop:Generator_UserColumnName="PrincipalAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Interest" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnInterest" msprop:Generator_ColumnPropNameInRow="Interest" msprop:Generator_ColumnPropNameInTable="InterestColumn" msprop:Generator_UserColumnName="Interest" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Total_Int_Prin" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotal_Int_Prin" msprop:Generator_ColumnPropNameInRow="Total_Int_Prin" msprop:Generator_ColumnPropNameInTable="Total_Int_PrinColumn" msprop:Generator_UserColumnName="Total_Int_Prin" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ProcessingFee" msprop:Generator_ColumnVarNameInTable="columnProcessingFee" msprop:Generator_ColumnPropNameInRow="ProcessingFee" msprop:Generator_ColumnPropNameInTable="ProcessingFeeColumn" msprop:Generator_UserColumnName="ProcessingFee" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Amortization" msprop:Generator_ColumnVarNameInTable="columnAmortization" msprop:Generator_ColumnPropNameInRow="Amortization" msprop:Generator_ColumnPropNameInTable="AmortizationColumn" msprop:Generator_UserColumnName="Amortization" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Balance" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBalance" msprop:Generator_ColumnPropNameInRow="Balance" msprop:Generator_ColumnPropNameInTable="BalanceColumn" msprop:Generator_UserColumnName="Balance" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Total_Collection" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotal_Collection" msprop:Generator_ColumnPropNameInRow="Total_Collection" msprop:Generator_ColumnPropNameInTable="Total_CollectionColumn" msprop:Generator_UserColumnName="Total_Collection" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NumTerm" msprop:Generator_ColumnVarNameInTable="columnNumTerm" msprop:Generator_ColumnPropNameInRow="NumTerm" msprop:Generator_ColumnPropNameInTable="NumTermColumn" msprop:Generator_UserColumnName="NumTerm" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTListOfBorrowers" msprop:Generator_TableClassName="DTListOfBorrowersDataTable" msprop:Generator_TableVarName="tableDTListOfBorrowers" msprop:Generator_RowChangedName="DTListOfBorrowersRowChanged" msprop:Generator_TablePropName="DTListOfBorrowers" msprop:Generator_RowDeletingName="DTListOfBorrowersRowDeleting" msprop:Generator_RowChangingName="DTListOfBorrowersRowChanging" msprop:Generator_RowEvHandlerName="DTListOfBorrowersRowChangeEventHandler" msprop:Generator_RowDeletedName="DTListOfBorrowersRowDeleted" msprop:Generator_RowClassName="DTListOfBorrowersRow" msprop:Generator_UserTableName="DTListOfBorrowers" msprop:Generator_RowEvArgName="DTListOfBorrowersRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="152" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="branch" msprop:Generator_ColumnVarNameInTable="columnbranch" msprop:Generator_ColumnPropNameInRow="branch" msprop:Generator_ColumnPropNameInTable="branchColumn" msprop:Generator_UserColumnName="branch" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PrincipalAmount" msprop:Generator_ColumnVarNameInTable="columnPrincipalAmount" msprop:Generator_ColumnPropNameInRow="PrincipalAmount" msprop:Generator_ColumnPropNameInTable="PrincipalAmountColumn" msprop:Generator_UserColumnName="PrincipalAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Interest" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnInterest" msprop:Generator_ColumnPropNameInRow="Interest" msprop:Generator_ColumnPropNameInTable="InterestColumn" msprop:Generator_UserColumnName="Interest" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Total_Int_Prin" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotal_Int_Prin" msprop:Generator_ColumnPropNameInRow="Total_Int_Prin" msprop:Generator_ColumnPropNameInTable="Total_Int_PrinColumn" msprop:Generator_UserColumnName="Total_Int_Prin" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Amortization" msprop:Generator_ColumnVarNameInTable="columnAmortization" msprop:Generator_ColumnPropNameInRow="Amortization" msprop:Generator_ColumnPropNameInTable="AmortizationColumn" msprop:Generator_UserColumnName="Amortization" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NumTerm" msprop:Generator_ColumnVarNameInTable="columnNumTerm" msprop:Generator_ColumnPropNameInRow="NumTerm" msprop:Generator_ColumnPropNameInTable="NumTermColumn" msprop:Generator_UserColumnName="NumTerm" type="xs:int" minOccurs="0" />
+              <xs:element name="StartDate" msprop:Generator_ColumnVarNameInTable="columnStartDate" msprop:Generator_ColumnPropNameInRow="StartDate" msprop:Generator_ColumnPropNameInTable="StartDateColumn" msprop:Generator_UserColumnName="StartDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EndDate" msprop:Generator_ColumnVarNameInTable="columnEndDate" msprop:Generator_ColumnPropNameInRow="EndDate" msprop:Generator_ColumnPropNameInTable="EndDateColumn" msprop:Generator_UserColumnName="EndDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RemittanceOfSharesLoans" msprop:Generator_TableClassName="RemittanceOfSharesLoansDataTable" msprop:Generator_TableVarName="tableRemittanceOfSharesLoans" msprop:Generator_TablePropName="RemittanceOfSharesLoans" msprop:Generator_RowDeletingName="RemittanceOfSharesLoansRowDeleting" msprop:Generator_RowChangingName="RemittanceOfSharesLoansRowChanging" msprop:Generator_RowEvHandlerName="RemittanceOfSharesLoansRowChangeEventHandler" msprop:Generator_RowDeletedName="RemittanceOfSharesLoansRowDeleted" msprop:Generator_UserTableName="RemittanceOfSharesLoans" msprop:Generator_RowChangedName="RemittanceOfSharesLoansRowChanged" msprop:Generator_RowEvArgName="RemittanceOfSharesLoansRowChangeEvent" msprop:Generator_RowClassName="RemittanceOfSharesLoansRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="lastname" msprop:Generator_ColumnVarNameInTable="columnlastname" msprop:Generator_ColumnPropNameInRow="lastname" msprop:Generator_ColumnPropNameInTable="lastnameColumn" msprop:Generator_UserColumnName="lastname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="firstname" msprop:Generator_ColumnVarNameInTable="columnfirstname" msprop:Generator_ColumnPropNameInRow="firstname" msprop:Generator_ColumnPropNameInTable="firstnameColumn" msprop:Generator_UserColumnName="firstname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="branch" msprop:Generator_ColumnVarNameInTable="columnbranch" msprop:Generator_ColumnPropNameInRow="branch" msprop:Generator_ColumnPropNameInTable="branchColumn" msprop:Generator_UserColumnName="branch" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Total_Contributions" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotal_Contributions" msprop:Generator_ColumnPropNameInRow="Total_Contributions" msprop:Generator_ColumnPropNameInTable="Total_ContributionsColumn" msprop:Generator_UserColumnName="Total_Contributions" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Total_Loans" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotal_Loans" msprop:Generator_ColumnPropNameInRow="Total_Loans" msprop:Generator_ColumnPropNameInTable="Total_LoansColumn" msprop:Generator_UserColumnName="Total_Loans" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SharesDetail" msprop:Generator_TableClassName="SharesDetailDataTable" msprop:Generator_TableVarName="tableSharesDetail" msprop:Generator_RowChangedName="SharesDetailRowChanged" msprop:Generator_TablePropName="SharesDetail" msprop:Generator_RowDeletingName="SharesDetailRowDeleting" msprop:Generator_RowChangingName="SharesDetailRowChanging" msprop:Generator_RowEvHandlerName="SharesDetailRowChangeEventHandler" msprop:Generator_RowDeletedName="SharesDetailRowDeleted" msprop:Generator_RowClassName="SharesDetailRow" msprop:Generator_UserTableName="SharesDetail" msprop:Generator_RowEvArgName="SharesDetailRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dateremit" msprop:Generator_ColumnVarNameInTable="columndateremit" msprop:Generator_ColumnPropNameInRow="dateremit" msprop:Generator_ColumnPropNameInTable="dateremitColumn" msprop:Generator_UserColumnName="dateremit" type="xs:dateTime" />
+              <xs:element name="empid" msprop:Generator_ColumnVarNameInTable="columnempid" msprop:Generator_ColumnPropNameInRow="empid" msprop:Generator_ColumnPropNameInTable="empidColumn" msprop:Generator_UserColumnName="empid">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="amount" msprop:Generator_ColumnVarNameInTable="columnamount" msprop:Generator_ColumnPropNameInRow="amount" msprop:Generator_ColumnPropNameInTable="amountColumn" msprop:Generator_UserColumnName="amount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="remarks" msprop:Generator_ColumnVarNameInTable="columnremarks" msprop:Generator_ColumnPropNameInRow="remarks" msprop:Generator_ColumnPropNameInTable="remarksColumn" msprop:Generator_UserColumnName="remarks" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RemittanceOfLoans" msprop:Generator_TableClassName="RemittanceOfLoansDataTable" msprop:Generator_TableVarName="tableRemittanceOfLoans" msprop:Generator_TablePropName="RemittanceOfLoans" msprop:Generator_RowDeletingName="RemittanceOfLoansRowDeleting" msprop:Generator_RowChangingName="RemittanceOfLoansRowChanging" msprop:Generator_RowEvHandlerName="RemittanceOfLoansRowChangeEventHandler" msprop:Generator_RowDeletedName="RemittanceOfLoansRowDeleted" msprop:Generator_UserTableName="RemittanceOfLoans" msprop:Generator_RowChangedName="RemittanceOfLoansRowChanged" msprop:Generator_RowEvArgName="RemittanceOfLoansRowChangeEvent" msprop:Generator_RowClassName="RemittanceOfLoansRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PayDate" msprop:Generator_ColumnVarNameInTable="columnPayDate" msprop:Generator_ColumnPropNameInRow="PayDate" msprop:Generator_ColumnPropNameInTable="PayDateColumn" msprop:Generator_UserColumnName="PayDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PayAmount" msprop:Generator_ColumnVarNameInTable="columnPayAmount" msprop:Generator_ColumnPropNameInRow="PayAmount" msprop:Generator_ColumnPropNameInTable="PayAmountColumn" msprop:Generator_UserColumnName="PayAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="LoanType" msprop:Generator_ColumnVarNameInTable="columnLoanType" msprop:Generator_ColumnPropNameInRow="LoanType" msprop:Generator_ColumnPropNameInTable="LoanTypeColumn" msprop:Generator_UserColumnName="LoanType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpID" msprop:Generator_ColumnVarNameInTable="columnEmpID" msprop:Generator_ColumnPropNameInRow="EmpID" msprop:Generator_ColumnPropNameInTable="EmpIDColumn" msprop:Generator_UserColumnName="EmpID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AmortCode" msprop:Generator_ColumnVarNameInTable="columnAmortCode" msprop:Generator_ColumnPropNameInRow="AmortCode" msprop:Generator_ColumnPropNameInTable="AmortCodeColumn" msprop:Generator_UserColumnName="AmortCode">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TransactCode" msprop:Generator_ColumnVarNameInTable="columnTransactCode" msprop:Generator_ColumnPropNameInRow="TransactCode" msprop:Generator_ColumnPropNameInTable="TransactCodeColumn" msprop:Generator_UserColumnName="TransactCode">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
@@ -248,6 +574,16 @@ WHERE        (SigNum = 1)</CommandText>
     </xs:unique>
     <xs:unique name="LoanAmortization_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:LoanAmortization" />
+      <xs:field xpath="mstns:TransactCode" />
+      <xs:field xpath="mstns:AmortCode" />
+    </xs:unique>
+    <xs:unique name="SharesDetail_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:SharesDetail" />
+      <xs:field xpath="mstns:dateremit" />
+      <xs:field xpath="mstns:empid" />
+    </xs:unique>
+    <xs:unique name="RemittanceOfLoans_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:RemittanceOfLoans" />
       <xs:field xpath="mstns:TransactCode" />
       <xs:field xpath="mstns:AmortCode" />
     </xs:unique>

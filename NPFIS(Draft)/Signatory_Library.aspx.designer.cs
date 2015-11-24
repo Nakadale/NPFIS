@@ -40,6 +40,15 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.WebControls.Button BTNSave;
         
         /// <summary>
+        /// BTNSave_ConfirmButtonExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ConfirmButtonExtender BTNSave_ConfirmButtonExtender;
+        
+        /// <summary>
         /// BTNCancel control.
         /// </summary>
         /// <remarks>

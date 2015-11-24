@@ -22,39 +22,30 @@ namespace NPFIS_Draft_ {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// lbtnAdd control.
+        /// lbtnAddNewLoan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbtnAdd;
+        protected global::System.Web.UI.WebControls.LinkButton lbtnAddNewLoan;
         
         /// <summary>
-        /// ddlLoantype control.
+        /// hdnMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLoantype;
+        protected global::System.Web.UI.WebControls.HiddenField hdnMessage;
         
         /// <summary>
-        /// txtbxInterest control.
+        /// GridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtbxInterest;
-        
-        /// <summary>
-        /// txtbxDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtbxDescription;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
     }
 }

@@ -11,6 +11,11 @@ namespace NPFIS_Draft_
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["User"] == null)
+            {
+                Response.Redirect("WebLogin.aspx");
+            }
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#LoanMaintenance').collapse('show');", true);
 
         }
 
@@ -57,12 +62,6 @@ namespace NPFIS_Draft_
                 int RowIndex = int.Parse(gv.SelectedIndex.ToString());
                 Session["TransactCode"] = ((Label)gvTransactions.Rows[RowIndex].FindControl("lblTransactCode")).Text;
                 Response.Redirect("Member_Loan_Summary.aspx");
-            }
-            else if (((string)e.CommandName.ToString()) == "Print")
-            {
-                GridView gv = (GridView)sender;
-                int RowIndex = int.Parse(gv.SelectedIndex.ToString());
-                Session["TransactCode"] = ((Label)gvTransactions.Rows[RowIndex].FindControl("lblTransactCode")).Text;
             }
             else if (((string)e.CommandName.ToString()) == "Print")
             {

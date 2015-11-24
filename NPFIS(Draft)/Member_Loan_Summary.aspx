@@ -14,12 +14,12 @@
 
         </div>
     <div>
-        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Height="100%" Width="100%" Font-Names="Verdana" Font-Size="8pt" ShowPrintButton="False" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt">
-            <LocalReport ReportEmbeddedResource="NPFIS_Draft_.Reports.Amortization_Schedule.rdlc">
+        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Height="900px" Width="700px" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt">
+            <LocalReport ReportEmbeddedResource="NPFIS_Draft_.Reports.Amortization_Schedule.rdlc" ReportPath="Reports\Amortization_Schedule.rdlc">
                 <DataSources>
-                    <rsweb:ReportDataSource DataSourceId="ObjectDataSource1" Name="DTAmortization" />
-                    <rsweb:ReportDataSource DataSourceId="ObjectDataSource2" Name="DTTransaction" />
-                    <rsweb:ReportDataSource DataSourceId="ObjectDataSource3" Name="DTSignatories" />
+                    <rsweb:ReportDataSource DataSourceId="ODSLoanAmortization" Name="DTAmortization" />
+                    <rsweb:ReportDataSource DataSourceId="ODSLoanTransaction" Name="DTTransaction" />
+                    <rsweb:ReportDataSource DataSourceId="ODSSignatories" Name="DTSignatories" />
                 </DataSources>
             </LocalReport>
         </rsweb:ReportViewer>

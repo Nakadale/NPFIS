@@ -21,7 +21,8 @@ namespace NPFIS_Draft_
                BindDivision(ddlDivision);
 
             }
-     
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
+
         }
 
         private void BindDivision(DropDownList ddlDivision)
@@ -68,7 +69,7 @@ namespace NPFIS_Draft_
             string divisionid = this.ddlDivision.Text;
 
             {
-                if (Helper.UpdatingMembers(empid, address, contactno, birthdate, lastname, firstname, midname, salary, perofshare, divisionid)) ;
+                if (Helper.UpdatingMembers(empid, address, contactno, birthdate, lastname, firstname, midname, salary, perofshare, divisionid))
 
 
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "UpdateSuccess", @"$(document).ready(function(){alertify.success('Update Success!');});", true);

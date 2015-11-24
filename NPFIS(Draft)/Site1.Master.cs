@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -16,6 +17,16 @@ namespace NPFIS_Draft_
 
         protected void LnkLogout_Click(object sender, EventArgs e)
         {
+            using (SqlConnection cnn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+            {
+
+                {
+                    SqlCommand cmd = new SqlCommand("Update Users Set Active = 0 where UserID = @UserID", cnn);
+                    cnn.Open();
+                    cmd.Parameters.AddWithValue("@UserID", Session["user"].ToString());
+                    cmd.ExecuteNonQuery();
+                }
+            }
             Session["User"] = null;
             Session["Name"] = null;
             Response.Redirect("WebLogin.aspx");

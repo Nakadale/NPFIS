@@ -14,11 +14,8 @@ namespace NPFIS_Draft_
             if (!IsPostBack)
             {
                 LoadDivisionLib();
-                //          btnSave.Attributes.Add("onClick", @"alertify.defaults.glossary.title='NPFIS';alertify.confirm('Are you sure you want to save this record?',
-                //                                                function(){
-                //                                                    __doPostBack($('.btnSave').attr('name'),'OnClick');
-                //                                                });  return false;");
             }
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
         }
 
         public void LoadDivisionLib()
@@ -48,7 +45,7 @@ namespace NPFIS_Draft_
                 ddlDivision.Enabled = true;
                 hdnMessage.Value = "Please enter a Employee ID.";
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "empid", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
+                
             }
 
             if (string.IsNullOrWhiteSpace(txtbxAddress.Text))
@@ -237,6 +234,7 @@ namespace NPFIS_Draft_
                 txtbxMonthlySalary.Text = string.Empty;
                 txtbxPercentageofShare.Text = string.Empty;
                 ddlDivision.SelectedValue = string.Empty;
+               
                 Helper.InsertMemberMaintenance(empid, address, contactno, birthdate, firstname, lastname, midname, salary, perofshare, divisionid, userid);
                 hdnMessage.Value = "Success.";
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "Success", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.success($('#hdnMessage').val());});", true);

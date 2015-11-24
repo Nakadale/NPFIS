@@ -48,9 +48,14 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net40\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.Common\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -61,7 +66,10 @@
       <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.WebForms\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.Windows.11.0.3452\lib\net40\Microsoft.ReportViewer.WinForms.DLL</HintPath>
       <Private>True</Private>
@@ -164,13 +172,19 @@
     <Content Include="Members_Amortization_Report.aspx" />
     <Content Include="Members_Share.aspx" />
     <Content Include="Members_Summary.aspx" />
+    <Content Include="Members_Summary_Report.aspx" />
     <Content Include="Member_Browse.aspx" />
     <Content Include="Member_Loan_Summary.aspx" />
     <Content Include="Member_Maintenance.aspx" />
+    <Content Include="Member_LoanSummary_Report.aspx" />
     <Content Include="NewLoanTransaction.aspx" />
     <Content Include="NPF_Members_Summary_Report.aspx" />
     <Content Include="Pager.css" />
-    <Content Include="RemittanceOfSharesAndLoans.aspx" />
+    <Content Include="Redirect1.aspx" />
+    <Content Include="Redirect2.aspx" />
+    <Content Include="Redirect3.aspx" />
+    <Content Include="RemittanceofContributionPreview.aspx" />
+    <Content Include="RemittanceOfLoansPreview.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -178,8 +192,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Remittance_of_Contributions.aspx" />
+    <Content Include="Remittance_of_Loans.aspx" />
     <Content Include="Remittance_of_Shares_Loans.aspx" />
-    <Content Include="Salary_Deduction_Report.aspx" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -224,6 +239,7 @@
     <Content Include="alertify\semantic.min.js" />
     <Content Include="LoanTransactionInfo2.aspx" />
     <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="ViewSwitcher.ascx" />
     <Content Include="WebLogin.aspx" />
     <Content Include="Reports\DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
@@ -991,9 +1007,13 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Import.aspx" />
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\Helper.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BHelper.cs" />
     <Compile Include="Branch_Division_Library.aspx.cs">
       <DependentUpon>Branch_Division_Library.aspx</DependentUpon>
@@ -1031,6 +1051,13 @@
     <Compile Include="Loan_Library_Maintenance.aspx.designer.cs">
       <DependentUpon>Loan_Library_Maintenance.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Members_Summary_Report.aspx.cs">
+      <DependentUpon>Members_Summary_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Members_Summary_Report.aspx.designer.cs">
+      <DependentUpon>Members_Summary_Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Member_Browse.aspx.cs">
       <DependentUpon>Member_Browse.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1044,6 +1071,13 @@
     </Compile>
     <Compile Include="Member_Maintenance.aspx.designer.cs">
       <DependentUpon>Member_Maintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Member_LoanSummary_Report.aspx.cs">
+      <DependentUpon>Member_LoanSummary_Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Member_LoanSummary_Report.aspx.designer.cs">
+      <DependentUpon>Member_LoanSummary_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="NewLoanTransaction.aspx.cs">
       <DependentUpon>NewLoanTransaction.aspx</DependentUpon>
@@ -1059,6 +1093,60 @@
     <Compile Include="NPF_Members_Summary_Report.aspx.designer.cs">
       <DependentUpon>NPF_Members_Summary_Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Redirect1.aspx.cs">
+      <DependentUpon>Redirect1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Redirect1.aspx.designer.cs">
+      <DependentUpon>Redirect1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Redirect2.aspx.cs">
+      <DependentUpon>Redirect2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Redirect2.aspx.designer.cs">
+      <DependentUpon>Redirect2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Redirect3.aspx.cs">
+      <DependentUpon>Redirect3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Redirect3.aspx.designer.cs">
+      <DependentUpon>Redirect3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RemittanceofContributionPreview.aspx.cs">
+      <DependentUpon>RemittanceofContributionPreview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RemittanceofContributionPreview.aspx.designer.cs">
+      <DependentUpon>RemittanceofContributionPreview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RemittanceOfLoansPreview.aspx.cs">
+      <DependentUpon>RemittanceOfLoansPreview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RemittanceOfLoansPreview.aspx.designer.cs">
+      <DependentUpon>RemittanceOfLoansPreview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Remittance_of_Contributions.aspx.cs">
+      <DependentUpon>Remittance_of_Contributions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Remittance_of_Contributions.aspx.designer.cs">
+      <DependentUpon>Remittance_of_Contributions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Remittance_of_Loans.aspx.cs">
+      <DependentUpon>Remittance_of_Loans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Remittance_of_Loans.aspx.designer.cs">
+      <DependentUpon>Remittance_of_Loans.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Remittance_of_Shares_Loans.aspx.cs">
       <DependentUpon>Remittance_of_Shares_Loans.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1070,13 +1158,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Salary_Deduction_Report.aspx.cs">
-      <DependentUpon>Salary_Deduction_Report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Salary_Deduction_Report.aspx.designer.cs">
-      <DependentUpon>Salary_Deduction_Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="SignatoryHelper.cs" />
     <Compile Include="LoanMaintenanceHelper.cs" />
@@ -1117,13 +1198,6 @@
       <DependentUpon>Member_Loan_Summary.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemittanceOfSharesAndLoans.aspx.cs">
-      <DependentUpon>RemittanceOfSharesAndLoans.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RemittanceOfSharesAndLoans.aspx.designer.cs">
-      <DependentUpon>RemittanceOfSharesAndLoans.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Signatory_Library.aspx.cs">
       <DependentUpon>Signatory_Library.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1161,6 +1235,13 @@
     <Compile Include="LoanTransactionInfo2.aspx.designer.cs">
       <DependentUpon>LoanTransactionInfo2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
     <Compile Include="WebLogin.aspx.cs">
       <DependentUpon>WebLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1186,7 +1267,16 @@
     <Folder Include="upload\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\Amortization_Schedule.rdlc" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Image\Amortization_Schedule.rdlc" />
+    <EmbeddedResource Include="Reports\List_Of_Borrowers.rdlc" />
+    <EmbeddedResource Include="Reports\Loan_Summary.rdlc" />
+    <EmbeddedResource Include="Reports\MemberSummary.rdlc" />
+    <EmbeddedResource Include="Reports\Remittance.rdlc" />
+    <EmbeddedResource Include="Reports\RemittanceOfLoans.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

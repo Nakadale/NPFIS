@@ -147,5 +147,76 @@ namespace NPFIS_Draft_
                 }
             }
         } //DeleteUser
+
+        public static bool UpdateUser(string UserID, string UserIDNew, string UserName, string Password, bool ChkAllow, bool ChkActive)
+        {
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = @"Update Users Set UserID = @UserIdNew, Name = @NameNew, Password = @PasswordNew, Allow = @AllowNew, 
+                               Active = @ActiveNew WHERE UserID=@UserID";
+
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@UserID", UserID);
+                    CMD.Parameters.AddWithValue("@UserIdNew", UserIDNew);
+                    CMD.Parameters.AddWithValue("@NameNew", UserName);
+                    CMD.Parameters.AddWithValue("@PasswordNew", Password);
+                    CMD.Parameters.AddWithValue("@AllowNew", ChkAllow);
+                    CMD.Parameters.AddWithValue("@ActiveNew", ChkActive);
+                    try
+                    {
+                        int rowsAffected = CMD.ExecuteNonQuery();
+                        if (rowsAffected == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        } //DeleteUser
+
+        public static bool CheckIfExist(string UserID)
+        {
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = "select isnull(count(UserID),0) as UserID from Users WHERE UserID=@UserID";
+
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@UserID", UserID);
+                    try
+                    {
+                        object o = CMD.ExecuteScalar();
+                        if (o.ToString() == "0")
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        } // check if exist
+
     }
 }

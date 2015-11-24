@@ -5,7 +5,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="panel panel-default panel-body">
+        <div class="panel panel-default">
         <div>
+            <br />
         <asp:FileUpload ID="fuScannedForm" runat="server" />
         <br />
         <asp:Button ID="btnUpload" runat="server" CssClass="btn btn-info btn-sm" Text="Upload" OnClick="btnUpload_Click" />
@@ -50,7 +52,7 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
-
+            </div>
         </div>
     </div>
 

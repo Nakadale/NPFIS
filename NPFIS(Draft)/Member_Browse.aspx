@@ -31,7 +31,9 @@
     </ContentTemplate>
         </asp:UpdatePanel>
 
-
+        <br />
+        <br />
+        <br />
             <div id="Transact">
             <div class="panel panel-default panel-collapse collapse" id="MemberSearch2">
             <div class="panel-heading">

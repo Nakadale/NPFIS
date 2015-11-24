@@ -44,7 +44,7 @@ namespace NPFIS_Draft_
         protected void btnGenerate_Click(object sender, EventArgs e)
         {
             double PrincipalAmount;
-            double.TryParse(TxtPrincipalAmount.Text, out PrincipalAmount);
+            double.TryParse(txtChequeAmount.Text, out PrincipalAmount);
             double ServiceFee;
             double.TryParse(TxtServiceFee.Text, out ServiceFee);
             int Interest = int.Parse(TxtInterestRate.Text);
@@ -90,6 +90,8 @@ namespace NPFIS_Draft_
                 string TxtIssuedCheque = this.TxtIssuedCheque.Text;
                 string IssuedChequeDate = this.TxtIssuedChequeDate.Text;
                 string ChequeReleasedDate = this.TxtChequeReleasedDate.Text;
+                double TxtChequeAmount;
+                double.TryParse(this.txtChequeAmount.Text, out TxtChequeAmount);
                 double TxtPrincipalAmount;
                 double.TryParse(this.TxtPrincipalAmount.Text, out TxtPrincipalAmount);
                 double TxtInterestRate;
@@ -120,7 +122,7 @@ namespace NPFIS_Draft_
                     //UploadStatusLabel.Text = "You did not specify a file to upload."; 
                 }
                 // for insertion of new transactions
-                if (helpers.InsertLoanTransaction(DDLTransactCode, DDLEmpID, DDLLoanType, TxtDivision, TxtLoanApp, TxtLoanDate, TxtIssuedCheque, IssuedChequeDate, ChequeReleasedDate, TxtStartAmort, TxtEndAmort, TxtPrincipalAmount, TxtPaymentTerms, TxtInterestRate, TxtServiceFee, ChPaidUpLoad, UserID))
+                if (helpers.InsertLoanTransaction(DDLTransactCode, DDLEmpID, DDLLoanType, TxtDivision, TxtLoanApp, TxtLoanDate, TxtIssuedCheque, IssuedChequeDate, ChequeReleasedDate, TxtStartAmort, TxtEndAmort, TxtPrincipalAmount, TxtPaymentTerms, TxtInterestRate, TxtServiceFee, ChPaidUpLoad, UserID, TxtChequeAmount))
                 {
                     //will put up something with more flair here
                     if (helpers.InsertLoanAmortization(DDLTransactCode, DDLEmpID, DDLLoanType, InterestAmount, gVAmort, UserID))
@@ -130,6 +132,7 @@ namespace NPFIS_Draft_
                         ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
                         gvSearch.DataSource = null;
                         gvSearch.DataBind();
+
                     }
                     else
                     {
@@ -256,6 +259,15 @@ namespace NPFIS_Draft_
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
             Refresh();
+        }
+
+        protected void TxtStartAmort_TextChanged(object sender, EventArgs e)
+        {
+            DateTime StartAmort;
+            DateTime.TryParse(TxtStartAmort.Text, out StartAmort);
+            int AddMonths;
+            int.TryParse(TxtPaymentTerms.Text, out AddMonths);
+            TxtEndAmort.Text = StartAmort.AddMonths(AddMonths).ToString("d");
         }
     }
 }

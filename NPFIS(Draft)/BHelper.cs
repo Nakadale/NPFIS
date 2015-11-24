@@ -309,6 +309,64 @@ namespace NPFIS_Draft_
                     }
                 }
             }
-        } //InsertBranch
+        } //UpdateBranch
+
+        public static bool DeleteBranch(string txtBranchID)
+        {
+
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = @"Delete BranchLib where BranchID=@BranchID";
+
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@BranchID", txtBranchID);
+                    try
+                    {
+                        CMD.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        } //DeleteBranch
+
+        public static bool CheckBranchIDInDivision(string DivisionID)
+        {
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = "select isnull(count(BranchID),0) as BranchIDExist from DivisionLib WHERE BranchID=@BranchID";
+
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@BranchID", DivisionID);
+                    try
+                    {
+                        object o = CMD.ExecuteScalar();
+                        if (o.ToString() == "0")
+                        {
+                            return true;                            
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        } //CheckDivisionIDandDivisionName
     }
 }

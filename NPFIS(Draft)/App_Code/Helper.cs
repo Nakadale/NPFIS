@@ -147,7 +147,7 @@ public static class Helper
         using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
         {
             conn.Open();
-            string sql = @"SELECT * FROM LoanLib";
+            string sql = @"SELECT * FROM LoanLib where InterestRate != 0";
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -167,19 +167,130 @@ public static class Helper
         }
     }
 
-    public static String LoadLoanLibDescription(String LoanId)
+
+    
+
+
+
+    public static void LoadLibDescription(String LoanId, TextBox Description, TextBox InterestRate)
     {
-      //  DataTable dtu = new DataTable();
         using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
         {
             conn.Open();
-            string sql = @"SELECT Description FROM LoanLib WHERE LoanId=@LoanId";
-            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            string sql = @"SELECT * FROM LoanLib WHERE LoanId=@LoanId";
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@LoanId", LoanId);
+            
+             try
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        Description.Text = dr["Description"].ToString();
+                        InterestRate.Text = dr["InterestRate"].ToString();
+                        
+                       
+                    }
+                }
+             catch
+             {
+
+             }
+
+        }
+    }
+
+    public static bool LoanLibDelete(string LoanId)
+    {
+        DataTable dt = new DataTable();
+
+        using (SqlConnection cnn = new SqlConnection())
+        {
+            cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+            cnn.Open();
+
+            string sql = "Delete LoanLib where LoanId=@LoanId";
+
+            using (SqlCommand cmd = new SqlCommand(sql, cnn))
             {
                 cmd.Parameters.AddWithValue("@LoanId", LoanId);
-                string TempLoan = cmd.ExecuteReader().ToString();
-                return TempLoan;
+
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+
+                catch
+                {
+                    return false;
+                }
             }
+        }
+
+    }
+
+    public static bool LoanDelete(string LoanId)
+    {
+        DataTable dt = new DataTable();
+
+        using (SqlConnection cnn = new SqlConnection())
+        {
+            cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+            cnn.Open();
+
+
+            string sql = "Delete Member where LoanId=@LoanID";
+
+            using (SqlCommand cmd = new SqlCommand(sql, cnn))
+            {
+                cmd.Parameters.AddWithValue("@LoanId", LoanId);
+
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    return true;
+
+                }
+
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    public static void LoanLibEdit(string loanid, string description, string interestrate, string loantype)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+            conn.Open();
+            string sql = @"SELECT * FROM LoanLib WHERE LoanId=@LoanId";
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@LoanId", loanid);
+
+            try
+            {
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    loanid = dr["LoanId"].ToString();
+                    description = dr["Description"].ToString();
+                    interestrate = dr["InterestRate"].ToString();
+                    loantype = dr["LoanType"].ToString();
+
+
+                }
+            }
+            catch
+            {
+
+            }
+
         }
     }
 
@@ -219,6 +330,97 @@ GROUP BY Member.empid, Member.firstname, Member.midname, Member.lastname, Divisi
 
 
     }
+    public static bool InsertLoanLib(string loantype, string interestrate, string description, string loanid)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+            conn.Open();
+            string sql = @"INSERT INTO LoanLib (loantype, interestrate, description, loanid) VALUES (@loantype, @interestrate, @description, @loanid)";
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@loantype", loantype);
+                cmd.Parameters.AddWithValue("@interestrate", interestrate);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@loanid", loanid);
+
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+        }
+
+
+    }//end loan lib insert
+
+
+    public static bool UpdateLoanLib(string loantype, string interestrate, string description, string loanid)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+            conn.Open();
+            string sql = @"Update LoanLib set loantype=@loantype, interestrate=@interestrate, description=@description WHERE loanid=@loanid";
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@loantype", loantype);
+                cmd.Parameters.AddWithValue("@interestrate", interestrate);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@loanid", loanid);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    return true;
+
+                }
+
+                catch
+                {
+                    return false;
+
+
+                }
+            }
+        }
+
+
+    }
+
+    public static bool CompareLib(string loanid)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+
+
+            conn.Open();
+
+            string sql = @"SELECT * FROM LoanLib WHERE loanid=@loanid";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@loanid", loanid);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+
+            DataTable dt = new DataTable();
+
+
+            da.Fill(dt);
+
+            if (dt.Rows.Count == 0)
+            {
+                DataRow dr = dt.NewRow();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
+
+
+           
+
+
+        }
+    }
+
     public static bool InsertMemberMaintenance(string empid, string address, string contactno, string birthdate, string firstname, string lastname, string midname, double salary, string perofshare, string divisionid, string userid)
     {
         using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
@@ -523,8 +725,9 @@ group by empid ";
                 SqlDataReader dr = CMD.ExecuteReader();
                 while (dr.Read())
                 {
-                   // lblTotalShareValue.Text = ((decimal)dr["TotalContribution"]).ToString("N", CultureInfo.InvariantCulture);
-                    lblTotalShareValue.Text = dr["TotalContribution"].ToString();
+                    double TotalContribution;
+                    double.TryParse(dr["TotalContribution"].ToString(), out TotalContribution);
+                    lblTotalShareValue.Text = TotalContribution.ToString("N", CultureInfo.InvariantCulture);
                 }// decimal cannot unbox
             }
             catch
@@ -552,8 +755,9 @@ group by empid ";
                 SqlDataReader dr = CMD.ExecuteReader();
                 while (dr.Read())
                 {
-                    // lblTotalShareValue.Text = ((decimal)dr["TotalContribution"]).ToString("N", CultureInfo.InvariantCulture);
-                    lblTotalShareValue.Text = dr["TotalContribution"].ToString();
+                    double TotalContribution;
+                    double.TryParse(dr["TotalContribution"].ToString(), out TotalContribution);
+                    lblTotalShareValue.Text = TotalContribution.ToString("N", CultureInfo.InvariantCulture);
                 }// decimal cannot unbox
             }
             catch
@@ -571,7 +775,7 @@ group by empid ";
 
             conn.Open();
 
-            string sql = @"select LoanLib.Description,DateFiled,PrincipalAmount, 
+            string sql = @"select LoanLib.LoanType,DateFiled,PrincipalAmount, 
                            PrincipalAmount * cast(cast((LoanTransaction.InterestRate/1) as decimal(18,2))/100 as decimal(18,2)) as IntAmt 
                            ,ProcessingFee,NumTerm, LoanTransaction.Balance
                            from LoanTransaction 
@@ -602,6 +806,81 @@ group by empid ";
         }
 
     }//LoadShareDetails
+
+
+    public static bool InsertShare(string empid, string dateremit, string amount, string salarybasis, string perofsharebasis, string userid)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+            conn.Open();
+            string sql = @"INSERT INTO SharesDetail (empid, dateremit, amount, salarybasis, perofsharebasis, userid) VALUES (@empid, @dateremit, @amount, @salarybasis, @perofsharebasis, @userid)";
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@empid", empid);
+                cmd.Parameters.AddWithValue("@dateremit", dateremit);
+                cmd.Parameters.AddWithValue("@amount", amount);
+                cmd.Parameters.AddWithValue("@salarybasis", salarybasis);
+                cmd.Parameters.AddWithValue("@perofsharebasis", perofsharebasis);
+                cmd.Parameters.AddWithValue("@userid", userid);
+
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+        }
+    }
+
+    public static bool DeleteShare(string empid, string dateremit)
+    {
+        DataTable dt = new DataTable();
+
+        using (SqlConnection cnn = new SqlConnection())
+        {
+            cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+            cnn.Open();
+
+            string sql = "Delete SharesDetail where empid=@empid and dateremit=@dateremit";
+
+            using (SqlCommand cmd = new SqlCommand(sql, cnn))
+            {
+                cmd.Parameters.AddWithValue("@empid", empid);
+                cmd.Parameters.AddWithValue("@dateremit", dateremit);
+
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    public static bool UpdateShare(string empid, string dateremit, decimal amount, string salarybasis, string perofsharebasis, string userid)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+            conn.Open();
+            string sql = @"UPDATE SharesDetail set amount=@amount WHERE empid=@empid and dateremit=@dateremit ";
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+
+                cmd.Parameters.AddWithValue("@empid", empid);
+                cmd.Parameters.AddWithValue("@dateremit", dateremit);
+                cmd.Parameters.AddWithValue("@amount", amount);
+                cmd.Parameters.AddWithValue("@salarybasis", salarybasis);
+                cmd.Parameters.AddWithValue("@perofsharebasis", perofsharebasis);
+                cmd.Parameters.AddWithValue("@userid", userid);
+
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+        }
+    }
 }
 
 

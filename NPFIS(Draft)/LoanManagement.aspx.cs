@@ -67,26 +67,16 @@ namespace NPFIS_Draft_
 
         protected void gvTransactions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
+            if (((string)e.CommandName.ToString()) == "View")
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenus", @"window.open('LoanTransactionInfo2.aspx', 'Loan Transaction Information', 'width=895, height=600');", true);
+            }
         }
 
 
         protected void gvAmortizations_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            GridView gv = (GridView)sender;
-            int RowIndex = int.Parse(gv.SelectedIndex.ToString());
-            string TransactCode = ((Label)gvAmortizations.Rows[RowIndex].FindControl("lblTransactCode")).Text;
-            string AmortCode = ((Label)gvAmortizations.Rows[RowIndex].FindControl("lblAmortCode")).Text;
-            if (helpers.UpdateLoanAmortization(TransactCode, AmortCode))
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Transaction saved!');});", true);
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionError", @"$(document).ready(function(){alertify.error('Transaction failed!');});", true);
-            }
         }
 
         protected void gvAmortizations_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -136,7 +126,7 @@ namespace NPFIS_Draft_
                 e.Row.Attributes["onmouseover"] = "this.style.cursor = 'hand';this.style.textDecoration = 'underline';";
                 e.Row.Attributes["onmouseout"] = "this.style.textDecoration = 'none';";
                 e.Row.Attributes["onclick"] = ClientScript.GetPostBackClientHyperlink(gv, "Select$" + e.Row.RowIndex);
-
+                //e.Row.Attributes["onclick"] = "if (!confirm('Are you sure this has been paid?')) return false;";
 //                e.Row.Attributes["onclick"] = @" return alertify.defaults.glossary.title='Amortization Payment';
 //                                                alertify.confirm('Are you sure this amortization date has been paid?', 
 //                                                function (e) {
@@ -165,7 +155,7 @@ namespace NPFIS_Draft_
 
         protected void lnkSelectTransact_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"window.open('LoanTransactionInfo2.aspx', 'Loan Transaction Information', 'width=895, height=600');", true);
+            //ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenus2", @"window.open('LoanTransactionInfo2.aspx', 'Loan Transaction Information', 'width=895, height=600');", true);
         }
 
         protected void gvSearch_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -179,6 +169,25 @@ namespace NPFIS_Draft_
         protected void ckPaid_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void ckPaid_CheckedChanged1(object sender, EventArgs e)
+        {
+            int RowIndex = gvAmortizations.SelectedIndex;
+            string TransactCode = ((Label)gvAmortizations.Rows[RowIndex].FindControl("lblTransactCode")).Text;
+            string AmortCode = ((Label)gvAmortizations.Rows[RowIndex].FindControl("lblAmortCode")).Text;
+            bool ChkPaid = ((CheckBox)gvAmortizations.Rows[RowIndex].FindControl("ckPaid")).Checked;
+
+
+            if (helpers.UpdateLoanAmortization(TransactCode, AmortCode, ChkPaid))
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Transaction saved!');});", true);
+                //ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionError", @"$(document).ready(function(){alertify.error('Transaction failed!');});", true);
+            }
         }
 
 

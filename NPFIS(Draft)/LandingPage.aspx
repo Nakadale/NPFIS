@@ -7,7 +7,7 @@
             <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    Welcome! Please select a button.
+                    Welcome!
                 </h4>
             </div>
             <div id="Transact" class="panel-collapse collapse in">

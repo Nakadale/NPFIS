@@ -15,6 +15,7 @@ namespace NPFIS_Draft_
             {
                 Response.Redirect("WebLogin.aspx");
             }
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)

@@ -19,8 +19,8 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>1.62376in</Top>
-        <Left>2.49876in</Left>
+        <Top>1.60417in</Top>
+        <Left>2.49642in</Left>
         <Height>0.25in</Height>
         <Width>2.78125in</Width>
         <Style>
@@ -41,16 +41,18 @@
             <TextRuns>
               <TextRun>
                 <Value>Member Name: </Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>2.08209in</Top>
-        <Left>0.49876in</Left>
+        <Top>2.0625in</Top>
+        <Left>0.49642in</Left>
         <Height>0.25in</Height>
-        <Width>1in</Width>
+        <Width>1.15625in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -70,16 +72,20 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!Members_Name.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>2.08209in</Top>
-        <Left>1.58209in</Left>
-        <Height>0.55208in</Height>
-        <Width>1.9375in</Width>
+        <Top>2.0625in</Top>
+        <Left>1.72211in</Left>
+        <Height>0.25in</Height>
+        <Width>4.90278in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -99,17 +105,19 @@
             <TextRuns>
               <TextRun>
                 <Value>Branch/Division:</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>2.08209in</Top>
-        <Left>3.58903in</Left>
+        <Top>2.36459in</Top>
+        <Left>0.49641in</Left>
         <Height>0.25in</Height>
-        <Width>1.03125in</Width>
+        <Width>1.15626in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -129,78 +137,22 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!Division_Branch.Value, "DTTransaction")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>2.08209in</Top>
-        <Left>4.68973in</Left>
-        <Height>0.55208in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="lblMemberName2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Transaction Code:</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>2.70362in</Top>
-        <Left>0.49876in</Left>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>2.36459in</Top>
+        <Left>1.72211in</Left>
         <Height>0.25in</Height>
-        <Width>1in</Width>
-        <ZIndex>5</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="txtMemberName2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!TransactCode.Value, "DTTransaction")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <Top>2.70362in</Top>
-        <Left>1.58209in</Left>
-        <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>6</ZIndex>
+        <Width>4.90278in</Width>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -228,11 +180,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>2.70362in</Top>
-        <Left>3.58904in</Left>
+        <Top>2.67014in</Top>
+        <Left>0.49642in</Left>
         <Height>0.25in</Height>
         <Width>1.21875in</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -251,18 +203,22 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!ApplicationNum.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>2.70362in</Top>
-        <Left>4.87723in</Left>
+        <Top>2.67014in</Top>
+        <Left>1.99295in</Left>
         <Height>0.25in</Height>
-        <Width>1.75in</Width>
-        <ZIndex>8</ZIndex>
+        <Width>1.54166in</Width>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -289,11 +245,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>3.02306in</Top>
-        <Left>0.49876in</Left>
+        <Top>3.00347in</Top>
+        <Left>0.49642in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -312,17 +268,21 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!Description.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>3.02306in</Top>
-        <Left>1.58209in</Left>
+        <Top>3.00347in</Top>
+        <Left>1.99295in</Left>
         <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>10</ZIndex>
+        <Width>1.5243in</Width>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -350,11 +310,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>3.02306in</Top>
-        <Left>3.58904in</Left>
+        <Top>2.67014in</Top>
+        <Left>3.60405in</Left>
         <Height>0.25in</Height>
         <Width>1.03125in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -372,19 +332,23 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!DateFiled.Value, "DTTransaction")</Value>
-                <Style />
+                <Value>=Format(First(Fields!DateFiled.Value, "DTTransaction"),"MM/dd/yyyy")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>3.02306in</Top>
-        <Left>4.68973in</Left>
+        <Top>2.67014in</Top>
+        <Left>5.10059in</Left>
         <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>12</ZIndex>
+        <Width>1.54165in</Width>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -411,11 +375,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>3.34251in</Top>
-        <Left>0.49876in</Left>
+        <Top>3.00347in</Top>
+        <Left>3.5867in</Left>
         <Height>0.25in</Height>
         <Width>1.15625in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -434,17 +398,21 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!ChequeNum.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>3.34251in</Top>
-        <Left>1.72445in</Left>
+        <Top>3.00347in</Top>
+        <Left>5.10059in</Left>
         <Height>0.25in</Height>
-        <Width>1.79514in</Width>
-        <ZIndex>14</ZIndex>
+        <Width>1.50694in</Width>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -472,11 +440,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>3.34251in</Top>
-        <Left>3.58904in</Left>
+        <Top>3.32292in</Top>
+        <Left>3.5867in</Left>
         <Height>0.25in</Height>
         <Width>1.21875in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -494,19 +462,23 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!ChequeDate.Value, "DTTransaction")</Value>
-                <Style />
+                <Value>=Format(First(Fields!ChequeDate.Value, "DTTransaction"),"MM/dd/yyyy")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>3.34251in</Top>
-        <Left>4.87723in</Left>
+        <Top>3.32292in</Top>
+        <Left>5.10059in</Left>
         <Height>0.25in</Height>
-        <Width>1.75in</Width>
-        <ZIndex>16</ZIndex>
+        <Width>1.5243in</Width>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -533,11 +505,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>3.66195in</Top>
-        <Left>0.49876in</Left>
+        <Top>3.32292in</Top>
+        <Left>0.51378in</Left>
         <Height>0.25in</Height>
         <Width>1.29167in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -555,18 +527,22 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!DateRelease.Value, "DTTransaction")</Value>
-                <Style />
+                <Value>=Format(First(Fields!DateRelease.Value, "DTTransaction"),"MM/dd/yyyy")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>3.66195in</Top>
-        <Left>1.85987in</Left>
+        <Top>3.32292in</Top>
+        <Left>1.99295in</Left>
         <Height>0.25in</Height>
-        <Width>1.65972in</Width>
-        <ZIndex>18</ZIndex>
+        <Width>1.54166in</Width>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -594,11 +570,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>3.66195in</Top>
-        <Left>3.58904in</Left>
+        <Top>3.64236in</Top>
+        <Left>3.5867in</Left>
         <Height>0.25in</Height>
         <Width>1.03125in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -617,18 +593,23 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!PrincipalAmount.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <Format>'PHP' #,0.00;('PHP' #,0.00)</Format>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>3.66195in</Top>
-        <Left>4.68973in</Left>
+        <Top>3.64236in</Top>
+        <Left>5.10059in</Left>
         <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>20</ZIndex>
+        <Width>1.54165in</Width>
+        <ZIndex>18</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -655,11 +636,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>3.98139in</Top>
-        <Left>0.49876in</Left>
+        <Top>3.9618in</Top>
+        <Left>0.49642in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>19</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -678,17 +659,21 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!InterestRate.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>3.98139in</Top>
-        <Left>1.58209in</Left>
+        <Top>3.9618in</Top>
+        <Left>1.99295in</Left>
         <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>22</ZIndex>
+        <Width>1.5243in</Width>
+        <ZIndex>20</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -716,11 +701,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>3.98139in</Top>
-        <Left>3.58904in</Left>
+        <Top>3.9618in</Top>
+        <Left>3.5867in</Left>
         <Height>0.25in</Height>
         <Width>1.03125in</Width>
-        <ZIndex>23</ZIndex>
+        <ZIndex>21</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -739,18 +724,23 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!ProcessingFee.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <Format>'PHP' #,0.00;('PHP' #,0.00)</Format>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>3.98139in</Top>
-        <Left>4.68973in</Left>
+        <Top>3.9618in</Top>
+        <Left>5.10059in</Left>
         <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>24</ZIndex>
+        <Width>1.5243in</Width>
+        <ZIndex>22</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -777,11 +767,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>4.30084in</Top>
-        <Left>0.49876in</Left>
+        <Top>4.28125in</Top>
+        <Left>0.49642in</Left>
         <Height>0.25in</Height>
         <Width>1.42708in</Width>
-        <ZIndex>25</ZIndex>
+        <ZIndex>23</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -799,18 +789,22 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!StartDate.Value, "DTTransaction")</Value>
-                <Style />
+                <Value>=Format(First(Fields!StartDate.Value, "DTTransaction"),"MM/dd/yyyy")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>4.30084in</Top>
-        <Left>1.99529in</Left>
+        <Top>4.28125in</Top>
+        <Left>1.99295in</Left>
         <Height>0.25in</Height>
         <Width>1.5243in</Width>
-        <ZIndex>26</ZIndex>
+        <ZIndex>24</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -838,11 +832,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>4.30084in</Top>
-        <Left>3.58904in</Left>
+        <Top>4.28125in</Top>
+        <Left>3.5867in</Left>
         <Height>0.25in</Height>
         <Width>1.44444in</Width>
-        <ZIndex>27</ZIndex>
+        <ZIndex>25</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -860,19 +854,23 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!EndDate.Value, "DTTransaction")</Value>
-                <Style />
+                <Value>=Format(First(Fields!EndDate.Value, "DTTransaction"),"MM/dd/yyyy")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>4.30084in</Top>
-        <Left>5.10293in</Left>
+        <Top>4.28125in</Top>
+        <Left>5.10059in</Left>
         <Height>0.25in</Height>
         <Width>1.5243in</Width>
-        <ZIndex>28</ZIndex>
+        <ZIndex>26</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -899,11 +897,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>4.62029in</Top>
-        <Left>0.49876in</Left>
+        <Top>4.6007in</Top>
+        <Left>0.49642in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>29</ZIndex>
+        <ZIndex>27</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -922,17 +920,21 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!NumTerm.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>4.62029in</Top>
-        <Left>1.58209in</Left>
+        <Top>4.6007in</Top>
+        <Left>1.99295in</Left>
         <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>30</ZIndex>
+        <Width>1.5243in</Width>
+        <ZIndex>28</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -960,11 +962,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>4.62029in</Top>
-        <Left>3.58904in</Left>
+        <Top>4.6007in</Top>
+        <Left>3.5867in</Left>
         <Height>0.25in</Height>
         <Width>1.03125in</Width>
-        <ZIndex>31</ZIndex>
+        <ZIndex>29</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -983,18 +985,22 @@
             <TextRuns>
               <TextRun>
                 <Value>=First(Fields!Paid.Value, "DTTransaction")</Value>
-                <Style />
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>4.62029in</Top>
-        <Left>4.68973in</Left>
+        <Top>4.6007in</Top>
+        <Left>5.10059in</Left>
         <Height>0.25in</Height>
-        <Width>1.9375in</Width>
-        <ZIndex>32</ZIndex>
+        <Width>1.5243in</Width>
+        <ZIndex>30</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1038,7 +1044,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox35</rd:DefaultName>
@@ -1068,7 +1076,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox37</rd:DefaultName>
@@ -1098,7 +1108,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox39</rd:DefaultName>
@@ -1128,7 +1140,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox41</rd:DefaultName>
@@ -1159,11 +1173,13 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PayDate.Value</Value>
+                              <Value>=Format(Fields!PayDate.Value,"MM/dd/yyyy")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PayDate</rd:DefaultName>
@@ -1190,7 +1206,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PayAmount.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'PHP' #,0.00;('PHP' #,0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1220,7 +1238,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Balance.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>'PHP' #,0.00;('PHP' #,0.00)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1253,7 +1273,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Paid</rd:DefaultName>
@@ -1293,11 +1315,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DTAmortization</DataSetName>
-        <Top>5.15501in</Top>
-        <Left>0.49876in</Left>
+        <Top>5.13542in</Top>
+        <Left>0.49642in</Left>
         <Height>0.5in</Height>
         <Width>6.12847in</Width>
-        <ZIndex>33</ZIndex>
+        <ZIndex>31</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1320,11 +1342,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>5.87501in</Top>
-        <Left>0.49875in</Left>
+        <Top>5.85542in</Top>
+        <Left>0.49641in</Left>
         <Height>0.25in</Height>
         <Width>0.71875in</Width>
-        <ZIndex>34</ZIndex>
+        <ZIndex>32</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1349,11 +1371,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>5.87501in</Top>
-        <Left>1.28695in</Left>
+        <Top>5.85542in</Top>
+        <Left>1.28461in</Left>
         <Height>0.25in</Height>
         <Width>2.23264in</Width>
-        <ZIndex>35</ZIndex>
+        <ZIndex>33</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1381,11 +1403,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>5.87501in</Top>
-        <Left>3.58903in</Left>
+        <Top>5.85542in</Top>
+        <Left>3.58669in</Left>
         <Height>0.25in</Height>
         <Width>0.625in</Width>
-        <ZIndex>36</ZIndex>
+        <ZIndex>34</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1411,11 +1433,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>5.87501in</Top>
-        <Left>4.28348in</Left>
+        <Top>5.85542in</Top>
+        <Left>4.28114in</Left>
         <Height>0.25in</Height>
         <Width>2.34375in</Width>
-        <ZIndex>37</ZIndex>
+        <ZIndex>35</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1427,11 +1449,11 @@
         </Style>
       </Textbox>
       <Line Name="Line1">
-        <Top>6.23834in</Top>
-        <Left>1.28695in</Left>
+        <Top>6.13125in</Top>
+        <Left>1.28461in</Left>
         <Height>0in</Height>
         <Width>2.23264in</Width>
-        <ZIndex>38</ZIndex>
+        <ZIndex>36</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1440,11 +1462,11 @@
         </Style>
       </Line>
       <Line Name="Line2">
-        <Top>6.23834in</Top>
-        <Left>4.28348in</Left>
+        <Top>6.13125in</Top>
+        <Left>4.27628in</Left>
         <Height>0in</Height>
         <Width>2.34375in</Width>
-        <ZIndex>39</ZIndex>
+        <ZIndex>37</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1466,11 +1488,11 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>6.30778in</Top>
-        <Left>1.28695in</Left>
+        <Top>6.16319in</Top>
+        <Left>1.28461in</Left>
         <Height>0.25in</Height>
         <Width>2.23264in</Width>
-        <ZIndex>40</ZIndex>
+        <ZIndex>38</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1496,11 +1518,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>6.30778in</Top>
-        <Left>4.28348in</Left>
+        <Top>6.16319in</Top>
+        <Left>4.28114in</Left>
         <Height>0.25in</Height>
         <Width>2.34375in</Width>
-        <ZIndex>41</ZIndex>
+        <ZIndex>39</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1515,27 +1537,92 @@
         <Source>Embedded</Source>
         <Value>npfisbanner</Value>
         <Sizing>FitProportional</Sizing>
-        <Top>0.51959in</Top>
-        <Left>0.49875in</Left>
+        <Top>0.5in</Top>
+        <Left>0.49641in</Left>
         <Height>1.10417in</Height>
         <Width>6.12848in</Width>
-        <ZIndex>42</ZIndex>
+        <ZIndex>40</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Image>
+      <Textbox Name="lblMemberName10">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Cheque Amount:</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <Top>3.64374in</Top>
+        <Left>0.49641in</Left>
+        <Height>0.25in</Height>
+        <Width>1.29167in</Width>
+        <ZIndex>41</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="txtMemberName11">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!ChequeAmount.Value, "DTTransaction")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <Format>'PHP' #,0.00;('PHP' #,0.00)</Format>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>3.64374in</Top>
+        <Left>1.99295in</Left>
+        <Height>0.25in</Height>
+        <Width>1.52429in</Width>
+        <ZIndex>42</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>6.97917in</Height>
+    <Height>7.12152in</Height>
     <Style />
   </Body>
-  <Width>7.32514in</Width>
+  <Width>7.62489in</Width>
   <Page>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <LeftMargin>0.5in</LeftMargin>
+    <RightMargin>0.5in</RightMargin>
+    <TopMargin>0.5in</TopMargin>
+    <BottomMargin>0.5in</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -1670,6 +1757,10 @@
         <Field Name="Description">
           <DataField>Description</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ChequeAmount">
+          <DataField>ChequeAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

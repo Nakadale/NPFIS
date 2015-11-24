@@ -128,6 +128,7 @@
                                 </Columns>
                             <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
                             <RowStyle Height="25px" />
+                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
                             </asp:GridView>
                             </center>
                         </ContentTemplate>

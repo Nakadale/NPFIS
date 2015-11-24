@@ -28,7 +28,7 @@ namespace NPFIS_Draft_
 
                 {
                     cnn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE userid=@userid and password=@password", cnn);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE userid=@userid and password=@password and allow = 1", cnn);
                     cmd.Parameters.AddWithValue("@userid", user);
                     cmd.Parameters.AddWithValue("@password", password);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -37,13 +37,20 @@ namespace NPFIS_Draft_
 
                     if (dt.Rows.Count > 0)
                     {
+                        if (dt.Rows[0]["Active"].ToString() == "False")
+                        {
                         Session["Name"] = dt.Rows[0]["Name"].ToString();
                         Session["User"] = user;
+                        cmd.CommandText = "Update Users Set Active = 1 where UserID = @userid";
+                        cmd.ExecuteNonQuery();
+
                         Response.Redirect("LandingPage.aspx");
-
-                        //hdnMessage.Value = "Login Success.";
-                        //ScriptManager.RegisterStartupScript(this, typeof(Page), "Login", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.success($('#hdnMessage').val());});", true);
-
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionError", @"$(document).ready(function(){alertify.error('Login failed! User is already logged in.');});", true);
+                            return;
+                        }
                     }
                     else
                     {

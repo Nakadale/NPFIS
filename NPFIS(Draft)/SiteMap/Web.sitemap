@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+  <siteMapNode url="~/LandingPage.aspx" title="Home" >
+    <siteMapNode title="Member Maintenance" >
+
+    </siteMapNode>
+    <siteMapNode title="Loan Maintenance" >
+
+    </siteMapNode>
+    <siteMapNode title="Library Maintenance" >
+
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

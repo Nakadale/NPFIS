@@ -13,6 +13,7 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch2" class="btn btn-info btn-sm">Search</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="btnSave" runat="server" CssClass="btn btn-info btn-sm" Text="Save" OnClick="btnSave_Click" ValidationGroup="InputGroup" />
+                <ajaxToolkit:ConfirmButtonExtender ID="btnSave_ConfirmButtonExtender" runat="server" ConfirmText="Do you wish to create this Loan Transaction?" TargetControlID="btnSave" />
             </div>
             <br />
             <br />
@@ -149,7 +150,13 @@
                                 <ajaxToolkit:CalendarExtender ID="CEChequeReleasedDate" runat="server" Format="MM/dd/yyyy" TargetControlID="TxtChequeReleasedDate" />
                             </div>
                             <div>
-                                <asp:Label ID="Label11" runat="server" Text="Computed Principal Amount: "></asp:Label>
+                                <asp:Label ID="Label17" runat="server" Text="Cheque Amount: "></asp:Label>
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator9" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtPrincipalAmount" ErrorMessage="numbers only are accepted" Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationExpression="^(-)?\d+(\.\d\d)?$" Display="Dynamic">*</asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtPrincipalAmount" ErrorMessage="No Cheque Amount entered" Font-Bold="True" Font-Size="Large" ForeColor="Red" Display="Dynamic">*</asp:RequiredFieldValidator>
+                                <asp:TextBox ID="txtChequeAmount" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div>
+                                <asp:Label ID="Label11" runat="server" Text="Principal Amount: "></asp:Label>
                                 <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtPrincipalAmount" ErrorMessage="numbers only are accepted" Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationExpression="^(-)?\d+(\.\d\d)?$" Display="Dynamic">*</asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtPrincipalAmount" ErrorMessage="No Principal Amount entered" Font-Bold="True" Font-Size="Large" ForeColor="Red" Display="Dynamic">*</asp:RequiredFieldValidator>
                                 <asp:TextBox ID="TxtPrincipalAmount" runat="server" CssClass="form-control"></asp:TextBox>
@@ -178,12 +185,12 @@
                                 <asp:Label ID="Label15" runat="server" Text="Start Date of Amortization: "></asp:Label>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtStartAmort" ErrorMessage="No Start Amortization date" Font-Bold="True" Font-Size="Large" ForeColor="Red" Display="Dynamic">*</asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ValidationGroup="InputGroup" ControlToValidate="TxtStartAmort" ErrorMessage="Invalid Date Format" Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationExpression="^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$" Display="Dynamic">*</asp:RegularExpressionValidator>
-                                <asp:TextBox ID="TxtStartAmort" runat="server" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="TxtStartAmort" runat="server" CssClass="form-control" OnTextChanged="TxtStartAmort_TextChanged"></asp:TextBox>
                                 <ajaxToolkit:CalendarExtender ID="CEStartAmort" runat="server" Format="MM/dd/yyyy" TargetControlID="TxtStartAmort" />
                             </div>
                             <div>
                                 <asp:Label ID="Label16" runat="server" Text="End Date of Amortization: "></asp:Label>
-                                <asp:TextBox ID="TxtEndAmort" runat="server" CssClass="form-control" ReadOnly="True"></asp:TextBox>
+                                <asp:TextBox ID="TxtEndAmort" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="checkbox in-line">
                                 <center>

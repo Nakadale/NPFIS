@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<siteMap>
-  <siteMapNode title="Home" url="~/LandingPage.aspx" >
-    <siteMapNode title="Member Maintenance" >
-      <siteMapNode title="Member's Maintenance" url="~/Member_Maintenance.aspx">
-        <siteMapNode title="Member Search" url="~/Member_Browse.aspx"/>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" > 
+<siteMapNode url="~/LandingPage.aspx" title="Home" >
+  <siteMapNode url="~/Redirect1.aspx" title="Member Maintenance" >
+      <siteMapNode url="~/Member_Maintenance.aspx" title="Member's Maintenance" >
+        <siteMapNode url="~/Member_Browse.aspx" title="Member Search" />
       </siteMapNode>
-      <siteMapNode title="Member's Summary" url="~/Members_Summary.aspx"/>
-      <siteMapNode title="Member's Shares Management" url="~/Members_Share.aspx"/>
-      <siteMapNode title="Member's Summary Report" url="~/NPF_Members_Summary_Report.aspx"/>
-      <siteMapNode title="List of Borrower's for Salary Deduction" url="~/Salary_Deduction_Report.aspx"/>
-      <siteMapNode title="Remittance of Shares and Loans" url="~/Remittance_of_Shares_Loans.aspx"/>
-    </siteMapNode>
-    <siteMapNode title="Loan Maintenance" >
-      <siteMapNode title="Loan Management" url="~/LoanManagement.aspx"/>
-      <siteMapNode title="Loan Application Form" url="~/NewLoanTransaction.aspx"/>
-      <siteMapNode title="Member's Amortization Schedule Report" url="~/Members_Amortization_Report.aspx"/>
-      <siteMapNode title="Member's Loan Summary Report" url="~/Member_Loan_Summary.aspx"/>
-    </siteMapNode>
-    <siteMapNode title="Library Maintenance" >
-      <siteMapNode title="Signatory Library" url="~/Signatory_Library.aspx"/>
-      <siteMapNode title="Branch/Division Library" url="~/Branch_Division_Library.aspx"/>
-      <siteMapNode title="User Maintenance" url="~/User_Maintenance.aspx"/>
-      <siteMapNode title="Import Loan Transactions" url="~/Import_Loan_Transact.aspx"/>
-    </siteMapNode>
+      <siteMapNode url="~/Members_Summary.aspx" title="Member's Summary" />
+      <siteMapNode url="~/Members_Share.aspx" title="Member's Shares Management" />
+      <siteMapNode url="~/Members_Summary_Report.aspx" title="Member's Summary Report" />
+      <siteMapNode url="~/Remittance_of_Loans.aspx" title="Remittance of Loans" >
+        <siteMapNode url="~/RemittanceOfLoansPreview.aspx" title="Remittance of Loans Preview" />
+      </siteMapNode>
+      <siteMapNode url="~/Remittance_of_Contributions.aspx" title="Remittance of Contributions" >
+        <siteMapNode url="~/RemittanceOfContributionPreview.aspx" title="Remittance of Contributions Preview" />
+      </siteMapNode>
   </siteMapNode>
+  <siteMapNode url="~/Redirect2.aspx" title="Loan Maintenance" >
+    <siteMapNode url="~/LoanManagement.aspx" title="Loan Management" />
+    <siteMapNode url="~/NewLoanTransaction.aspx" title="New Loan" />
+    <siteMapNode url="~/ListOfBorrowers.aspx" title="List of Borrower's for Salary Deduction" />
+    <siteMapNode url="~/Members_Amortization_Report.aspx" title="Member's Amortization Schedule Report" >
+      <siteMapNode url="~/Member_Loan_Summary.aspx" title="Print Preview" />
+    </siteMapNode>
+    <siteMapNode url="~/Member_LoanSummary_Report.aspx" title="Member's Loan Summary Report" />
+  </siteMapNode>
+  <siteMapNode url="~/Redirect3.aspx" title="Library Maintenance" >
+    <siteMapNode url="~/Signatory_Library.aspx" title="Signatory Library" />
+    <siteMapNode url="~/Branch_Division_Library.aspx" title="Branch/Division Library" />
+    <siteMapNode url="~/User_Maintenance.aspx" title="User Maintenance" />
+    <siteMapNode url="~/Import_Loan_Transact.aspx" title="Import Loan Transactions" />
+    <siteMapNode url="~/Import.aspx" title="Import Member Contributions" />
+    <siteMapNode url="~/Loan_Library_Maintenance.aspx" title="Loan Library Maintenance" />
+
+  </siteMapNode>
+</siteMapNode>
 </siteMap>

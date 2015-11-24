@@ -216,7 +216,7 @@
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
-                        <asp:TemplateField></asp:TemplateField>
+                        <asp:TemplateField Visible="False"></asp:TemplateField>
                     </Columns>
                     <EditRowStyle BackColor="#2461BF" />
                     <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -248,10 +248,12 @@
                     <Columns>
                         <asp:TemplateField HeaderText="Type" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Label ID="lblType" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
+                                <asp:Label ID="lblType" runat="server" Text='<%# Bind("LoanType") %>'></asp:Label>
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Date" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
@@ -259,6 +261,8 @@
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Prin. amt." ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
@@ -266,6 +270,7 @@
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                             </ItemTemplate>
+                            <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Int. amt." ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
@@ -273,6 +278,7 @@
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                             </ItemTemplate>
+                            <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Serv. fee" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
@@ -280,6 +286,7 @@
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                             </ItemTemplate>
+                            <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Pay terms" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
@@ -287,13 +294,15 @@
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                             </ItemTemplate>
+                            <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Balance" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance") %>'></asp:Label>
+                                <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance", "{0:#,0.00}") %>'></asp:Label>
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                             </ItemTemplate>
+                            <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
                     <EditRowStyle BackColor="#2461BF" />

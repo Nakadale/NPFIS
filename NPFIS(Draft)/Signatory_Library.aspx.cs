@@ -11,6 +11,10 @@ namespace NPFIS_Draft_
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["User"] == null)
+            {
+                Response.Redirect("WebLogin.aspx");
+            }
             if (!IsPostBack)
             {
                 //DropDownList ddlSignatureNum = (DropDownList)ddlSigNum;
@@ -139,6 +143,7 @@ namespace NPFIS_Draft_
                     this.TxtNotedBy.Enabled = false;
                     this.TxtPosition.Enabled = false;
                     this.TxtAdministrator.Enabled = false;
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Signatures saved!');});", true);
                 }
                 else
                 {
@@ -149,6 +154,7 @@ namespace NPFIS_Draft_
             { // for insertion of new transactions
                 if (SignatoryHelper.InsertSignatory(ddlSignatoryNum, TxtAdministrator, TxtPosition, TxtNotedBy, TxtNotedByPosition, TxtPreparedBy, TxtPrepareByPosition, TxtEncodedBy, TxtEncodedByPosition))
                 {
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Signatures saved!');});", true);
                     //will put up something with more flair here
                 }
                 else

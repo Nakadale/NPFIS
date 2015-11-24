@@ -15,6 +15,8 @@ namespace NPFIS_Draft_
             {
                 Response.Redirect("WebLogin.aspx");
             }
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#LibraryMaintenance').collapse('show');", true);
+
         }
 
         protected void btnNew_Click(object sender, EventArgs e)
@@ -23,14 +25,18 @@ namespace NPFIS_Draft_
             txtbxPassword.Enabled = true;
             txtbxUsername.Enabled = true;
             txtbxVerifyPassword.Enabled = true;
-            chckbxActiveUser.Enabled = true;
+            //chckbxActiveUser.Enabled = true;
             chckbxAllowUser.Enabled = true;
             txtbxName.Text = "";
             txtbxPassword.Text = "";
             txtbxUsername.Text = "";
             txtbxVerifyPassword.Text = "";
-            chckbxActiveUser.Checked = false;
-            chckbxAllowUser.Checked = false;
+            //chckbxActiveUser.Checked = false;
+            //chckbxAllowUser.Checked = false;
+            btnSave.Enabled = true;
+            btnEdit.Enabled = false;
+            btnCancel.Enabled = true;
+            btnDelete.Enabled = false;
         }
 
         protected void btnSearchMember_Click(object sender, EventArgs e)
@@ -47,14 +53,8 @@ namespace NPFIS_Draft_
             gvSearch.DataBind();
         }
 
-        protected void gvSearch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         protected void gvSearch_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
             //UserMHelper.LoadUserInformation();
         }
 
@@ -64,7 +64,6 @@ namespace NPFIS_Draft_
             {
                 GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
                 int RowIndex = gvr.RowIndex;
-
                 TextBox Member = (TextBox)this.txtbxName;
                 TextBox Username = (TextBox)this.txtbxUsername;
                 TextBox Password = (TextBox)this.txtbxPassword;
@@ -75,6 +74,9 @@ namespace NPFIS_Draft_
                 UserMHelper.LoadUserInformation(Origusername, Username, Member, Password, VPassword, ChkAllow, ChkActive);
                 gvSearch.DataSource = null;
                 gvSearch.DataBind();
+                Session["UserID"] = Username.Text;
+                btnEdit.Enabled = true;
+                btnDelete.Enabled = true;
             }
         }
 
@@ -86,6 +88,11 @@ namespace NPFIS_Draft_
             txtbxVerifyPassword.Enabled = true;
             chckbxAllowUser.Enabled = true;
             chckbxActiveUser.Enabled = true;
+            btnNew.Enabled = false;
+            btnEdit.Enabled = false;
+            btnSave.Enabled = true;
+            btnCancel.Enabled = true;
+            btnDelete.Enabled = false;
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -99,12 +106,40 @@ namespace NPFIS_Draft_
 
             if (Password != VPassword)
             {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Password does not match!');});", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.error('Password does not match!');});", true);
+                return;
+            }
+            //!String.IsNullOrEmpty(ViewState["UserID"].ToString())) || 
+
+            if ((UserMHelper.CheckIfExist(txtbxUsername.Text)) && btnNew.Enabled == true)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "Duplicate", @"$(document).ready(function(){alertify.error('Duplicate User. Please use a different User ID.');});", true);
                 return;
             }
 
+            if ((UserMHelper.CheckIfExist(txtbxUsername.Text)) || btnNew.Enabled == false)
+            {
+                    if (UserMHelper.UpdateUser(Session["UserID"].ToString(), UserID, Name, Password, ChAllow, ChActive))
+                    {
+                        ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('User saved!');});", true);
+                        ViewState["UserID"] = null;
+                        txtbxName.Text = "";
+                        txtbxPassword.Text = "";
+                        txtbxUsername.Text = "";
+                        txtbxVerifyPassword.Text = "";
+                        chckbxActiveUser.Checked = false;
+                        chckbxAllowUser.Checked = false;
+                        btnNew.Enabled = true;
+                        //btnEdit.Enabled = false;
+                        //btnDelete.Enabled = false;
+                        btnSave.Enabled = false;
+                        btnCancel.Enabled = false;
+                        return;
+                    }
+                return;
+            }
             // for insertion of new transactions
-            if (UserMHelper.InsertUser(UserID,Name, Password, ChAllow,ChActive))
+            else if (UserMHelper.InsertUser(UserID,Name, Password, ChAllow,ChActive))
             {
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('User saved!');});", true);
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
@@ -114,6 +149,11 @@ namespace NPFIS_Draft_
                     txtbxVerifyPassword.Text = "";
                     chckbxActiveUser.Checked = false;
                     chckbxAllowUser.Checked = false;
+                    btnNew.Enabled = true;
+                    //btnEdit.Enabled = false;
+                    //btnDelete.Enabled = false;
+                    btnSave.Enabled = false;
+                    btnCancel.Enabled = false;
             }
         }
 
@@ -131,6 +171,11 @@ namespace NPFIS_Draft_
             txtbxVerifyPassword.Text = "";
             chckbxActiveUser.Checked = false;
             chckbxAllowUser.Checked = false;
+            btnNew.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+            btnCancel.Enabled = false;
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -144,7 +189,11 @@ namespace NPFIS_Draft_
             txtbxVerifyPassword.Text = "";
             chckbxActiveUser.Checked = false;
             chckbxAllowUser.Checked = false;
-
+            btnNew.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnSave.Enabled = false;
+            btnCancel.Enabled = false;
         }
     }
 }

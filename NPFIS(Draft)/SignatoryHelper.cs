@@ -189,7 +189,7 @@ namespace NPFIS_Draft_
                     CMD.Parameters.AddWithValue("@TxtPosition", TxtPosition);
                     CMD.Parameters.AddWithValue("@TxtNotedBy", TxtNotedBy);
                     CMD.Parameters.AddWithValue("@TxtNotedByPosition", TxtNotedByPosition);
-                    CMD.Parameters.AddWithValue("@TxtPreparedBy", TxtPrepareByPosition);
+                    CMD.Parameters.AddWithValue("@TxtPreparedBy", TxtPreparedBy);
                     CMD.Parameters.AddWithValue("@TxtPrepareByPosition", TxtPrepareByPosition);
                     CMD.Parameters.AddWithValue("@TxtEncodedBy", TxtEncodedBy);
                     CMD.Parameters.AddWithValue("@TxtEncodedByPosition", TxtEncodedByPosition);
