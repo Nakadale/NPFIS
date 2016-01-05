@@ -23,37 +23,37 @@
                             <br />
                             <br />
                             <center>
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" AllowPaging="True" EnableModelValidation="False" OnRowDataBound="gvSearch_RowDataBound" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" AllowPaging="True" EnableModelValidation="False" OnRowDataBound="gvSearch_RowDataBound" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" OnPageIndexChanging="gvSearch_PageIndexChanging">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
                                         <asp:Label ID="lblEmpIDDisp" runat="server" Text='<%# Bind("EMPID") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                     <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Surname">
                                     <ItemTemplate>
                                         <asp:Label ID="lblSurnameDisp" runat="server" Text='<%# Bind("LASTNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                      <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="First Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblFirstNameDisp" runat="server" Text='<%# Bind("FIRSTNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                     <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Middle Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblMiddleNameDisp" runat="server" Text='<%# Bind("MIDNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                     <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Date of Birth">
                                     <ItemTemplate>
                                         <asp:Label ID="lblDateOfBirthDisp" runat="server" Text='<%# Bind("BIRTHDATE","{0:MMM dd, yyyy}") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                      <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Show Transactions">
                                     <ItemTemplate>
@@ -61,6 +61,7 @@
                                         <asp:LinkButton ID="lnkSelect" runat="server" CommandName="Preview" CssClass="btn btn-info btn-sm" Visible="False">Preview</asp:LinkButton>
                                         </center>
                                     </ItemTemplate>
+                                      <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Branch" Visible="False">
                                     <ItemTemplate>

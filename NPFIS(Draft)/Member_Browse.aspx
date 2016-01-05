@@ -59,37 +59,37 @@
                                 <br />
                                 <br />
                                 <center>
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" AllowPaging="True" ShowFooter="True">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" AllowPaging="True" ShowFooter="False" OnPageIndexChanging="gvSearch_PageIndexChanging">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
                                         <asp:Label ID="lblEmpIDDisp" runat="server" Text='<%# Bind("EMPID") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                      <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Surname">
                                     <ItemTemplate>
                                         <asp:Label ID="lblSurnameDisp" runat="server" Text='<%# Bind("LASTNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                     <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="First Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblFirstNameDisp" runat="server" Text='<%# Bind("FIRSTNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                     <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Middle Name">
                                     <ItemTemplate>
                                         <asp:Label ID="lblMiddleNameDisp" runat="server" Text='<%# Bind("MIDNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                      <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Date of Birth">
                                     <ItemTemplate>
                                         <asp:Label ID="lblDateOfBirthDisp" runat="server" Text='<%# Bind("BIRTHDATE","{0:MMM dd, yyyy}") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                    <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Show Details">
                                     <ItemTemplate>
@@ -125,30 +125,20 @@
         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
         
-       
-
-        <div>
+       <div id="main">
+       <div style="width: 800px" class="row">
+        <div style="width: 350px;" class="col-md-4">
                 <asp:Label ID="lblempid" runat="server" Text="Employee ID:"></asp:Label> &nbsp 
                 <asp:TextBox ID="txtbxEmpid" runat="server" CssClass="form-control" 
                     Width="150px" Enabled="False"></asp:TextBox>
                
-                <br />
-                
-            
-            </div> <br />
-            <div>
-                <asp:Label ID="lblLastname" runat="server" Text="Lastname:"></asp:Label> &nbsp
+             <asp:Label ID="lblLastname" runat="server" Text="Lastname: "></asp:Label> &nbsp
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
                     ControlToValidate="txtbxLastname" ErrorMessage="Please Enter Lastname" 
                     ForeColor="Red" ValidationGroup="VGSave" Font-Bold="True" 
                     Font-Size="Large">*</asp:RequiredFieldValidator>
                 <asp:TextBox ID="txtbxLastname" runat="server" CssClass="form-control" 
                     Width="250px" Enabled="False"></asp:TextBox>
-                <br />
-                
-            </div> <br />
-        
-        <div>
                 <asp:Label ID="lblFirstname" runat="server" Text="Firstname:"></asp:Label> &nbsp
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
                     ControlToValidate="txtbxFirstname" ErrorMessage="Please enter Firstname" 
@@ -157,12 +147,6 @@
               <br />
                 <asp:TextBox ID="txtbxFirstname" runat="server" CssClass="form-control" 
                     Width="250px" Enabled="False"></asp:TextBox>
-              
-            
-            </div> <br />
-        
-
-        <div>
                 <asp:Label ID="lblMiddlename" runat="server" Text="Middlename:"></asp:Label> &nbsp
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
                     ControlToValidate="txtbxMidname" ErrorMessage="Please enter Middlename" 
@@ -170,78 +154,70 @@
                 <br />
                 <asp:TextBox ID="txtbxMidname" runat="server" CssClass="form-control" 
                     Width="250px" Enabled="False"></asp:TextBox>
-              
-            
-            </div> <br />
-
-
-        <div>
-                <asp:Label ID="lblBirthday" runat="server" Text="Birth Date:"></asp:Label> &nbsp
+             <asp:Label ID="lblBirthday" runat="server" Text="Birth Date:"></asp:Label> &nbsp
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" 
                     ControlToValidate="txtbxBirthdate" ErrorMessage="Please enter Birthdate" 
                     Font-Size="Large" ForeColor="Red" ValidationGroup="VGSave">*</asp:RequiredFieldValidator>
-                <br />
-                <asp:TextBox ID="txtbxBirthdate" runat="server" CssClass="form-control" 
-                    Width="400px" Enabled="False"></asp:TextBox>
-            
-                <ajaxToolkit:CalendarExtender ID="txtbxBirthdate_CalendarExtender" 
-                    runat="server" TargetControlID="txtbxBirthdate" />
-            
-            </div> <br />
 
-            <div>
+                <br />
+               
+                <asp:TextBox ID="txtbxBirthdate" runat="server" CssClass="form-control" 
+                    Width="150px" Enabled="False"></asp:TextBox>
+           
+            </div> 
+        
+       
+            <div style="width: 450px;" class="col-md-4">
+
                 <asp:Label ID="lblContactno" runat="server" Text="Contact Number:"></asp:Label> &nbsp
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" 
                     ControlToValidate="txtbxContactno" ErrorMessage="Please enter Contact Number" 
                     Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationGroup="VGSave">*</asp:RequiredFieldValidator>
                 <br />
                 <asp:TextBox ID="txtbxContactno" runat="server" CssClass="form-control" 
-                    Width="400px" Enabled="False"></asp:TextBox>
-            
-            </div> <br />
+                    Width="150px" Enabled="False"></asp:TextBox>
 
-            <div>
-                <asp:Label ID="lblAddress" runat="server" Text="Address:"></asp:Label> &nbsp
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" 
-                    ControlToValidate="txtbxAddress" ErrorMessage="Please enter Address" 
-                    Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationGroup="VGSave">*</asp:RequiredFieldValidator>
-                <br />
-                <asp:TextBox ID="txtbxAddress" runat="server" CssClass="form-control" 
-                    Width="400px" Enabled="False"></asp:TextBox>
-            
-            </div> <br />
-
-            <div>
                 <asp:Label ID="lblSalary" runat="server" Text="Monthly Salary:"></asp:Label> &nbsp
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" 
                     ControlToValidate="txtbxSalary" ErrorMessage="Please enter Monthly Salary" 
                     Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationGroup="VGSave">*</asp:RequiredFieldValidator>
                 <br />
                 <asp:TextBox ID="txtbxSalary" runat="server" CssClass="form-control" 
-                    Width="400px" Enabled="False"></asp:TextBox>
-            
-            </div> <br />
+                    Width="150px" Enabled="False"></asp:TextBox>
 
-            <div>
-                <asp:Label ID="lblPercentageofshare" runat="server" Text="Percentage of Share:"></asp:Label> &nbsp
+                <asp:Label ID="lblPercentageofshare" runat="server" Text="Percent Share:"></asp:Label> &nbsp
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" 
                     ControlToValidate="txtbxPerofshare" 
                     ErrorMessage="Please enter Percentage of Share" Font-Bold="True" 
                     Font-Size="Large" ForeColor="Red" ValidationGroup="VGSave">*</asp:RequiredFieldValidator>
                 <br />
                 <asp:TextBox ID="txtbxPerofshare" runat="server" CssClass="form-control" 
-                    Width="400px" Enabled="False"></asp:TextBox>
-            
-            </div> <br />
-                <div>
-                <asp:Label ID="lblDivision" runat="server" Text="Division:"></asp:Label> &nbsp
+                    Width="150px" Enabled="False"></asp:TextBox>
+
+            <asp:Label ID="lblAddress" runat="server" Text="Address:"></asp:Label> &nbsp
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" 
+                    ControlToValidate="txtbxAddress" ErrorMessage="Please enter Address" 
+                    Font-Bold="True" Font-Size="Large" ForeColor="Red" ValidationGroup="VGSave">*</asp:RequiredFieldValidator>
+                <br />
+                <asp:TextBox ID="txtbxAddress" runat="server" CssClass="form-control" 
+                    Width="350px" Enabled="False"></asp:TextBox>
+
+            <asp:Label ID="lblDivision" runat="server" Text="Division:"></asp:Label> 
+                    <br />
+                   
                     <asp:DropDownList ID="ddlDivision" runat="server" 
-                        CssClass="btn btn-primary dropdown-toggle" Enabled="False">
+                        CssClass="btn btn-primary dropdown-toggle" Enabled="False" 
+                    Width="350px">
                     </asp:DropDownList>
-               <br />
-                
-            
-            </div> <br />
+                    <br />
+        Set Member as Active <asp:CheckBox Enabled="false" ID="CheckBox1" runat="server" />
+                <br />
+          </div> 
+
+         
+             <br />
+            </div>
+            </div>
         </ContentTemplate>
         </asp:UpdatePanel>
         <br />

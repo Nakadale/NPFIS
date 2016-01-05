@@ -24,7 +24,12 @@ namespace NPFIS_Draft_
             ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
 
         }
-
+        protected void gvSearch_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            gv.PageIndex = e.NewPageIndex;
+            BindTransactCode("");
+        }
         private void BindDivision(DropDownList ddlDivision)
         {
 
@@ -55,6 +60,9 @@ namespace NPFIS_Draft_
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            
+
+
             double salary;
             string monthlysalary = txtbxSalary.Text;
             string empid = this.txtbxEmpid.Text;
@@ -70,9 +78,9 @@ namespace NPFIS_Draft_
 
             {
                 if (Helper.UpdatingMembers(empid, address, contactno, birthdate, lastname, firstname, midname, salary, perofshare, divisionid))
-
-
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "UpdateSuccess", @"$(document).ready(function(){alertify.success('Update Success!');});", true);
+                {
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "UpdateSuccess", @"$(document).ready(function(){alertify.success('Update Success!');});", true);
+                }
             }
 
             txtbxEmpid.Text = "";
@@ -117,6 +125,7 @@ namespace NPFIS_Draft_
             txtbxSalary.Enabled = true;
             txtbxPerofshare.Enabled = true;
             ddlDivision.Enabled = true;
+            CheckBox1.Enabled = true;
 
 
 
@@ -147,9 +156,10 @@ namespace NPFIS_Draft_
                 TextBox salary = (TextBox)this.txtbxSalary;
                 TextBox perofshare = (TextBox)this.txtbxPerofshare;
                 DropDownList divisionid = (DropDownList)this.ddlDivision;
+                CheckBox ChkActive = (CheckBox)this.CheckBox1;
 
                 string tempempid = ((Label)gvSearch.Rows[RowIndex].FindControl("lblEmpIDDisp")).Text;
-                Helper.LoadSearchedMember(tempempid, empid, lastname, firstname, midname, divisionid, birthdate, contactno, address, salary, perofshare);
+                Helper.LoadSearchedMember(tempempid, empid, lastname, firstname, midname, divisionid, birthdate, contactno, address, salary, perofshare,ChkActive);
           
                 txtbxLastname.Enabled = false;
                 txtbxFirstname.Enabled = false;
@@ -160,6 +170,7 @@ namespace NPFIS_Draft_
                 txtbxSalary.Enabled = false;
                 txtbxPerofshare.Enabled = false;
                 ddlDivision.Enabled = false;
+                CheckBox1.Enabled = false;
 
                 if (String.IsNullOrEmpty(txtbxEmpid.Text))
                     btnEdit.Enabled = false;

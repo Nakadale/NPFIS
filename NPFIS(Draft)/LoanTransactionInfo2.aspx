@@ -97,7 +97,7 @@
                     <div class="checkbox in-line">
                         <center>
                             <br />
-                        <asp:CheckBox ID="CkPaidUpLoan" runat="server" Enabled="False" CssClass="checkbox" Text="Paid-up Loan:" AutoPostBack="True" />
+                        <asp:CheckBox ID="CkPaidUpLoan" runat="server" Enabled="False" CssClass="checkbox" Text="Paid-up Loan" AutoPostBack="True" />
                         </center>
                     </div>
                 </div>

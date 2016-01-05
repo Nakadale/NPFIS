@@ -160,6 +160,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="alertify\jquery-1.11.3.min.js" />
     <Content Include="alertify\jquery.js" />
+    <Content Include="Global.asax" />
     <Content Include="Image\bgBody.png" />
     <Content Include="Image\bgPage.png" />
     <Content Include="Image\NPFIS.jpg" />
@@ -1022,6 +1023,9 @@
     <Compile Include="Branch_Division_Library.aspx.designer.cs">
       <DependentUpon>Branch_Division_Library.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Ihelper.cs" />
     <Compile Include="Import_Loan_Transact.aspx.cs">
       <DependentUpon>Import_Loan_Transact.aspx</DependentUpon>
@@ -1271,7 +1275,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Image\Amortization_Schedule.rdlc" />
+    <EmbeddedResource Include="Reports\Amortization_Schedule.rdlc" />
     <EmbeddedResource Include="Reports\List_Of_Borrowers.rdlc" />
     <EmbeddedResource Include="Reports\Loan_Summary.rdlc" />
     <EmbeddedResource Include="Reports\MemberSummary.rdlc" />

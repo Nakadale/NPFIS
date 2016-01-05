@@ -57,11 +57,19 @@ namespace NPFIS_Draft_
                 TextBox branch = (TextBox)this.txtBranch;
                 string EmpID = ((Label)gvSearch.Rows[RowIndex].FindControl("lblEmpIDDisp")).Text;
                 helpers.LoadSearchedMember(EmpID, Member, branch, division);
-                gvTransactions.DataSource = helpers.LoadEmpTransactRecord(EmpID);
-                gvTransactions.DataKeyNames = new string[] { "LOANTYPE", "PRINCIPALAMOUNT", "DATEFILED", "BALANCE", "PAID", "TRANSACTCODE" };
-                gvTransactions.DataBind();
-                gvSearch.DataSource = null;
-                gvSearch.DataBind();
+                if (helpers.CheckIfLoanTransactionExist(EmpID))
+                {
+                    lblNumTran.Text = "";
+                    gvTransactions.DataSource = helpers.LoadEmpTransactRecord(EmpID);
+                    gvTransactions.DataKeyNames = new string[] { "LOANTYPE", "PRINCIPALAMOUNT", "DATEFILED", "BALANCE", "PAID", "TRANSACTCODE" };
+                    gvTransactions.DataBind();
+                    gvSearch.DataSource = null;
+                    gvSearch.DataBind();
+                }
+                else
+                {
+                    lblNumTran.Text = "No Loan History";
+                }
             }
         }
 
@@ -76,7 +84,9 @@ namespace NPFIS_Draft_
 
         protected void gvAmortizations_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            GridView gv = (GridView)sender;
+            int RowIndex = int.Parse(gv.SelectedIndex.ToString());
+            ((CheckBox)gv.Rows[RowIndex].FindControl("ckPaid")).Enabled = true;
         }
 
         protected void gvAmortizations_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -141,12 +151,12 @@ namespace NPFIS_Draft_
 
                 if ((bool)DataBinder.Eval(e.Row.DataItem, "Paid") == false)
                 {
-                    ((CheckBox)e.Row.FindControl("ckPaid")).Enabled = true;
+                    //((CheckBox)e.Row.FindControl("ckPaid")).Enabled = true;
                     ((CheckBox)e.Row.FindControl("ckPaid")).Checked = false;
                 }
                 else
                 {
-                    ((CheckBox)e.Row.FindControl("ckPaid")).Enabled = false;
+                    //((CheckBox)e.Row.FindControl("ckPaid")).Enabled = false;
                     ((CheckBox)e.Row.FindControl("ckPaid")).Checked = true;
 
                 }
@@ -164,11 +174,10 @@ namespace NPFIS_Draft_
 
         protected void gvAmortizations_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-        }
-
-        protected void ckPaid_CheckedChanged(object sender, EventArgs e)
-        {
-
+            //GridViewRow gvr = (GridViewRow)((e.CommandArgument));
+            //int RowIndex;
+            //int.TryParse(e.CommandArgument.ToString(),out RowIndex);
+            //((CheckBox)gvAmortizations.Rows[RowIndex].FindControl("ckPaid")).Enabled = true;
         }
 
         protected void ckPaid_CheckedChanged1(object sender, EventArgs e)
@@ -183,6 +192,7 @@ namespace NPFIS_Draft_
             {
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Transaction saved!');});", true);
                 //ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
+                helpers.UpdateLoanTransactionPaid(TransactCode);
             }
             else
             {
@@ -190,7 +200,12 @@ namespace NPFIS_Draft_
             }
         }
 
-
+        protected void gvSearch_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            gv.PageIndex = e.NewPageIndex;
+            BindTransactCode("");
+        }
 
 
     }

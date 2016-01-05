@@ -7,3 +7,8 @@ hr
 {
     margin: 5px;
 }
+
+.GridHeader
+{
+    text-align:center !important;   
+}

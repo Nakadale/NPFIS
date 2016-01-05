@@ -8,6 +8,8 @@
 
     <div class="panel panel-default panel-body">
         <div style="float: right">
+            <a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch2" data-id="#MemberSearch2" class="btn btn-info btn-sm">Search</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:Button ID="btnNew" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/NewLoanTransaction.aspx" Text="New" />
         </div>
         <br />
@@ -34,37 +36,37 @@
                             <br />
                             <center>
                             <br />
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" OnRowCommand="gvSearch_RowCommand" CellPadding="2" OnRowDataBound="gvSearch_RowDataBound" AllowPaging="True">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="700px" OnRowCommand="gvSearch_RowCommand" CellPadding="2" OnRowDataBound="gvSearch_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvSearch_PageIndexChanging">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
                                         <asp:Label ID="lblEmpIDDisp" runat="server" Text='<%# Bind("EMPID") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                    <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Last Name">
                                     <ItemTemplate>
                                         <asp:Label ID="Label8" runat="server" Text='<%# Bind("LASTNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                   <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="First Name">
                                     <ItemTemplate>
                                         <asp:Label ID="Label9" runat="server" Text='<%# Bind("FIRSTNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                   <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Middle Name">
                                     <ItemTemplate>
                                         <asp:Label ID="Label10" runat="server" Text='<%# Bind("MIDNAME") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                    <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Date of Birth">
                                     <ItemTemplate>
                                         <asp:Label ID="Label11" runat="server" Text='<%# Bind("BIRTHDATE","{0:MMM dd, yyyy}") %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle />
+                                    <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Show Details">
                                     <ItemTemplate>
@@ -97,10 +99,6 @@
                                 <div class="col-xs-8">
                                     <asp:Label ID="Label4" runat="server" Text="Member: "></asp:Label>
                                     <asp:TextBox ID="txtMemberSearch" runat="server" CssClass="form-control" OnTextChanged="txtMemberSearch_TextChanged" ReadOnly="True"></asp:TextBox>
-                                </div>
-                                <div>
-                                    <br />
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch2" data-id="#MemberSearch2" class="btn btn-info btn-sm">...</a>
                                 </div>
                                 <br />
                                 <div class="col-xs-8">
@@ -142,22 +140,29 @@
                                         <ItemTemplate>
                                             <asp:Label ID="lblLoanType" runat="server" Text='<%# Bind("LoanType") %>'></asp:Label>
                                         </ItemTemplate>
-                                        <ItemStyle />
+                                        <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Principal Amount">
                                         <ItemTemplate>
                                             <asp:Label ID="lblPrincipalAmountDisp" runat="server" Text='<%# Bind("PrincipalAmount","{0:#,0.00}") %>'></asp:Label>
                                         </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Right" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Loan Date">
                                         <ItemTemplate>
                                             <asp:Label ID="lblLoanDateDisp" runat="server" Text='<%# Bind("DateFiled","{0:MMM dd, yyyy}") %>'></asp:Label>
                                         </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Balance">
                                         <ItemTemplate>
                                             <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance","{0:#,0.00}") %>'></asp:Label>
                                         </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Right" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Paid">
                                         <ItemTemplate>
@@ -165,13 +170,15 @@
                                             <asp:CheckBox ID="ckPaidTransactionDisp" runat="server" Checked='<%# Bind("Paid") %>' Enabled="False" />
                                             </center>
                                         </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Show Details">
                                         <ItemTemplate>
                                             <center>
-                                            <asp:LinkButton ID="lnkSelectTransact" runat="server" CommandName="View" CssClass="btn btn-info btn-sm" OnClick="lnkSelectTransact_Click" data-target="#Amortizations">...</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkSelectTransact" runat="server" CommandName="View" CssClass="btn btn-info btn-xs" OnClick="lnkSelectTransact_Click" data-target="#Amortizations">...</asp:LinkButton>
                                             </center>
                                         </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Center" CssClass="GridHeader" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="TransactCode" Visible="False">
                                         <ItemTemplate>
@@ -179,12 +186,16 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
+                            <PagerStyle HorizontalAlign="Center" />
                             <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
                             <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
                             <RowStyle Height="25px" />
                             </asp:GridView>
                             </center>
-                                <br />
+                                <div class="col-xs-8">
+                                    <asp:Label ID="lblNumTran" runat="server" Text=""></asp:Label>
+                                </div>
+                                    <br />
                                 <br />
                                 <br />
                             </div>
@@ -203,23 +214,31 @@
                                             <ItemTemplate>
                                                 <asp:Label ID="lblDateDisp" runat="server" Text='<%# Bind("PayDate","{0:MMM dd, yyyy}") %>'></asp:Label>
                                             </ItemTemplate>
+                                            <HeaderStyle CssClass="GridHeader" />
+                                            <ItemStyle HorizontalAlign="Center" />
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Amount">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblAmountDisp" runat="server" Text='<%# Bind("PayAmount","{0:#,0.00}") %>'></asp:Label>
                                             </ItemTemplate>
+                                            <HeaderStyle CssClass="GridHeader" />
+                                            <ItemStyle HorizontalAlign="Right" />
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Balance">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance","{0:#,0.00}") %>'></asp:Label>
                                             </ItemTemplate>
+                                            <HeaderStyle CssClass="GridHeader" />
+                                            <ItemStyle HorizontalAlign="Right" />
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Paid">
                                             <ItemTemplate>
                                                 <center>
-                                            <asp:CheckBox ID="ckPaid" runat="server" AutoPostBack="True" OnCheckedChanged="ckPaid_CheckedChanged1"/>    
+                                            <asp:CheckBox ID="ckPaid" runat="server" AutoPostBack="True" OnCheckedChanged="ckPaid_CheckedChanged1" Enabled="False"/>    
                                             </center>
                                             </ItemTemplate>
+                                            <HeaderStyle CssClass="GridHeader" />
+                                            <ItemStyle HorizontalAlign="Right" />
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="TransactCode" Visible="False">
                                             <ItemTemplate>
@@ -232,7 +251,7 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
-                                    <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" />
+                                    <HeaderStyle BackColor="#337AB7" BorderColor="#337AB7" ForeColor="White" Height="25px" Wrap="False" HorizontalAlign="Center" />
                                     <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
                                     <RowStyle Height="25px" />
                                 </asp:GridView>

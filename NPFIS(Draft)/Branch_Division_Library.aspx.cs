@@ -66,23 +66,32 @@ namespace NPFIS_Draft_
                     string BranchID = ((Label)gvDivision.FooterRow.FindControl("lblBranchIDFooter")).Text;
                     string DivisionID = ((TextBox)gvDivision.FooterRow.FindControl("txtDivisionID")).Text;
                     string DivisionName = ((TextBox)gvDivision.FooterRow.FindControl("txtDivisionName")).Text;
-                    if (BranchHelper.CheckDivisionIDandDivisionName(DivisionID, DivisionName) == true)
+                    if (DivisionID != "")
                     {
-                        BranchHelper.InsertDivision(BranchID, DivisionID, DivisionName);
-                        ((Label)gvDivision.FooterRow.FindControl("lblBranchIDFooter")).Text = "";
-                        ((TextBox)gvDivision.FooterRow.FindControl("txtDivisionID")).Text = "";
-                        ((TextBox)gvDivision.FooterRow.FindControl("txtDivisionName")).Text = "";
-                        gvDivision.FooterRow.Visible = false;
+                        if (BranchHelper.CheckDivisionIDandDivisionName(DivisionID, DivisionName) == true)
+                        {
+                            BranchHelper.InsertDivision(BranchID, DivisionID, DivisionName);
+                            ((Label)gvDivision.FooterRow.FindControl("lblBranchIDFooter")).Text = "";
+                            ((TextBox)gvDivision.FooterRow.FindControl("txtDivisionID")).Text = "";
+                            ((TextBox)gvDivision.FooterRow.FindControl("txtDivisionName")).Text = "";
+                            gvDivision.FooterRow.Visible = false;
 
-                        string ddlBid = DDLBranchID.SelectedValue.ToString();
-                        gvDivision.DataSource = BranchHelper.LoadDivisionByBranch(ddlBid);
-                        gvDivision.DataBind();
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Division saved!');});", true);
+                            string ddlBid = DDLBranchID.SelectedValue.ToString();
+                            gvDivision.DataSource = BranchHelper.LoadDivisionByBranch(ddlBid);
+                            gvDivision.DataBind();
+                            ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Division saved!');});", true);
+
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.error('Division ID or Division Name already in use!');});", true);
+                        }
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.error('Division ID or Division Name already in use!');});", true);
+                        ScriptManager.RegisterStartupScript(this, typeof(Page), "Division_ID_Missing", @"$(document).ready(function(){alertify.error('Division ID is missing!');});", true);
                     }
+
                 }
                 btnAddSave.Attributes.Add("onclick", "");
             }
@@ -158,17 +167,26 @@ namespace NPFIS_Draft_
         {
             if (btnDeleteCancel.Text == "Delete")
             {
-                btnAddSave.Text = "Add";
-                btnDeleteCancel.Text = "Delete";
-                string DivisionID = ViewState["DivisionID"].ToString().Trim();
-                BranchHelper.DeleteDivision(DivisionID);
-                gvDivision.FooterRow.Visible = false;
+                //if (confirm("Are you sure you want to delete?"))
+                //{
+                string confirmValue = Request.Form["confirm_value"];
+                if (confirmValue == "Yes")
+                {
+                    btnAddSave.Text = "Add";
+                    btnDeleteCancel.Text = "Delete";
+                    string DivisionID = ViewState["DivisionID"].ToString().Trim();
+                    BranchHelper.DeleteDivision(DivisionID);
+                    gvDivision.FooterRow.Visible = false;
 
-                string ddlBid = DDLBranchID.SelectedValue.ToString();
-                gvDivision.DataSource = BranchHelper.LoadDivisionByBranch(ddlBid);
-                gvDivision.DataBind();
-                btnAddSave.Attributes.Add("onclick", "");
-                btnDeleteCancel.Enabled = false;
+                    string ddlBid = DDLBranchID.SelectedValue.ToString();
+                    gvDivision.DataSource = BranchHelper.LoadDivisionByBranch(ddlBid);
+                    gvDivision.DataBind();
+                    btnAddSave.Attributes.Add("onclick", "");
+                    btnDeleteCancel.Enabled = false;
+
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "TransactionSuccess", @"$(document).ready(function(){alertify.success('Division deleted!');});", true);
+                }
+                //}
             }
             else
             {
@@ -206,6 +224,7 @@ namespace NPFIS_Draft_
             string DivisionID = ((Label)gvDivision.Rows[gvDivision.SelectedIndex].FindControl("lblDivisionID")).Text;
             ViewState["DivisionID"] = DivisionID;
             btnDeleteCancel.Enabled = true;
+            btnDeleteCancel.Attributes.Add("onclick","ConfirmDel()");
         }
 
         protected void BTNUpdate_Click(object sender, EventArgs e)

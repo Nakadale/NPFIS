@@ -31,7 +31,12 @@ namespace NPFIS_Draft_
         protected void btnSave_Click(object sender, EventArgs e)
         {
 
-            if (string.IsNullOrWhiteSpace(txtbxempid.Text))
+            if (string.IsNullOrWhiteSpace(txtbxempid.Text) || ddlDivision.SelectedValue.ToString() == "" || 
+                string.IsNullOrWhiteSpace(txtbxPercentageofShare.Text) || string.IsNullOrWhiteSpace(txtbxMonthlySalary.Text) || 
+                string.IsNullOrWhiteSpace(txtbxMidlename.Text) || string.IsNullOrWhiteSpace(txtbxLastname.Text) || 
+                string.IsNullOrWhiteSpace(txtbxAddress.Text) || string.IsNullOrWhiteSpace(txtbxContactno.Text) || 
+                string.IsNullOrWhiteSpace(txtbxDateofBirth.Text) || string.IsNullOrWhiteSpace(txtbxFirstname.Text) 
+                )
             {
                 txtbxempid.Enabled = true;
                 txtbxAddress.Enabled = true;
@@ -43,171 +48,170 @@ namespace NPFIS_Draft_
                 txtbxMonthlySalary.Enabled = true;
                 txtbxPercentageofShare.Enabled = true;
                 ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Employee ID.";
+                hdnMessage.Value = "Please fill all fields";
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "empid", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
                 
             }
 
-            if (string.IsNullOrWhiteSpace(txtbxAddress.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Address.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Address", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtbxAddress.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter an Address.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Address", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtbxContactno.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Contact Number.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Contactno", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
+            //if (string.IsNullOrWhiteSpace(txtbxContactno.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a Contact Number.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Contactno", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
 
-            }
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtbxDateofBirth.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Date of Birth.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "DateofBirth", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
+            //if (string.IsNullOrWhiteSpace(txtbxDateofBirth.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a Date of Birth.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "DateofBirth", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
 
-            }
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtbxFirstname.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a First name.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Firstname", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtbxFirstname.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a First name.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Firstname", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtbxLastname.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Last name.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Lastname", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtbxLastname.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a Last name.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Lastname", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtbxMidlename.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Middle name.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Middlename", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtbxMidlename.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a Middle name.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Middlename", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtbxMonthlySalary.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Monthly Salary.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "MonthlySalary", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtbxMonthlySalary.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a Monthly Salary.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "MonthlySalary", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtbxPercentageofShare.Text))
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Percentage of Share.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "PercentageofShare", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtbxPercentageofShare.Text))
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a Percentage of Share.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "PercentageofShare", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
+            //}
 
-            if (ddlDivision.SelectedValue.ToString() == "")
-            {
-                txtbxempid.Enabled = true;
-                txtbxAddress.Enabled = true;
-                txtbxContactno.Enabled = true;
-                txtbxDateofBirth.Enabled = true;
-                txtbxFirstname.Enabled = true;
-                txtbxLastname.Enabled = true;
-                txtbxMidlename.Enabled = true;
-                txtbxMonthlySalary.Enabled = true;
-                txtbxPercentageofShare.Enabled = true;
-                ddlDivision.Enabled = true;
-                hdnMessage.Value = "Please enter a Division.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Division", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-                return;
-            }
+            //if (ddlDivision.SelectedValue.ToString() == "")
+            //{
+            //    txtbxempid.Enabled = true;
+            //    txtbxAddress.Enabled = true;
+            //    txtbxContactno.Enabled = true;
+            //    txtbxDateofBirth.Enabled = true;
+            //    txtbxFirstname.Enabled = true;
+            //    txtbxLastname.Enabled = true;
+            //    txtbxMidlename.Enabled = true;
+            //    txtbxMonthlySalary.Enabled = true;
+            //    txtbxPercentageofShare.Enabled = true;
+            //    ddlDivision.Enabled = true;
+            //    hdnMessage.Value = "Please enter a Division.";
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "Division", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+            //    return;
+            //}
 
             else
             {
 
                 string monthlysalary = txtbxMonthlySalary.Text;
-
                 string empid = txtbxempid.Text;
                 string address = txtbxAddress.Text;
                 string contactno = txtbxContactno.Text;
@@ -220,7 +224,7 @@ namespace NPFIS_Draft_
                 string divisionid = ddlDivision.SelectedValue;
                 double.TryParse(monthlysalary, out salary);
                 string userid = Session["User"].ToString();
-
+                bool active = CheckBox1.Checked;
 
 
 
@@ -234,12 +238,13 @@ namespace NPFIS_Draft_
                 txtbxMonthlySalary.Text = string.Empty;
                 txtbxPercentageofShare.Text = string.Empty;
                 ddlDivision.SelectedValue = string.Empty;
-               
-                Helper.InsertMemberMaintenance(empid, address, contactno, birthdate, firstname, lastname, midname, salary, perofshare, divisionid, userid);
-                hdnMessage.Value = "Success.";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "Success", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.success($('#hdnMessage').val());});", true);
+                CheckBox1.Checked = false;
 
-                return;
+                if (Helper.InsertMemberMaintenance(empid, address, contactno, birthdate, firstname, lastname, midname, salary, perofshare, divisionid, userid, active))
+                {
+                    hdnMessage.Value = "Success.";
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "Success", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.success($('#hdnMessage').val());});", true);
+                }
             }
 
         }
@@ -326,6 +331,8 @@ namespace NPFIS_Draft_
         {
             Response.Redirect("Member_Browse.aspx");
         }
+
+       
 
 
 

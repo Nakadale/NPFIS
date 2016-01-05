@@ -384,6 +384,37 @@ GROUP BY Member.empid, Member.firstname, Member.midname, Member.lastname, Divisi
 
     }
 
+    public static bool CompareLoan(string loanid)
+    {
+        using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
+        {
+
+
+            conn.Open();
+
+            string sql = @"SELECT count(loanid) as istherealoan from LoanTransaction where loanid='@loanid'";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@loanid", loanid);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+
+            DataTable dt = new DataTable();
+
+
+            da.Fill(dt);
+
+            if (dt.Rows.Count == 0)
+            {
+                //DataRow dr = dt.NewRow();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
+
     public static bool CompareLib(string loanid)
     {
         using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
@@ -412,21 +443,15 @@ GROUP BY Member.empid, Member.firstname, Member.midname, Member.lastname, Divisi
             {
                 return true;
             }
-            
-
-
-           
-
-
         }
     }
 
-    public static bool InsertMemberMaintenance(string empid, string address, string contactno, string birthdate, string firstname, string lastname, string midname, double salary, string perofshare, string divisionid, string userid)
+    public static bool InsertMemberMaintenance(string empid, string address, string contactno, string birthdate, string firstname, string lastname, string midname, double salary, string perofshare, string divisionid, string userid, bool active)
     {
         using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString))
         {
             conn.Open();
-            string sql = @"INSERT INTO Member (empid,lastname,firstname,midname,divisionid,birthdate,contactno,address,salary,perofshare,userid) VALUES(@empid,@lastname,@firstname,@midname,@divisionid,@birthdate,@contactno,@address,@salary,@perofshare, @userid)";
+            string sql = @"INSERT INTO Member (empid,lastname,firstname,midname,divisionid,birthdate,contactno,address,salary,perofshare,userid,active) VALUES(@empid,@lastname,@firstname,@midname,@divisionid,@birthdate,@contactno,@address,@salary,@perofshare, @userid, @active)";
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@empid", empid);
@@ -440,6 +465,7 @@ GROUP BY Member.empid, Member.firstname, Member.midname, Member.lastname, Divisi
                 cmd.Parameters.AddWithValue("@salary", salary);
                 cmd.Parameters.AddWithValue("@perofshare", perofshare);
                 cmd.Parameters.AddWithValue("@userid", userid);
+                cmd.Parameters.AddWithValue("@active", active);
 
 
 
@@ -468,7 +494,7 @@ GROUP BY Member.empid, Member.firstname, Member.midname, Member.lastname, Divisi
 
     public static void LoadSearchedMember(string querystring, TextBox empid, TextBox lastname, TextBox firstname,
         TextBox midname, DropDownList divisionid, TextBox birthdate, TextBox contactno, TextBox address, 
-        TextBox salary, TextBox perofshare)
+        TextBox salary, TextBox perofshare, CheckBox Active)
     {
         SqlConnection cnn = new SqlConnection();
         cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
@@ -495,6 +521,14 @@ GROUP BY Member.empid, Member.firstname, Member.midname, Member.lastname, Divisi
                     address.Text = dr["address"].ToString();
                     salary.Text = ((decimal)dr["salary"]).ToString("N", CultureInfo.InvariantCulture);
                     perofshare.Text = dr["perofshare"].ToString();
+                    if (((bool)dr["active"]).ToString() == "true" )
+                    {
+                        Active.Checked = true;
+                    }
+                    else
+                    {
+                        Active.Checked = false;
+                    }
 
                 }
             }

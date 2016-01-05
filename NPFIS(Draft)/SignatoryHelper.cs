@@ -180,7 +180,7 @@ namespace NPFIS_Draft_
                 cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
                 cnn.Open();
 
-                string sql = @"Update Signatories set AdminName = @TxtAdministrator, AdminPosition = @TxtPosition, NotedName = @TxtNotedBy, PreparedName = @TxtPreparedBy,
+                string sql = @"Update Signatories set AdminName = @TxtAdministrator, AdminPosition = @TxtPosition, NotedName = @TxtNotedBy, NotedPosition = @TxtNotedByPosition,  PreparedName = @TxtPreparedBy,
                 PreparedPosition = @TxtPrepareByPosition, EncodedName = @TxtEncodedBy, EncodedPosition = @TxtEncodedByPosition where SigNum = @SigNum";
                 using (SqlCommand CMD = new SqlCommand(sql, cnn))
                 {

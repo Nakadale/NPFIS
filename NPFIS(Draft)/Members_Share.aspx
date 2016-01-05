@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" EnableEventValidation="false"
     CodeBehind="Members_Share.aspx.cs" Inherits="NPFIS_Draft_.Members_Share" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
@@ -14,7 +14,7 @@
                             OnClick="btnRefresh_Click" />
                         &nbsp;<a data-toggle="collapse" data-parent="#accordion" href="#MemberSearch2" class="btn btn-info btn-sm">Search</a>
                         <asp:Button ID="Button1" runat="server" CssClass="btn btn-info btn-sm" Text="Save"
-                            OnClick="btnSave_Click" ValidationGroup="VGSave" />
+                            OnClick="btnSave_Click" ValidationGroup="VGSave" Visible="False" />
                         &nbsp;<asp:Button ID="btnEdit" runat="server" CssClass="btn btn-info btn-sm" Text="Edit"
                             OnClick="btnEdit_Click" Enabled="False" Visible="False" />
                     </div>
@@ -43,7 +43,7 @@
                                     <br />
                                     <br />
                                     <br />
-                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" AllowPaging="True" ShowFooter="True">
+                        <asp:GridView ID="gvSearch" runat="server" AutoGenerateColumns="False" Width="650px" CellPadding="2" OnRowCommand="gvSearch_RowCommand" OnSelectedIndexChanged="gvSearch_SelectedIndexChanged" AllowPaging="True" ShowFooter="False" OnPageIndexChanging="gvSearch_PageIndexChanging">
                             <Columns>
                                 <asp:TemplateField HeaderText="Employee ID">
                                     <ItemTemplate>
@@ -78,7 +78,9 @@
                                 <asp:TemplateField HeaderText="Show Details">
                                     <ItemTemplate>
                                         <center>
-                                        <asp:LinkButton ID="lnkSelect" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClientClick="$('#MemberSearch2').collapse('hide');">Select</asp:LinkButton>
+                                        
+                                            <asp:LinkButton ID="lnkSelect" runat="server" CommandName="Select" CssClass="btn btn-info btn-sm" OnClientClick="$('#MemberSearch2').collapse('hide'); $('#contribution').collapse('show')">Select</asp:LinkButton>
+                                        
                                         </center>
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -138,7 +140,7 @@
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell runat="server" Style="text-align: left">
-                                Percentage Share:
+                                Percent Share:
                                 <asp:TextBox ID="TxtPercentageShare" CssClass="form-control" Enabled="false" Width="50px"
                                     runat="server"></asp:TextBox>
                             </asp:TableCell>
@@ -154,18 +156,23 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
             <br />
-            <div>
+            
+            <div id="contribution" class="panel panel-collapse collapse in">
 
                 <asp:Label ID="Label2" runat="server" Text="Contributions: "></asp:Label>
                 <br />
-                <br />
-                <asp:LinkButton ID="lbtnAddNewContribution" runat="server" 
-                    CssClass="btn btn-info btn-sm" onclick="lbtnAddNewContribution_Click">Add New Contribution</asp:LinkButton>
+                    
+                    <br />
                 <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                     <ContentTemplate>
+                 <div>
+                <asp:LinkButton ID="lbtnAddNewContribution" runat="server" 
+                    CssClass="btn btn-info btn-sm" onclick="lbtnAddNewContribution_Click" 
+                        Enabled="True">Add New Contribution</asp:LinkButton>
+                    </div>
                         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                            ForeColor="#333333" HorizontalAlign="Left" OnSelectedIndexChanged="GridView1_SelectedIndexChanged"
-                            Width="700px" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" 
+                            ForeColor="#333333" OnSelectedIndexChanged="GridView1_SelectedIndexChanged"
+                            Width="700px" 
                             onpageindexchanging="GridView1_PageIndexChanging" 
                             onrowcancelingedit="GridView1_RowCancelingEdit" 
                             onrowcommand="GridView1_RowCommand" onrowdatabound="GridView1_RowDataBound" 
@@ -173,40 +180,45 @@
                             onrowupdating="GridView1_RowUpdating">
                             <AlternatingRowStyle BackColor="White" />
                             <Columns>
+                           
                                 <asp:TemplateField HeaderText="DATE REMIT">
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtbxeditremit" Text='<%# Bind("dateremit","{0:MMM dd, yyyy}") %>' runat="server" CssClass="form-control" 
+                                        <asp:TextBox ID="txtbxeditremit" Enabled="true" style="text-align:center" Text='<%# Bind("dateremit","{0:MMM dd, yyyy}") %>' runat="server" CssClass="form-control" 
                                             Width="148px"></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterTemplate>
-                                        <asp:Label ID="lbldateremit" runat="server" CssClass="form-control" 
-                                            Text='<%# Bind("dateremit","{0:MMM dd, yyyy}") %>' Width="148px"></asp:Label>
+                                        <asp:TextBox ID="txtremit" style="text-align:center" runat="server" CssClass="form-control" Text='<%# Bind("dateremit","{0:MMM dd, yyyy}") %>' Width="148px">
+                                        </asp:TextBox>
+                                        <%--<asp:Label ID="lbldateremit" runat="server" CssClass="form-control" 
+                                            Text='<%# Bind("dateremit","{0:MMM dd, yyyy}") %>' Width="148px"></asp:Label>--%>
                                     </FooterTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="lblDateremit" runat="server" Text='<%# Bind("dateremit","{0:MMM dd, yyyy}") %>'></asp:Label>
                                     </ItemTemplate>
                                     <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                                    <HeaderStyle HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                    <ItemStyle HorizontalAlign="Right" VerticalAlign="Middle" />
+                                    <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Center" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AMOUNT">
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtbxeditAmount" Text='<%# Bind("amount","{0:#,0.00}") %>' runat="server" CssClass="form-control" 
+                                        <asp:TextBox ID="txtbxeditAmount" style="text-align:center" Text='<%# Bind("amount","{0:#,0.00}") %>' runat="server" CssClass="form-control" 
                                             Width="150px"></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterTemplate>
-                                        <asp:TextBox ID="txtbxAmount" runat="server" CssClass="form-control" Width="150px"></asp:TextBox>
+                                        <asp:TextBox ID="txtbxAmount" style="text-align:center" runat="server" CssClass="form-control" Width="150px"></asp:TextBox>
                                     </FooterTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="lblAmount" runat="server" Text='<%# Bind("amount","{0:#,0.00}") %>'></asp:Label>
                                     </ItemTemplate>
                                     <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                                    <HeaderStyle HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                   <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Right" />
+                                    <ItemStyle HorizontalAlign="Right" VerticalAlign="Middle" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="SALARY">
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtbxEditSalary" Text='<%# Bind("salarybasis","{0:#,0.00}") %>' runat="server" CssClass="form-control" 
+                                        <asp:TextBox ID="txtbxEditSalary" style="text-align:center" Enabled="false" Text='<%# Bind("salarybasis","{0:#,0.00}") %>' runat="server" CssClass="form-control" 
                                             Width="150px"></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterTemplate>
@@ -216,12 +228,13 @@
                                         <asp:Label ID="lblSalary" runat="server" Text='<%# Bind("salarybasis","{0:#,0.00}") %>'></asp:Label>
                                     </ItemTemplate>
                                     <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                                    <HeaderStyle HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                    <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    <ItemStyle HorizontalAlign="Right" VerticalAlign="Middle" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="% OF SHARE">
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="perofshare" runat="server" Text='<%# Bind("perofsharebasis") %>' CssClass="form-control" 
+                                        <asp:TextBox ID="perofshare" Enabled="false" style="text-align:center" runat="server" Text='<%# Bind("perofsharebasis") %>' CssClass="form-control" 
                                             Width="50px"></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterTemplate>
@@ -232,7 +245,8 @@
                                         <asp:Label ID="lblperofshare" runat="server" Text='<%# Bind("perofsharebasis") %>'></asp:Label>
                                     </ItemTemplate>
                                     <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                                    <HeaderStyle HorizontalAlign="Center" />
+                                    <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Center" />
                                     <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="REMARKS" Visible="False">
@@ -243,7 +257,8 @@
                                         <asp:Label ID="lblRemarks" runat="server" Text='<%# Bind("remarks") %>'></asp:Label>
                                     </ItemTemplate>
                                     <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                                    <HeaderStyle HorizontalAlign="Center" />
+                                    <HeaderStyle HorizontalAlign="Right" CssClass="GridHeader" />
+                                        <ItemStyle HorizontalAlign="Center" />
                                     <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                 </asp:TemplateField>
                                 <asp:TemplateField>
@@ -255,18 +270,19 @@
                                             CssClass="btn btn-info btn-sm" CommandName="Cancel">Cancel</asp:LinkButton>
                                     </EditItemTemplate>
                                     <FooterTemplate>
-                                        <asp:LinkButton ID="lbtnAddRemit" runat="server" CssClass="btn btn-info btn-sm" 
-                                            CommandName="Insert">Add</asp:LinkButton>
+                                        <asp:LinkButton ID="lbtnAddRemit" OnClientClick='return confirm("Are you sure you want to Add?");' runat="server" CssClass="btn btn-info btn-sm" 
+                                            CommandName="Insert">Save</asp:LinkButton>
                                         &nbsp;&nbsp;
                                         <asp:LinkButton ID="lbtnCancelRemit" runat="server" 
                                             CssClass="btn btn-info btn-sm" CommandName="Cancel">Cancel</asp:LinkButton>
                                     </FooterTemplate>
                                     <ItemTemplate>
                                         <asp:LinkButton ID="lbtnEditRemit" runat="server" 
-                                            CssClass="btn btn-info btn-sm" CommandName="Edit">Edit</asp:LinkButton>
+                                            CssClass="btn btn-info btn-sm" CommandName="Edit" Visible="False">Edit</asp:LinkButton>
                                         &nbsp;&nbsp;&nbsp;
-                                        <asp:LinkButton ID="lbtnDeleteRemit" runat="server" 
-                                            CssClass="btn btn-info btn-sm" CommandName="Delete">Delete</asp:LinkButton>
+                                        <asp:LinkButton ID="lbtnDeleteRemit" 
+                                            OnClientClick='return confirm("Are you sure you want to Delete?");' runat="server" 
+                                            CssClass="btn btn-info btn-sm" CommandName="Delete" Visible="False">Delete</asp:LinkButton>
                                     </ItemTemplate>
                                     <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                     <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
@@ -283,8 +299,7 @@
                             <SortedDescendingCellStyle BackColor="#E9EBEF" />
                             <SortedDescendingHeaderStyle BackColor="#4870BE" />
                         </asp:GridView>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
+                       </ContentTemplate> </asp:UpdatePanel>
             </div>
         </div>
     </div>

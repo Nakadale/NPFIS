@@ -92,7 +92,12 @@ namespace NPFIS_Draft_
             
         }
 
-
+        protected void gvSearch_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            gv.PageIndex = e.NewPageIndex;
+            BindTransactCode("");
+        }
         private void LoadShareDetails(string empid)
         {
 

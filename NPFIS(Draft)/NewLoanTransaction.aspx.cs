@@ -53,6 +53,7 @@ namespace NPFIS_Draft_
             GridView gvAmort = (GridView) this.gvAmortizations;
             TextBox EndAmort = (TextBox)this.TxtEndAmort;
             helpers.GenerateAmortization(NumPay,StartAmort,PrincipalAmount,Interest,ServiceFee,gvAmort, EndAmort);
+            btnSave.Enabled = true;
         }
 
         private void BindTransactCode(DropDownList ddl, string EmpID)
@@ -263,11 +264,18 @@ namespace NPFIS_Draft_
 
         protected void TxtStartAmort_TextChanged(object sender, EventArgs e)
         {
-            DateTime StartAmort;
-            DateTime.TryParse(TxtStartAmort.Text, out StartAmort);
-            int AddMonths;
-            int.TryParse(TxtPaymentTerms.Text, out AddMonths);
-            TxtEndAmort.Text = StartAmort.AddMonths(AddMonths).ToString("d");
+            //DateTime StartAmort;
+            //DateTime.TryParse(TxtStartAmort.Text, out StartAmort);
+            //int AddMonths;
+            //int.TryParse(TxtPaymentTerms.Text, out AddMonths);
+            //TxtEndAmort.Text = StartAmort.AddMonths(AddMonths).ToString("d");
+        }
+
+        protected void gvSearch_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            gv.PageIndex = e.NewPageIndex;
+            BindTransactCode("");
         }
     }
 }

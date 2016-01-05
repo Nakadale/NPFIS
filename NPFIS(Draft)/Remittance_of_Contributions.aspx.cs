@@ -17,6 +17,14 @@ namespace NPFIS_Draft_
             }
             ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
         }
+
+        protected void gvSearch_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            gv.PageIndex = e.NewPageIndex;
+            BindTransactCode("");
+        }
+
         protected void btnSearchMember_Click(object sender, EventArgs e)
         {
             string txtSearchKeyword = (string)txtSearch.Text;

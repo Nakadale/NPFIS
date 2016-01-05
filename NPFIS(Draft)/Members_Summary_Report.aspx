@@ -12,6 +12,7 @@
             <div class="col-md-4">
                 <asp:Label ID="lblReportDate" runat="server" Text="Report Date:"></asp:Label>
                 <asp:TextBox ID="txtReportDate" runat="server" CssClass="form-control" Width="122px"></asp:TextBox>
+                <asp:Label ID="Label1" runat="server" Text="Label">dd/mm/yyyy</asp:Label>
                 <ajaxToolkit:CalendarExtender ID="txtReportDate_CalendarExtender" runat="server"  TargetControlID="txtReportDate" Format="dd/MM/yyyy"/>
             </div>
             <div class="col-md-4">

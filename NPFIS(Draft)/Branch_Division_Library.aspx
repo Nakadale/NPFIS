@@ -17,6 +17,17 @@
                 }
                 document.forms[0].appendChild(confirm_value);
             }
+            function ConfirmDel() {
+                var confirmDel_value = document.createElement("INPUT");
+                confirmDel_value.type = "hidden";
+                confirmDel_value.name = "confirmDel_value";
+                if (confirm("Do you want to delete this Division?")) {
+                    confirm_value.value = "Yes";
+                } else {
+                    confirm_value.value = "No";
+                }
+                document.forms[0].appendChild(confirm_value);
+            }
     </script>
 
     <div class="panel panel-default panel-body">
@@ -28,6 +39,7 @@
                     <a data-toggle="collapse" data-parent="#accordion" href="#NewBranch" onclick="$('#OldBranch').collapse('toggle');" class="btn btn-info btn-sm">New</a>&nbsp
                     <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-info btn-sm" OnClick="BtnEdit_Click" Enabled="False" />&nbsp
                     <asp:Button ID="BTNDelete" runat="server" Text="Delete" CssClass="btn btn-info btn-sm" OnClick="BTNDelete_Click" Enabled="False" />&nbsp
+                    <ajaxToolkit:ConfirmButtonExtender ID="ConfirmButtonExtender2" runat="server" TargetControlID="BTNDelete" ConfirmText="Do you wish to delete this Branch?" />
                     <asp:Button ID="BTNSearch" runat="server" Text="Search" CssClass="btn btn-info btn-sm" Visible="False" />&nbsp
                         <br /><br />
                     </div>
@@ -40,7 +52,7 @@
                         <asp:TextBox ID="TxtNewBranchName" runat="server" CssClass="form-control" Width="400px"></asp:TextBox>
                         <br />
                         <asp:Button ID="BTNSave" runat="server" Text="Save" CssClass="btn btn-info btn-sm" OnClick="BTNSave_Click" Visible="True" />&nbsp
-                        <ajaxToolkit:ConfirmButtonExtender ID="ConfirmButtonExtender1" runat="server" TargetControlID="BTNSave" ConfirmText="Do you wish to save this as a new Branch?" />   
+                        <ajaxToolkit:ConfirmButtonExtender ID="ConfirmButtonExtender1" runat="server" TargetControlID="BTNSave" ConfirmText="Do you wish to save this Branch?" />   
                         <asp:Button ID="BTNCancel" runat="server" Text="Cancel" CssClass="btn btn-info btn-sm" OnClick="BTNCancel_Click" />&nbsp
                     </div>
                     <br />

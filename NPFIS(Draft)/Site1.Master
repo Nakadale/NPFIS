@@ -22,12 +22,15 @@
                 <div style="width: 100%; height: 40px; background-color: #000000;">
                     <div style=" margin: auto; padding-top: 10px; width: 1024px;">
                     <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/LandingPage.aspx" Text="Home" BorderColor="Black" ForeColor="White" Font-Size="Medium" Font-Bold="False" Font-Names="Arial"></asp:HyperLink>
+                    &nbsp;&nbsp;&nbsp;
+                    <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Manual/NPFIS User's Manual.docx" Text="User's Manual" BorderColor="Black" ForeColor="White" Font-Size="Medium" Font-Bold="False" Font-Names="Arial"></asp:HyperLink>
+
                     </div>
                 </div>
                 <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; width: 100%;">
                     <asp:Image ID="Image1" runat="server" ImageUrl="~/Image/textNamria2.jpg" />
                 </div>
-                <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; background-color: #cccccc; width: 100%; height: 95px;">
+                <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; background-color: #cccccc; width: 100%; height: 50px;">
                     <asp:Image ID="Image4" runat="server" ImageUrl="~/Image/NPFIS.jpg" />
                 </div>
             </div>
@@ -54,7 +57,7 @@
                 <div class="col-md-3">
                     <div class="panel-collapse collapse in">
                     <div id="MemberMaintenance" class="panel-collapse collapse ">
-                            <asp:LinkButton ID="lnkLoanManage" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/Member_Maintenance.aspx" Width="250px">Member' Maintenance</asp:LinkButton>
+                            <asp:LinkButton ID="lnkLoanManage" runat="server" CssClass="btn btn-info btn-sm" PostBackUrl="~/Member_Maintenance.aspx" Width="250px">Member's Maintenance</asp:LinkButton>
                             <asp:LinkButton ID="lnkLoanApp" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Summary.aspx">Member's Summary</asp:LinkButton>
                             <asp:LinkButton ID="LinkButton9" runat="server" CssClass="btn btn-info btn-sm" Width="250px" PostBackUrl="~/Members_Share.aspx">Member's Shares Management</asp:LinkButton>
                             <hr />

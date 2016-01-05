@@ -18,6 +18,12 @@ namespace NPFIS_Draft_
             }
             ScriptManager.RegisterStartupScript(this, typeof(Page), "OpenMenu", @"$('#MemberMaintenance').collapse('show');", true);
         }
+        protected void gvSearch_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            gv.PageIndex = e.NewPageIndex;
+            BindTransactCode("");
+        }
 
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -54,7 +60,8 @@ namespace NPFIS_Draft_
         }
 
         protected void gvSearch_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
+        {  
+            
             if (((string)e.CommandName.ToString()) == "Select")
             {
                 GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
@@ -68,8 +75,6 @@ namespace NPFIS_Draft_
                 TextBox fullname = (TextBox)this.TxtName;
                 TextBox empid2 = (TextBox)this.Txtempid;
 
-                
-                
                 TxtBranch.Enabled = false;
                 TxtComputedShare.Enabled = false;
                 TxtDivision.Enabled = false;
@@ -90,68 +95,29 @@ namespace NPFIS_Draft_
 
                 TxtComputedShare.Text = (MonthlySalary * (PerofShare / 100)).ToString();
 
-               // GridView1.Visible = true;
+             
                 GridView1.DataSource = Helper.LoadShareDetails(((Label)gvSearch.Rows[RowIndex].FindControl("lblEmpIDDisp")).Text);
                 GridView1.DataKeyNames = new string[] { "dateremit", "amount", "salarybasis", "perofsharebasis", "remarks" };
                 GridView1.DataBind();
 
-               
-
-                if (String.IsNullOrEmpty(Txtempid.Text))
-                    btnEdit.Enabled = false;
-                else
-                    btnEdit.Enabled = true;
-                
                 gvSearch.DataSource = null;
                 gvSearch.DataBind();
+
+                //if (Txtempid.Text != "")
+                //{
+                //    lbtnAddNewContribution.Enabled = true;
+                //}
+
             }
 
-            //if (e.CommandName == "Insert")
-            //{
-            //    GridView gvSearch = (GridView)sender;
-            //    if (String.IsNullOrWhiteSpace(((TextBox)gvSearch.FooterRow.FindControl("txtbxEmpId")).Text))
-            //    {
-            //        hdnMessage.Value = "Please enter Employee ID.";
-            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "empid", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-
-            //    }
-
-            //    if (String.IsNullOrWhiteSpace(((TextBox)gvSearch.FooterRow.FindControl("txtbxLastname")).Text))
-            //    {
-            //        hdnMessage.Value = "Please enter Lastname.";
-            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "lastname", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-
-            //    }
-
-            //    if (String.IsNullOrWhiteSpace(((TextBox)gvSearch.FooterRow.FindControl("txtbxFirstname")).Text))
-            //    {
-            //        hdnMessage.Value = "Please enter Firstname.";
-            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "firstname", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-
-            //    }
-
-            //    if (String.IsNullOrWhiteSpace(((TextBox)gvSearch.FooterRow.FindControl("txtbxMiddlename")).Text))
-            //    {
-            //        hdnMessage.Value = "Please enter Middlename.";
-            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "middlename", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-
-            //    }
-
-            //    if (String.IsNullOrWhiteSpace(((TextBox)gvSearch.FooterRow.FindControl("txtbxDateofbirth")).Text))
-            //    {
-            //        hdnMessage.Value = "Please enter Lastname.";
-            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "dateofbirth", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
-
-            //    }
-
-            //    else
-            //    {
-
-            //    }
-
-
-            //}
+           
+           
         }
+
+        //private void Txtempid_TextChanged(object sender, EventArgs e)
+        //{
+        //    this.lbtnAddNewContribution.Enabled = !string.IsNullOrWhiteSpace(this.Txtempid.Text);
+        //}
 
         protected void gvSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -161,20 +127,14 @@ namespace NPFIS_Draft_
         private void LoadShare(string empid)
         {
             GridView1.DataSource = Helper.LoadShareDetails(empid);
-            GridView1.DataBind();
-        }
+            GridView1.DataBind(); 
 
-        protected void gvSearch_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            
-            GridView gv = (GridView)sender;
-            gv.PageIndex = e.NewPageIndex;
-            
         }
 
         protected void gvSearch_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             gvSearch.EditIndex = -1;
+            GridView1.DataBind();
             
         }
 
@@ -190,7 +150,7 @@ namespace NPFIS_Draft_
                     LinkButton lbtnDeleteRemit = (LinkButton)row.FindControl("lbtnDeleteRemit");
                     LinkButton lbtnEditRemit = (LinkButton)row.FindControl("lbtnEditRemit");
 
-                    String key = GridView1.DataKeys[row.RowIndex]["dateremit"].ToString();
+                    //String key = GridView1.DataKeys[row.RowIndex]["dateremit"].ToString();
 
                     if (row.RowIndex == GridView1.SelectedIndex)
                     {
@@ -209,17 +169,14 @@ namespace NPFIS_Draft_
      
         }
 
-        protected void GridView1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
-        {
-            
-        }
-
         protected void lbtnAddNewContribution_Click(object sender, EventArgs e)
         {
             GridView1.FooterRow.Visible = true;
             (((Label)GridView1.FooterRow.FindControl("lblsalary")).Text) = TxtMonthlySalary.Text;
             (((Label)GridView1.FooterRow.FindControl("lblperofshare")).Text) = TxtPercentageShare.Text;
-            (((Label)GridView1.FooterRow.FindControl("lbldateremit")).Text) = DateTime.Now.ToString("MMM dd, yyyy");
+            (((TextBox)GridView1.FooterRow.FindControl("txtremit")).Text) = DateTime.Now.ToString("MMM dd, yyyy");
+            (((TextBox)GridView1.FooterRow.FindControl("txtbxAmount")).Text) = TxtComputedShare.Text;
+
         }
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -281,6 +238,8 @@ namespace NPFIS_Draft_
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+
+
             if (e.Row.RowType == DataControlRowType.DataRow && GridView1.EditIndex == -1)
             {
                 e.Row.Attributes["onmouseover"] = "this.style.cursor= 'hand' ;this.style.textDecoration='underline';";
@@ -331,10 +290,10 @@ namespace NPFIS_Draft_
         {
             GridView gv = (GridView)sender;
             string empid = Txtempid.Text;
-            string dateremit = ((Label)gv.FooterRow.FindControl("lbldateremit")).Text;
-            decimal amount; Decimal.TryParse((((TextBox)gv.FooterRow.FindControl("txtbxAmount")).Text).ToString(), out amount);
-            string salarybasis = ((Label)gv.FooterRow.FindControl("lblsalary")).Text;
-            string perofshare = ((Label)gv.FooterRow.FindControl("lblperofshare")).Text;
+            string dateremit = gv.DataKeys[e.RowIndex]["dateremit"].ToString();
+            decimal amount; Decimal.TryParse((((TextBox)gv.Rows[e.RowIndex].FindControl("txtbxeditAmount")).Text).ToString(), out amount);
+            string salarybasis = gv.DataKeys[e.RowIndex]["salarybasis"].ToString();
+            string perofshare = gv.DataKeys[e.RowIndex]["perofsharebasis"].ToString();
             string userid = Session["User"].ToString();
             
             if (Helper.UpdateShare(empid, dateremit, amount,salarybasis,perofshare, userid))
@@ -343,11 +302,14 @@ namespace NPFIS_Draft_
 
 
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "editloan", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.success('Edit Loan Success');});", true);
-
+                GridView1.DataSource = Helper.LoadShareDetails(empid);
+                GridView1.DataKeyNames = new string[] { "dateremit", "amount", "salarybasis", "perofsharebasis", "remarks" };
+                GridView1.DataBind();
             }
+
         }
 
-        
+
 
     }
 }

@@ -24,7 +24,7 @@
                 <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; width: 100%;">
                     <asp:Image ID="Image1" runat="server" ImageUrl="~/Image/textNamria2.jpg" />
                 </div>
-                <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; background-color: #cccccc; width: 100%; height: 95px;">
+                <div style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center; background-color: #cccccc; width: 100%; height: 50px;">
                     <asp:Image ID="Image4" runat="server" ImageUrl="~/Image/NPFIS.jpg" />
                 </div>
             </div>

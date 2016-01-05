@@ -5,7 +5,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div align="center" class="panel panel-default panel-body">
+    <div align="center" class="panel panel-default panel-body">
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 <ContentTemplate>
    <div align="left">
@@ -28,7 +28,8 @@
         <Columns>
             <asp:TemplateField HeaderText="Loan ID">
                 <EditItemTemplate>
-                    <asp:TextBox ID="txtbxEditLoanID" Text='<%# Bind("LoanId") %>' runat="server" Width="50px"></asp:TextBox>
+                    <asp:TextBox ID="txtbxEditLoanID" Text='<%# Bind("LoanId") %>' runat="server" 
+                        Width="50px" Enabled="False"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="EditValidLoanId" runat="server" 
                         ControlToValidate="txtbxEditLoanID" ErrorMessage="*" Font-Size="Large" 
                         ForeColor="Red" ValidationGroup="EditUpdate"></asp:RequiredFieldValidator>
@@ -106,7 +107,7 @@
             <asp:TemplateField>
                 <EditItemTemplate>
                     <asp:LinkButton ID="lbtnUpdate" OnClientClick='return confirm("Are you sure you want to Update?");' CommandName="Update" runat="server" ForeColor="White" 
-                        ValidationGroup="EditUpdate" CssClass="btn btn-info btn-sm">Update</asp:LinkButton>
+                        ValidationGroup="EditUpdate" CssClass="btn btn-info btn-sm" OnClick="lbtnUpdate_Click">Update</asp:LinkButton>
                     &nbsp;&nbsp;
                     <asp:LinkButton ID="lbtnCancel" CommandName="Cancel" runat="server" 
                         ForeColor="White" CssClass="btn btn-info btn-sm">Cancel</asp:LinkButton>
@@ -141,6 +142,13 @@
         <SortedDescendingCellStyle BackColor="#E9EBEF" />
         <SortedDescendingHeaderStyle BackColor="#4870BE" />
     </asp:GridView>
+    <p align="left">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Label ID="Label1" runat="server" Text="Label">Loan ID is based on acctg Code</asp:Label>
+    </p>
+        <br />
 </ContentTemplate>
  </asp:UpdatePanel>
 </div>

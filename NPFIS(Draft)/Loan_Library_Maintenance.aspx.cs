@@ -395,7 +395,7 @@ namespace NPFIS_Draft_
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridView GridView1 = (GridView)sender;
-            string loanid = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtbxEditLoanID")).Text;
+            string loanid = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtbxEditLoanID")).Text.Trim();
             string loantype = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtbxEditLoanType")).Text;
             string interestrate = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtbxEditInterestRate")).Text;
             string description = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("txtbxEditDescription")).Text;
@@ -418,26 +418,33 @@ namespace NPFIS_Draft_
             GridView GridView1 = (GridView)sender;
             string LoanId = GridView1.DataKeys[e.RowIndex]["LoanId"].ToString();
 
-            if (Helper.LoanLibDelete(LoanId))
+            if (Helper.CompareLoan(LoanId))
             {
-                GridView1.EditIndex = -1;
-                BindGrid();
 
-                hdnMessage.Value = "Delete Loan Success";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "deleteloan", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.success($('#hdnMessage').val());});", true);
+                if (Helper.LoanLibDelete(LoanId))
+                {
+                    GridView1.EditIndex = -1;
+                    BindGrid();
 
+                    hdnMessage.Value = "Delete Loan Success";
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "deleteloan", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.success($('#hdnMessage').val());});", true);
+                }
+
+                else
+                {
+                    hdnMessage.Value = "Delete Loan Failed";
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "deletefail", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+
+                }
 
             }
-
             else
             {
-                hdnMessage.Value = "Delete Loan Failed";
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "deletefail", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
+
+                hdnMessage.Value = "Delete Loan Failed. Loan Type has been used.";
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "deletefailed", @"var x='<%=intCount %>'; $(document).ready(function(){alertify.error($('#hdnMessage').val());});", true);
 
             }
-
-
-
         }
 
         protected void lbtnAddNewLoan_Click(object sender, EventArgs e)
@@ -454,6 +461,11 @@ namespace NPFIS_Draft_
         }
 
         protected void GridView1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+        {
+
+        }
+
+        protected void lbtnUpdate_Click(object sender, EventArgs e)
         {
 
         }

@@ -3,7 +3,7 @@
 <siteMapNode url="~/LandingPage.aspx" title="Home" >
   <siteMapNode url="~/Redirect1.aspx" title="Member Maintenance" >
       <siteMapNode url="~/Member_Maintenance.aspx" title="Member's Maintenance" >
-        <siteMapNode url="~/Member_Browse.aspx" title="Member Search" />
+        <siteMapNode url="~/Member_Browse.aspx" title="Member Browse" />
       </siteMapNode>
       <siteMapNode url="~/Members_Summary.aspx" title="Member's Summary" />
       <siteMapNode url="~/Members_Share.aspx" title="Member's Shares Management" />

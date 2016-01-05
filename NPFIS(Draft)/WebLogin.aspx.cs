@@ -41,7 +41,7 @@ namespace NPFIS_Draft_
                         {
                         Session["Name"] = dt.Rows[0]["Name"].ToString();
                         Session["User"] = user;
-                        cmd.CommandText = "Update Users Set Active = 1 where UserID = @userid";
+                        cmd.CommandText = "Update Users Set Active = 1, lastdate = SYSUTCDATETIME() where UserID = @userid";
                         cmd.ExecuteNonQuery();
 
                         Response.Redirect("LandingPage.aspx");

@@ -663,7 +663,7 @@ namespace NPFIS_Draft_
             }
         } // check if exist
 
-        public static void GenerateAmortization(int NumberOfPayments, string StartDate, Double Balance, int Interest, double ServiceFee, GridView gvAmortizations, TextBox txtTxtEndAmort)
+        public static void GenerateAmortization(int NumberOfPayments, string StartDate, Double Balance, int Interest, double ServiceFee, GridView gvAmortizations, TextBox TxtEndAmort)
         {
             DataTable dtAmortization = new DataTable();
 
@@ -712,8 +712,8 @@ namespace NPFIS_Draft_
                 }
                 dtAmortization.Rows.Add(PaymentDate, String.Format("{0:#,0.00}", Amount), String.Format("{0:#,0.00}", Balance), false);
 
-                txtTxtEndAmort.Text = PaymentDate;
-
+                TxtEndAmort.Text = PaymentDate;
+             
             }
 
             gvAmortizations.DataSource = dtAmortization;
@@ -820,7 +820,7 @@ namespace NPFIS_Draft_
                             TxtPaymentTerms.Text = dr["NumTerm"].ToString();
                             TxtStartAmort.Text = ((DateTime)dr["StartDate"]).ToShortDateString();
                             TxtEndAmort.Text = ((DateTime)dr["EndDate"]).ToShortDateString();
-                            if (dr["Paid"].ToString() == "0")
+                            if (dr["Paid"].ToString() == "False")
                             {
                                 ChPaidUpLoad.Checked = false;
                             }
@@ -917,6 +917,74 @@ namespace NPFIS_Draft_
                 }
             }
         } //UpdateLoanAmortization
+
+        public static bool CheckIfLoanTransactionExist(string Empid)
+        {
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = "select isnull(count(TransactCode),0) as TransactIDExist from LoanTransaction WHERE Empid=@EmpID";
+
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@EmpID", Empid);
+                    try
+                    {
+                        object o = CMD.ExecuteScalar();
+                        if (o.ToString() == "0")
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        } // CheckIfLoanTransactionExist
+        public static bool UpdateLoanTransactionPaid(string TransactCode)
+        {
+
+            using (SqlConnection cnn = new SqlConnection())
+            {
+                cnn.ConnectionString = ConfigurationManager.ConnectionStrings["NPFISCS"].ConnectionString;
+                cnn.Open();
+
+                string sql = @"select COUNT(Paid) as Paid from LoanAmortization
+                               where TransactCode = @TRANSACTCODE and Paid = 0";
+
+                using (SqlCommand CMD = new SqlCommand(sql, cnn))
+                {
+                    CMD.Parameters.AddWithValue("@TRANSACTCODE", TransactCode);
+                    try
+                    {
+                        object o = CMD.ExecuteScalar();
+                        if (o.ToString() == "0")
+                        {
+                            //update paid in LoanTransaction
+                            CMD.CommandText = @"update LoanTransaction set Paid = 1 where LoanTransaction.TransactCode=@TRANSACTCODE";
+                            CMD.ExecuteNonQuery();
+                            return true;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        } //UpdateLoanTransactionPaid
 
     } //helpers
 } // namespace
